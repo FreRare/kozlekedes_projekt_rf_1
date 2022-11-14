@@ -28,6 +28,19 @@ const CONTROL = new Control();
         }
  });
 
+ router.post("api/ticketPurchase", (req, res)=>{
+    let jaratid = req.body.jaratID;
+    console.log("Buying ticket...", jaratid);
+     if(!CONTROL.ticketPurchaseHandler(jaratid)){
+         console.log('Backend: Invalid ticketPurchase!');
+         res.status(403).json({error:'Invalid ticketPurchase!'});
+     }else{
+         console.log('Backend: Valid ticketPurchase!');
+         res.status(200);
+     }
+     res.end();
+ });
+
  router.get('/api/profile', (req, res)=>{
      setTimeout(()=>{
          let ticket = CONTROL.getTicketForLoggedInUser();
