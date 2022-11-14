@@ -5,11 +5,13 @@ import pepe from '../../assets/pepe.png'
 const Profil = () =>{
 
     const [ticket, setTicket] = useState({});
-    setTicket({
-        identifier: 17263,
-        validity: 'x-y időpontig érvényes eskü lekérjük majd adatbázisból',
-        serviceTheTicketIsFor: 12344
-    })
+    if(!ticket.identifier) {
+        setTicket({
+            identifier: 17263,
+            validity: 'x-y időpontig érvényes eskü lekérjük majd adatbázisból',
+            serviceTheTicketIsFor: 12344
+        });
+    }
 /*
     if(!ticket.identifier || ticket.identifier <= 0) {
         fetch('/api/profile', {

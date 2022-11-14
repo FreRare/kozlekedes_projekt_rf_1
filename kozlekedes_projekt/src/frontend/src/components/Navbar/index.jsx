@@ -71,13 +71,15 @@ function NavBar() {
             to="/">
             Bejelentkezés/Regisztráció
         </NavLink>
-        <NavLink
-            exact="true" 
-            activeclassname="active" 
-            className="profil-link"
-            to="/profil">
-            Profil
-        </NavLink>
+        {sessionStorage.getItem('loggedin') &&
+            <NavLink
+                exact="true"
+                activeclassname="active"
+                className="profil-link"
+                to="/profil">
+                Profil
+            </NavLink>
+        }
         <NavLink
             exact="true" 
             activeclassname="active" 

@@ -51,8 +51,6 @@ const CONTROL = new Control();
     const number = req.body.houseNumber;
     const birthDate = req.body.birthDate;
 
-    // TODO: registration validation and everything xdxd
-
      // used email check
      // Any other case we can register, type check is done on the client side
     CONTROL.canRegisterUser(email).then(res=>{
