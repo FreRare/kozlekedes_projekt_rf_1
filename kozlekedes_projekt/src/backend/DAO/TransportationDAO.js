@@ -12,6 +12,8 @@ class TransportationDAO{
         getUserQuery: 'SELECT email, jelszo, iranyitoszam, utca, hazszam, szuletesi_datum, vezeteknev, keresztnev, azonosito AS JEGYID, azonosito AS BERLETID, adminE FROM UTAS WHERE email = ?',
         createUserQuery: 'INSERT INTO UTAS VALUES(?,?,?,?,?,?,?,?,?,?)',
         updateUserQuery: 'UPDATE UTAS SET jelszo = ?, iranyitoszam = ?, utca = ?, hazszam = ?, szuletesi_datum = ?, vezeteknev = ?, keresztnev = ? WHERE email = ?',
+        updateUserTicketIdentifierQuery: 'UPDATE UTAS SET jegyAzonosito = ? WHERE email = ?',
+        updateUserPassIdentifierQuery: 'UPDATE UTAS SET berletAzonosito = ? WHERE email = ?',
         deleteUserQuery: 'DELETE FROM UTAS WHERE email = ?',
         createServiceQuery: 'INSERT INTO JARAT VALUES(?, ?, ?)',
         updateServiceQuery: 'UPDATE JARAT SET vonalszam =?, tipus= ? WHERE id = ?',
@@ -24,6 +26,7 @@ class TransportationDAO{
         updateTicketQuery: 'UPDATE JEGY SET ar = ?, ervenyes = ?, ID = ? WHERE azonosito = ?',
         deleteTicketQuery: 'DELETE FROM UTAS WHERE azonosito = ?',
         getTicketQuery: 'SELECT * FROM JEGY',
+        getTicketIdentifierByServiceIDQuery: 'SELECT azonosito FROM JEGY WHERE ID = ?',
         createPassQuery: 'INSERT INTO BERLET VALUES(?,?,?,?)',
         updatePasQuery: 'UPDATE BERLET SET ar = ?, ervenyes = ?, ID = ? WHERE azonosito = ?',
         deletePassQuery: 'DELETE FROM BERLET WHERE azonosito = ?',
@@ -128,6 +131,38 @@ class TransportationDAO{
                     reject(err);
                 }
                 console.log("Sikeres adatmódosítás!");
+                resolve(result);
+            })
+        })
+    }
+
+    updateUserTicketIdentifier(identifier, email) {
+        return new Promise((resolve, reject)=>{
+            if(!identifier instanceof 'number' || !email instanceof 'string'){
+                console.error('Inavlid identifier or email!')
+                reject(false);
+            }
+            this.db.query(TransportationDAO.QUERIES.updateUserTicketIdentifierQuery, [identifier, email], (err, result) => {
+                if(err){
+                    reject(err);
+                }
+                console.log("Sikeres jegyvásárlás!");
+                resolve(result);
+            })
+        })
+    }
+
+    updateUserPassIdentifier(identifier, email) {
+        return new Promise((resolve, reject)=>{
+            if(!identifier instanceof 'number' || !email instanceof 'string'){
+                console.error('Inavlid identifier or email!')
+                reject(false);
+            }
+            this.db.query(TransportationDAO.QUERIES.updateUserPassIdentifierQuery, [identifier, email], (err, result) => {
+                if(err){
+                    reject(err);
+                }
+                console.log("Sikeres bérletvásárlás!");
                 resolve(result);
             })
         })
@@ -307,6 +342,22 @@ class TransportationDAO{
             this.db.query(TransportationDAO.QUERIES.getTicketQuery,  [identifier], (err, res, next)=>{
                 if(err)throw(err);
                 console.log('Ticket got by identifier successfully');
+                res = res[0];
+                this.getService(res['ID']).then(service=>{
+                    resolve(new Ticket(res['AZONOSITO'], res['AR'], res['TIPUS'], new Date(res['ERVENYES']), service.id));
+                }).catch(e=>console.log(e));
+            });
+        });
+    }
+
+    getTicketIdentifierByServiceID(ID) {
+        return new Promise((resolve, reject)=>{
+            if(typeof ID !=="number"){
+                reject(false);
+            }
+            this.db.query(TransportationDAO.QUERIES.getTicketIdentifierByServiceIDQuery,  [ID], (err, res, next)=>{
+                if(err)throw(err);
+                console.log('Ticket got by Service ID successfully');
                 res = res[0];
                 this.getService(res['ID']).then(service=>{
                     resolve(new Ticket(res['AZONOSITO'], res['AR'], res['TIPUS'], new Date(res['ERVENYES']), service.id));
