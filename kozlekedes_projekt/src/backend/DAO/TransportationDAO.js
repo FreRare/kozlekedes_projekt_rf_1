@@ -109,10 +109,10 @@ class TransportationDAO{
             }
             this.db.query(TransportationDAO.QUERIES.createUserQuery, [user.email, user.password, user.zipCode, user.street, user.houseNumber, user.birthDate, user.firstName, user.lastName, user.ticketId, user.passId, user.isAdmin], (err, result) => {
                 if(err){
-                    reject(err);
+                    throw(err);
                 }
                 console.log("Sikeres felhasználó létrehozás!");
-                resolve(result);
+                resolve(true);
             })
         })
     }

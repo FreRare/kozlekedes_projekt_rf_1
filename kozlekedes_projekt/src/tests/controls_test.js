@@ -6,7 +6,7 @@ controlsObject= new Controls();
 //loginByEmailAndPassword tesztelese
 /*QUnit.module('loginByEmailAndPassword', function() {
     QUnit.test('email and password', function(assert) {
-        assert.equal(controlsObject.loginByEmailAndPassword("admin@admin", "admin"), false);
+        assert.equal(controlsObject.loginByEmailAndPassword("admin@admin", "admin"), true);
     });
 });*/
 

@@ -149,6 +149,19 @@ class Controls{
             return res;
         });
     }
+
+    canRegisterUser(email){
+        return this.DAO.getUserByEmail(email).then(res=>{
+            return !res;
+        })
+    }
+
+    registerUser(email, password, firstName, lastName, zipCode, street, house, birthDate){
+        let user = new User(email, password, zipCode, street, house, birthDate, firstName, lastName);
+        return this.DAO.createUser(user).then(res=>{
+            return res;
+        }).catch(e=>console.error(e));
+    }
 }
 
 module.exports = Controls;

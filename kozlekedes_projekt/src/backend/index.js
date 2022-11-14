@@ -41,7 +41,7 @@ const CONTROL = new Control();
 
  });
 
- router.post('/api/register', (req, res)=>{
+ router.post('/api/register', (req, response)=>{
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
     const email = req.body.email;
@@ -52,6 +52,22 @@ const CONTROL = new Control();
     const birthDate = req.body.birthDate;
 
     // TODO: registration validation and everything xdxd
+
+     // used email check
+     // Any other case we can register, type check is done on the client side
+    CONTROL.canRegisterUser(email).then(res=>{
+        if(!res){
+            response.json({error: 'Email address already in use!'});
+        }else{
+            CONTROL.registerUser(email, password, firstName, lastName, zipCode, street, number, birthDate).then(res=>{
+                if(res){
+                    response.json({success: true});
+                }else{
+                    response.json({success: false});
+                }
+            });
+        }
+    });
  });
 
  router.get('/bus', (req, res)=>{
