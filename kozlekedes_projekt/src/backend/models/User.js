@@ -10,7 +10,7 @@ class User{     // Adatbázis mező nevek
     birthDate;  //szuletesi_datum
     firstName;  //vezeteknev
     lastName;   //keresztnev
-    ticket;   //JEGY.azonosito
+    ticket;   //JEGY
     passId;     //BERLET.azonosito
     isAdmin;    //adminE
 

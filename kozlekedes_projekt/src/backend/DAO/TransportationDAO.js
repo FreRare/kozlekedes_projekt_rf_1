@@ -9,8 +9,8 @@ const {query} = require("express");
 
 class TransportationDAO{
     static QUERIES = {
-        getUserQuery: 'SELECT email, jelszo, iranyitoszam, utca, hazszam, szuletesi_datum, vezeteknev, keresztnev, azonosito AS JEGYID, azonosito AS BERLETID, adminE FROM UTAS WHERE email = ?',
-        createUserQuery: 'INSERT INTO UTAS VALUES(?,?,?,?,?,?,?,?,?,?)',
+        getUserQuery: 'SELECT email, jelszo, iranyitoszam, utca, hazszam, szuletesi_datum, vezeteknev, keresztnev, jegyAzonosito, berletAzonosito, adminE FROM UTAS WHERE email = ?',
+        createUserQuery: 'INSERT INTO UTAS VALUES(?,?,?,?,?,?,?,?,?,?,?)',
         updateUserQuery: 'UPDATE UTAS SET jelszo = ?, iranyitoszam = ?, utca = ?, hazszam = ?, szuletesi_datum = ?, vezeteknev = ?, keresztnev = ? WHERE email = ?',
         updateUserTicketIdentifierQuery: 'UPDATE UTAS SET jegyAzonosito = ? WHERE email = ?',
         updateUserPassIdentifierQuery: 'UPDATE UTAS SET berletAzonosito = ? WHERE email = ?',
@@ -110,7 +110,7 @@ class TransportationDAO{
                 console.error('Inavlid user!')
                 reject(false);
             }
-            this.db.query(TransportationDAO.QUERIES.createUserQuery, [user.email, user.password, user.zipCode, user.street, user.houseNumber, user.birthDate, user.firstName, user.lastName, user.ticketId, user.passId, user.isAdmin], (err, result) => {
+            this.db.query(TransportationDAO.QUERIES.createUserQuery, [user.email, user.password, user.zipCode, user.street, user.houseNumber, user.birthDate, user.firstName, user.lastName, user.ticket, user.passId, user.isAdmin], (err, result) => {
                 if(err){
                     throw(err);
                 }
@@ -196,10 +196,12 @@ class TransportationDAO{
             }
             this.db.query(TransportationDAO.QUERIES.getUserQuery, [email], (err, result, next)=>{
                 if(err)throw(err);
-                console.log('User got by email:', email, 'successfully', result);
+                //console.log('User got by email:', email, 'successfully', result);
                 let res = result[0];
-                this.getTicketByIdentifier(result['JEGYID']).then(ticket=>{
-                    resolve(new User(res['email'], res['jelszo'], res['iranyitoszam'], res['utca'], res['hazszam'], res['szuletesi_datum'], res['vezeteknev'], res['keresztnev'], ticket, res['BERLETID'], res['adminE']));
+                //console.log(res);
+                this.getTicketByIdentifier(res["jegyAzonosito"]).then(ticket=>{
+                    //console.log(res);
+                    resolve(new User(res['email'], res['jelszo'], res['iranyitoszam'], res['utca'], res['hazszam'], res['szuletesi_datum'], res['vezeteknev'], res['keresztnev'], ticket, res['berletAzonosito'], res['adminE']));
                 });
             });
         })
