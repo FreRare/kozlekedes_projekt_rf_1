@@ -6,39 +6,38 @@ const Stop = require('../models/Stop');
 class Controls{
     constructor() {
         this.DAO = new DAO();
-        this.activeUser = undefined;
+        this.activeUser = new User();
     }
 
     // TODO: Jegyek, bérletek kezeléséhez tartozó üzleti logika (listázás, módosítás, létrehozása, törlése)
     // Jegyek, bérletek árának módosítása, bejelentkezett felhasználó ellenörzése
     /***
      * A megadott email című usernek megvásárolja a jegyet
-     * @param user
-     * @param ticket
+     * @param jaratID
      * @returns {boolean}
      */
-    ticketPurchaseHandler(jaratID){
-        if(!(user instanceof User) || !(ID instanceof "number")){
+    async ticketPurchaseHandler(jaratID){
+        if(!jaratID instanceof "number"){
             console.error("Nem megfelelő az email vagy járat ID!");
             return false;
         }
         let ticketIdentifier;
         // Megkapja a járat ID-jét, amiből lekérdezi a jegy azonsoítóját 
-        this.DAO.getTicketIdentifierByServiceID(jaratID).then((result)=>{
-            if(result instanceof Error || !result){
-                console.error("Controls ticketPurchaseHandler getTicketIdentifierByServiceID error ", result)
+        return await this.DAO.getTicketIdentifierByServiceID(jaratID).then((result) => {
+            if (result instanceof Error || !result) {
+                console.error("Controls ticketPurchaseHandler getTicketIdentifierByServiceID error ", result.identifier);
                 return false;
             }
-            let ticketIdentifier = result;
-        });
-        // Megkapja az új jegyet
-        user.ticketId = ticketIdentifier;
-        this.DAO.updateUserTicketIdentifier(user).then((result)=>{
-            if(result instanceof Error || !result){
-                console.error("Controls ticketPurchaseHandler updateUserTicketIdentifierQuery error ", result)
-                return false;
-            }
-            return true;
+            ticketIdentifier = result.identifier;
+            // Megkapja az új jegyet
+            this.activeUser.ticket = result;
+            this.DAO.updateUserTicketIdentifier(ticketIdentifier, this.activeUser.email).then((result) => {
+                if (result instanceof Error || !result) {
+                    console.error("Controls ticketPurchaseHandler updateUserTicketIdentifierQuery error ", result)
+                    return false;
+                }
+                return true;
+            });
         });
     }
 
@@ -133,20 +132,12 @@ class Controls{
             console.error('Controls.loginByEmailAndPassword => ', 'Invalid argument(s)!', email, password);
             return false;
         }
-        /*
-        return this.DAO.getAllUser().then(res=>{
-            for(let u of res){
-                if(u.email === email && u.password === password){
-                    console.log('user found!');
-                    this.activeUser = u;
-                    console.log(this.activeUser);
-                    return true;
-                }
-            }
-            return false;
-        }).catch(e=>console.error(e));*/
+
         return this.DAO.getUserByEmail(email).then(res=>{
-            //console.log(res);
+            console.log('user found!');
+            this.activeUser = res;
+            //console.log(this.activeUser);
+            return true;
         }).catch(e=>console.error(e));
     }
 
