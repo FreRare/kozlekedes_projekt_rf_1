@@ -24,6 +24,9 @@ const Villamos = () => {
                             <li>Honnan: {b.stops[0].name}</li>
                             <li>Hová: {b.stops[b.stops.length-1].name}</li>
                         </ul>
+                        <ul>
+                            <
+                        </ul>
                     </div>
                 </div>
             ));
