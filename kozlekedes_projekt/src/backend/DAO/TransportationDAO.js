@@ -6,6 +6,7 @@ const Pass = require("../models/Pass");
 const Stopping = require("../models/Stopping");
 const News = require("../models/News");
 const {query} = require("express");
+const {TIME} = require("mysql/lib/protocol/constants/types");
 
 class TransportationDAO{
     static QUERIES = {
@@ -26,7 +27,7 @@ class TransportationDAO{
         updateTicketQuery: 'UPDATE JEGY SET ar = ?, ervenyes = ?, ID = ? WHERE azonosito = ?',
         deleteTicketQuery: 'DELETE FROM UTAS WHERE azonosito = ?',
         getTicketQuery: 'SELECT * FROM JEGY',
-        getTicketIdentifierByServiceIDQuery: 'SELECT azonosito FROM JEGY WHERE ID = ?',
+        getTicketByServiceIDQuery: 'SELECT * FROM JEGY WHERE ID = ?',
         createPassQuery: 'INSERT INTO BERLET VALUES(?,?,?,?)',
         updatePasQuery: 'UPDATE BERLET SET ar = ?, ervenyes = ?, ID = ? WHERE azonosito = ?',
         deletePassQuery: 'DELETE FROM BERLET WHERE azonosito = ?',
@@ -138,16 +139,15 @@ class TransportationDAO{
 
     updateUserTicketIdentifier(identifier, email) {
         return new Promise((resolve, reject)=>{
-            if(!identifier instanceof 'number' || !email instanceof 'string'){
-                console.error('Inavlid identifier or email!')
-                reject(false);
+            if(typeof identifier !== 'number' || typeof email !== 'string'){
+                throw new Error('Inavlid identifier or email!');
             }
             this.db.query(TransportationDAO.QUERIES.updateUserTicketIdentifierQuery, [identifier, email], (err, result) => {
                 if(err){
-                    reject(err);
+                    throw(err);
                 }
                 console.log("Sikeres jegyvásárlás!");
-                resolve(result);
+                resolve(true);
             })
         })
     }
@@ -278,13 +278,13 @@ class TransportationDAO{
                 console.error('Invalid Service!')
                 reject(false);
             }
-            this.db.query(TransportationDAO.QUERIES.getServiceQuery, [id], (err, result) => {
+            this.db.query(TransportationDAO.QUERIES.getServiceQuery, [id], (err, ser) => {
                 if(err){
-                    reject(err);
+                    throw(err);
                 }
                 console.log("Járat visszaadva!");
-                // TODO: resolve(valami) valami legyen egy Service objektum, helyesen feltöltve, a result[0]['jaratszam'] segít.
-                resolve(new Service(result["name"], result["location"]));
+                ser = ser[0];
+                resolve(new Service(ser['ID'],ser['vonalszam'], ser['tipus']));
             })
         })
     }
@@ -346,23 +346,29 @@ class TransportationDAO{
                 console.log('Ticket got by identifier successfully');
                 res = res[0];
                 this.getService(res['ID']).then(service=>{
-                    resolve(new Ticket(res['AZONOSITO'], res['AR'], res['TIPUS'], new Date(res['ERVENYES']), service.id));
+                    resolve(new Ticket(res['azonosito'], res['ar'], res['tipus'], new TIME(res['ervenyes']), service.id));
                 }).catch(e=>console.log(e));
             });
         });
     }
 
-    getTicketIdentifierByServiceID(ID) {
+    /**
+     * Returns the ticket for the service
+     * @param ID
+     * @returns {Promise<Ticket>}
+     */
+    getTicketByServiceID(ID) {
         return new Promise((resolve, reject)=>{
             if(typeof ID !=="number"){
-                reject(false);
+                throw new Error('Invalid serviceID: ' + ID);
             }
-            this.db.query(TransportationDAO.QUERIES.getTicketIdentifierByServiceIDQuery,  [ID], (err, res, next)=>{
+            this.db.query(TransportationDAO.QUERIES.getTicketByServiceIDQuery,  [ID], (err, res, next)=>{
                 if(err)throw(err);
-                console.log('Ticket got by Service ID successfully');
+                console.log('Ticket got by Service ID successfully: ', res[0]);
                 res = res[0];
-                this.getService(res['ID']).then(service=>{
-                    resolve(new Ticket(res['AZONOSITO'], res['AR'], res['TIPUS'], new Date(res['ERVENYES']), service.id));
+                this.getService(ID).then(service=>{
+                    console.log(this.className, 'getTicketByServiceID', service);
+                    resolve(new Ticket(res['azonosito'], res['ar'], res['tipus'], (res['ervenyes']), service.id));
                 }).catch(e=>console.log(e));
             });
         });

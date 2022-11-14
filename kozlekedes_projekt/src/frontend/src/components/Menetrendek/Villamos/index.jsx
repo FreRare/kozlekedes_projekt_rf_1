@@ -8,11 +8,10 @@ const Villamos = () => {
 
     const [tramsList, setTramsList] = useState([]);
     const [error, setError] = useState('');
-    const nav = useNavigate();
     let tramList;
     let trams = [];
     if(tramsList.length <= 0){
-        fetch('/villamos', {
+        fetch('/api/tram', {
             method: 'get'
         }).then(res=>res.json()).then(res=>{
             trams = res.trams;
@@ -27,9 +26,11 @@ const Villamos = () => {
                             <li>Honnan: {b.stops[0].name}</li>
                             <li>Hová: {b.stops[b.stops.length-1].name}</li>
                         </ul>
-                        <button onClick={()=>{
-                            ticketPurchase(b.id);
-                        }}>Megveszem</button>
+                        {sessionStorage.getItem('loggedin') &&
+                            <button onClick={() => {
+                                ticketPurchase(b.id);
+                            }}>Megveszem</button>
+                        }
                     </div>
                 </div>
             ));
@@ -40,6 +41,7 @@ const Villamos = () => {
     }
 
     const ticketPurchase = (id)=>{
+        console.log('Buying ticket for service: ', id);
         fetch('/api/ticketPurchase', {
             method: 'POST',
             headers: {
@@ -47,11 +49,12 @@ const Villamos = () => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({jaratID: id})
-        }).then((res=>res.json())).then(res=>{
+        }).then(res=>{
             if(res.status === 200){
                 setError('Sikeres jegyvásárlás!++');
+                alert('Sikeres jegyvásárlás!++');
             }else{
-                setError(res.error);
+                res.json().then(res=>setError(res.error));
             }
         })
     }

@@ -28,12 +28,13 @@ const CONTROL = new Control();
         }
  });
 
- router.post("api/ticketPurchase", (req, res)=>{
+ router.post("/api/ticketPurchase", (req, res)=>{
     let jaratid = req.body.jaratID;
-    console.log("Buying ticket...", jaratid);
+    console.log("Buying ticket...", "Jaratid: ", jaratid);
      if(!CONTROL.ticketPurchaseHandler(jaratid)){
          console.log('Backend: Invalid ticketPurchase!');
-         res.status(403).json({error:'Invalid ticketPurchase!'});
+         res.status(403);
+         res.json({error: 'Invalid ticketPurchase!'});
      }else{
          console.log('Backend: Valid ticketPurchase!');
          res.status(200);
@@ -45,7 +46,7 @@ const CONTROL = new Control();
      setTimeout(()=>{
          let ticket = CONTROL.getTicketForLoggedInUser();
          console.log(ticket);
-         if(!ticket){
+         if(ticket === false){
              console.log('No ticket found!');
          }else{
              res.json({ticketToSend: ticket});
@@ -81,14 +82,14 @@ const CONTROL = new Control();
     });
  });
 
- router.get('/bus', (req, res)=>{
+ router.get('/api/bus', (req, res)=>{
      CONTROL.selectBuses().then(result=>{
          console.log('Buses to display:', result);
          res.json(result);
      });
  });
 
- router.get('/villamos', (req, res)=>{
+ router.get('/api/tram', (req, res)=>{
      CONTROL.selectTrams().then(result=>{
          // console.log('Trams to display:', result);
          res.json({trams: result});

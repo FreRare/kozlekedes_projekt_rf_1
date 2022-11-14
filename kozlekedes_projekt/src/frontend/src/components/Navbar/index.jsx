@@ -65,12 +65,14 @@ function NavBar() {
             to="/price">
             Áraink
         </NavLink>
-        <NavLink
-            exact="true" 
-            activeclassname="active" 
-            to="/">
-            Bejelentkezés/Regisztráció
-        </NavLink>
+        { !sessionStorage.getItem('loggedin') &&
+            <NavLink
+                exact="true"
+                activeclassname="active"
+                to="/">
+                Bejelentkezés/Regisztráció
+            </NavLink>
+        }
         {sessionStorage.getItem('loggedin') &&
             <NavLink
                 exact="true"

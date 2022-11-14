@@ -4,27 +4,42 @@ import pepe from '../../assets/pepe.png'
 
 const Profil = () =>{
 
-    const [ticket, setTicket] = useState({});
-    if(!ticket.identifier) {
+    const [jegy, setJegy] = useState('');
+   /* if(!ticket.identifier) {
         setTicket({
             identifier: 17263,
             validity: 'x-y időpontig érvényes eskü lekérjük majd adatbázisból',
             serviceTheTicketIsFor: 12344
         });
-    }
-/*
-    if(!ticket.identifier || ticket.identifier <= 0) {
+    }*/
+    let ticket = {};
+    if(jegy.length <= 0) {
+        console.log(ticket.identifier, ticket.type);
         fetch('/api/profile', {
             method: 'GET'
         }).then(res => res.json()).then((res) => {
             if(!res){
                 console.log('No ticket found!');
             }else{
-                setTicket(res.ticketToSend);
+                console.log(res.ticketToSend);
+                ticket = res.ticketToSend;
                 console.log(ticket);
+                setJegy(
+                    <>
+                        <p>
+                            Érvényes: {ticket.validity}
+                        </p>
+                        <p>
+                            Járat: {ticket.serviceTheTicketIsFor}
+                        </p>
+                        <p>
+                            Típus: {ticket.type}
+                        </p>
+                    </>
+                );
             }
         });
-    }*/
+    }
 
     return(
         <>
@@ -46,16 +61,7 @@ const Profil = () =>{
                     <img src={pepe} alt="EzegyPepe"/>
                 </div>
                     <div className="ticketdatas">
-                        {ticket &&
-                            <>
-                                <p key={ticket.identifier}>
-                                    Érvényes: {ticket.validity}
-                                </p>
-                                <p>
-                                    Járat: {ticket.serviceTheTicketIsFor}
-                                </p>
-                            </>
-                        }
+                        {jegy}
                     </div>
                      
                 </div>

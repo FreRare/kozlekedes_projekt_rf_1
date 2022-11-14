@@ -1,15 +1,16 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import './index.scss';
 import { MapContainer, TileLayer, Popup, Marker  } from 'react-leaflet';
+const position = [46.253, 20.14824];
 
-const Bus = () => {
-    const position = [46.253, 20.14824];
-    const [busesList, setBusesList] = useState([]);
+const Troli = () => {
+
+    const [tramsList, setTramsList] = useState([]);
     const [error, setError] = useState('');
     let tramList;
     let trams = [];
-    if(setBusesList.length <= 0){
-        fetch('/api/bus', {
+    if(tramsList.length <= 0){
+        fetch('/api/tram', {
             method: 'get'
         }).then(res=>res.json()).then(res=>{
             trams = res.trams;
@@ -32,8 +33,8 @@ const Bus = () => {
                     </div>
                 </div>
             ));
-            if(!busesList || busesList.length <= 0){
-                setBusesList(tramList);
+            if(!tramsList || tramsList.length <= 0){
+                setTramsList(tramList);
             }
         });
     }
@@ -55,15 +56,14 @@ const Bus = () => {
             }
         })
     }
-
     return(
-        <>
+        <div className="container">
         <div className="header">
-            <h1>Busz menetrendek</h1>
+            <h1>Troli menetrendek</h1>
         </div>
         <div className="wrapper">
             <div className="menetrendek">
-                {busesList}
+                {tramsList}
             </div>
             
             <div className="map-wrap">
@@ -80,8 +80,8 @@ const Bus = () => {
   </MapContainer>
             </div>
         </div>
-        </>
-    )
+        </div>
+    );
 }
 
-export default Bus;
+export default Troli;

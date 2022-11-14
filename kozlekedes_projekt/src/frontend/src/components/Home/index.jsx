@@ -1,8 +1,15 @@
 import './index.scss';
 import { NavLink} from 'react-router-dom';
+import {useEffect} from "react";
 
-const Home = () =>(
+const Home = () =>{
 
+    useEffect(()=>{
+        sessionStorage.removeItem('loggedin');
+    });
+
+
+    return (
         <div>
                 <div className="header_container">
                         <h1>Menetrendek</h1>
@@ -26,8 +33,8 @@ const Home = () =>(
                         </div>
                 </div>
         </div>
-        
-)
+    );
+}
 
 
 export default Home;

@@ -17,28 +17,27 @@ class Controls{
      * @returns {boolean}
      */
     async ticketPurchaseHandler(jaratID){
-        if(!jaratID instanceof "number"){
+        if(typeof jaratID !== "number"){
             console.error("Nem megfelelő az email vagy járat ID!");
             return false;
         }
         let ticketIdentifier;
-        // Megkapja a járat ID-jét, amiből lekérdezi a jegy azonsoítóját 
-        return await this.DAO.getTicketIdentifierByServiceID(jaratID).then((result) => {
-            if (result instanceof Error || !result) {
-                console.error("Controls ticketPurchaseHandler getTicketIdentifierByServiceID error ", result.identifier);
-                return false;
-            }
+        // Megkapja a járat ID-jét, amiből lekérdezi a jegy azonsoítóját
+        return await this.DAO.getTicketByServiceID(jaratID).then((result) => {
+            console.log('CONTOLS: ', result);
             ticketIdentifier = result.identifier;
             // Megkapja az új jegyet
             this.activeUser.ticket = result;
-            this.DAO.updateUserTicketIdentifier(ticketIdentifier, this.activeUser.email).then((result) => {
-                if (result instanceof Error || !result) {
-                    console.error("Controls ticketPurchaseHandler updateUserTicketIdentifierQuery error ", result)
+            console.log('Ticket to buy id: ', ticketIdentifier);
+            return this.DAO.updateUserTicketIdentifier(ticketIdentifier, this.activeUser.email).then((result) => {
+                if(result) {
+                    console.log('User ticket successfully updated.');
+                    return true;
+                }else{
                     return false;
                 }
-                return true;
-            });
-        });
+            }).catch(e=>console.error(e));
+        }).catch(e=>console.error(e));
     }
 
     /***
@@ -126,14 +125,14 @@ class Controls{
      * Bejelentkezik a megadott adatokkal, hamissal tér vissza ha sikertelen
      * @param email
      * @param password
+     * @returns {boolean}
      */
-    loginByEmailAndPassword(email, password){
+    async loginByEmailAndPassword(email, password){
         if(typeof email !== "string" || typeof password !== "string"){
             console.error('Controls.loginByEmailAndPassword => ', 'Invalid argument(s)!', email, password);
             return false;
         }
-
-        return this.DAO.getUserByEmail(email).then(res=>{
+        return await this.DAO.getUserByEmail(email).then(res=>{
             console.log('user found!');
             this.activeUser = res;
             //console.log(this.activeUser);
