@@ -1,0 +1,119 @@
+.news-wrapper{
+    width: 100%;
+    overflow: hidden;
+    margin-top: 80px;
+    
+}
+
+h1{
+    text-align: center;
+    letter-spacing: 15px;
+    margin-top: 100px;
+    margin-bottom: 50px;
+    animation: fadeIn 1s 1.2s backwards;
+}
+
+
+.news-container{
+    
+    width: 50%;
+    height: 770px;
+    margin-left: 50px;
+    float: left;
+    overflow: hidden;
+}
+
+.news-row{
+    border: 2px solid black;
+    border-radius: 20px;
+    width: 99%;
+    height: 150px;
+    margin-bottom: 20px;
+    box-shadow: 10px 2px 2px 2px #484848;
+    
+    &:nth-child(1){
+        animation: backInRight 2s 0s;
+        animation-fill-mode: forwards;
+    }
+    &:nth-child(2){
+        animation: backInRight 2s 0s;
+        animation-fill-mode: forwards;
+    }
+    &:nth-child(3){
+        animation: backInRight 2s 0s;
+        animation-fill-mode: forwards;
+    }
+    &:nth-child(4){
+        animation: backInRight 2s 0s;
+        animation-fill-mode: forwards;
+    }
+}
+
+.news-subscription{
+    border: 2px solid black;
+    overflow: hidden;
+    float: right;
+    width: 45%;
+    height: 150*4.4823px;
+    box-shadow: 10px 2px 2px 2px #484848;
+    animation: backInRight 1s 0s;
+    animation-fill-mode: forwards;
+    
+
+    p:nth-child(1){
+        text-align: center;
+        font-size: 25px;
+        
+    }
+    p:nth-child(2){
+        text-align: center;
+        font-size: 20px;
+    }
+
+    form{
+        display: block;
+        margin-top: 50px;
+        text-align: center;
+        box-sizing: border-box;
+
+        input[type=email]{
+            display: block;
+            position: relative;
+            height: 80px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            width: 70%;
+            margin:auto;
+            font-size: 25px;
+            border: none;
+            background-color: #f3f3f3;
+        }
+    
+        input[type=submit]{
+            padding: 15px 25px;
+            font-size: 24px;
+            text-align: center;
+            cursor: pointer;
+            outline: none;
+            color: #fff;
+            background-color: #0578ba;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px #999;
+            margin-top: 70px;
+    
+            &:hover{
+                background-color: #00cdcd
+            }
+    
+            &:active{
+            background-color: #00ff22;
+            box-shadow: 0 5px rgb(138, 138, 138);
+            transform: translateY(4px);
+            }
+        }
+    }
+    
+
+    
+}
