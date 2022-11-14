@@ -35,7 +35,7 @@ class TransportationDAO{
         createStoppingQuery: '',
         updateStoppingQuery: '',
         deleteStoppingQuery: '',
-        getStoppingQuery: 'SELECT * FROM MEGALL WHERE ID = ?',
+        getStoppingQuery: 'SELECT * FROM MEGALL WHERE ID = ? ORDER BY mikor',
         createNewsQuery: 'INSERT INTO HIRFOLYAM VALUES (?, ?, ?, ?, ?)',
         updateNewsQuery: 'UPDATE HIRFOLYAM SET kategoria = ?, cim = ?, leiras = ? kozzetetel_datum = ?',
         deleteNewsQuery: 'DELETE FROM HIRFOLYAM WHERE ID = ?',
