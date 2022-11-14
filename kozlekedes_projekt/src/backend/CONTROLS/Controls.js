@@ -17,25 +17,26 @@ class Controls{
      * @param ticket
      * @returns {boolean}
      */
-    ticketPurchaseHandler(user, service){
-        if(!(user instanceof User) || !(service instanceof Service)){
-            console.error("Nem megfelelő az email vagy jarat!");
+    ticketPurchaseHandler(user, ID){
+        if(!(user instanceof User) || !(ID instanceof "number")){
+            console.error("Nem megfelelő az email vagy járat ID!");
             return false;
         }
-        // Megkapja az új jegyet
-        user.ticketId = ticket.ticketId;
-        this.DAO.updateUser(user).then((result)=>{
+        // Megkapja a járat ID-jét, amiből lekérdezi a jegy azonsoítóját 
+        this.DAO.getTicketIdentifierByServiceID(ID).then((result)=>{
             if(result instanceof Error || !result){
-                console.error("Controls ticketPurchaseHandler updateUser error ", result)
+                console.error("Controls ticketPurchaseHandler getTicketIdentifierByServiceID error ", result)
                 return false;
             }
-            // Az új jegyet eltároljuk
-            this.DAO.createTicket(ticket).then((result)=>{
-                if(result instanceof Error || !result){
-                    console.error("Controls ticketPurchaseHandler createTicket error ", result)
-                    return false;
-                }
-            });
+            ticketIdentifier = result;
+        });
+        // Megkapja az új jegyet
+        user.ticketId = ticketIdentifier;
+        this.DAO.updateUserTicketIdentifierQuery(user).then((result)=>{
+            if(result instanceof Error || !result){
+                console.error("Controls ticketPurchaseHandler updateUserTicketIdentifierQuery error ", result)
+                return false;
+            }
             return true;
         });
     }
