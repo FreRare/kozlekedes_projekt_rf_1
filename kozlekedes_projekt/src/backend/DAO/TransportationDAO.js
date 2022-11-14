@@ -9,8 +9,8 @@ const {query} = require("express");
 
 class TransportationDAO{
     static QUERIES = {
-        getUserQuery: 'SELECT email, jelszo, iranyitoszam, utca, hazszam, szuletesi_datum, vezeteknev, keresztnev, azonosito AS JEGYID, azonosito AS BERLETID, adminE FROM UTAS WHERE email = ?',
-        createUserQuery: 'INSERT INTO UTAS VALUES(?,?,?,?,?,?,?,?,?,?)',
+        getUserQuery: 'SELECT email, jelszo, iranyitoszam, utca, hazszam, szuletesi_datum, vezeteknev, keresztnev, jegyAzonosito, berletAzonosito, adminE FROM UTAS WHERE email = ?',
+        createUserQuery: 'INSERT INTO UTAS VALUES(?,?,?,?,?,?,?,?,?,?,?)',
         updateUserQuery: 'UPDATE UTAS SET jelszo = ?, iranyitoszam = ?, utca = ?, hazszam = ?, szuletesi_datum = ?, vezeteknev = ?, keresztnev = ? WHERE email = ?',
         updateUserTicketIdentifierQuery: 'UPDATE UTAS SET jegyAzonosito = ? WHERE email = ?',
         updateUserPassIdentifierQuery: 'UPDATE UTAS SET berletAzonosito = ? WHERE email = ?',
@@ -31,13 +31,13 @@ class TransportationDAO{
         updatePasQuery: 'UPDATE BERLET SET ar = ?, ervenyes = ?, ID = ? WHERE azonosito = ?',
         deletePassQuery: 'DELETE FROM BERLET WHERE azonosito = ?',
         getPassQuery: 'SELECT * FROM BERLET WHERE azonosito = ?',
-        createStopQuery: '',
-        updateStopQuery: '',
-        deleteStopQuery: '',
+        createStopQuery: 'INSERT INTO Megallo VALUES (?, ?)',
+        updateStopQuery: 'UPDATE Megallo SET hely = ? WHERE nev = ?',
+        deleteStopQuery: 'DELETE FROM Megallo WHERE nev = ?',
         getStopQuery: 'SELECT * FROM MEGALLO WHERE nev = ?',
-        createStoppingQuery: '',
-        updateStoppingQuery: '',
-        deleteStoppingQuery: '',
+        createStoppingQuery: 'INSERT INTO megall VALUES (?, ?, ?)',
+        updateStoppingQuery: 'UPDATE megall SET mikor = ? WHERE ID = ? AND nev = ?',
+        deleteStoppingQuery: 'DELETE FROM megall WHERE ID = ? AND nev = ?',
         getStoppingQuery: 'SELECT * FROM MEGALL WHERE ID = ? ORDER BY mikor',
         createNewsQuery: 'INSERT INTO HIRFOLYAM VALUES (?, ?, ?, ?, ?)',
         updateNewsQuery: 'UPDATE HIRFOLYAM SET kategoria = ?, cim = ?, leiras = ? kozzetetel_datum = ?',
@@ -110,7 +110,7 @@ class TransportationDAO{
                 console.error('Inavlid user!')
                 reject(false);
             }
-            this.db.query(TransportationDAO.QUERIES.createUserQuery, [user.email, user.password, user.zipCode, user.street, user.houseNumber, user.birthDate, user.firstName, user.lastName, user.ticketId, user.passId, user.isAdmin], (err, result) => {
+            this.db.query(TransportationDAO.QUERIES.createUserQuery, [user.email, user.password, user.zipCode, user.street, user.houseNumber, user.birthDate, user.firstName, user.lastName, user.ticket, user.passId, user.isAdmin], (err, result) => {
                 if(err){
                     throw(err);
                 }
@@ -196,10 +196,12 @@ class TransportationDAO{
             }
             this.db.query(TransportationDAO.QUERIES.getUserQuery, [email], (err, result, next)=>{
                 if(err)throw(err);
-                console.log('User got by email:', email, 'successfully', result);
+                //console.log('User got by email:', email, 'successfully', result);
                 let res = result[0];
-                this.getTicketByIdentifier(result['JEGYID']).then(ticket=>{
-                    resolve(new User(res['email'], res['jelszo'], res['iranyitoszam'], res['utca'], res['hazszam'], res['szuletesi_datum'], res['vezeteknev'], res['keresztnev'], ticket, res['BERLETID'], res['adminE']));
+                //console.log(res);
+                this.getTicketByIdentifier(res["jegyAzonosito"]).then(ticket=>{
+                    //console.log(res);
+                    resolve(new User(res['email'], res['jelszo'], res['iranyitoszam'], res['utca'], res['hazszam'], res['szuletesi_datum'], res['vezeteknev'], res['keresztnev'], ticket, res['berletAzonosito'], res['adminE']));
                 });
             });
         })

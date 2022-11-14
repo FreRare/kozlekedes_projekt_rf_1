@@ -22,6 +22,7 @@ class Controls{
             console.error("Nem megfelelő az email vagy járat ID!");
             return false;
         }
+        let ticketIdentifier;
         // Megkapja a járat ID-jét, amiből lekérdezi a jegy azonsoítóját 
         this.DAO.getTicketIdentifierByServiceID(jaratID).then((result)=>{
             if(result instanceof Error || !result){
@@ -32,7 +33,7 @@ class Controls{
         });
         // Megkapja az új jegyet
         user.ticketId = ticketIdentifier;
-        this.DAO.updateUserTicketIdentifierQuery().then((result)=>{
+        this.DAO.updateUserTicketIdentifier(user).then((result)=>{
             if(result instanceof Error || !result){
                 console.error("Controls ticketPurchaseHandler updateUserTicketIdentifierQuery error ", result)
                 return false;
@@ -132,6 +133,7 @@ class Controls{
             console.error('Controls.loginByEmailAndPassword => ', 'Invalid argument(s)!', email, password);
             return false;
         }
+        /*
         return this.DAO.getAllUser().then(res=>{
             for(let u of res){
                 if(u.email === email && u.password === password){
@@ -142,8 +144,12 @@ class Controls{
                 }
             }
             return false;
+        }).catch(e=>console.error(e));*/
+        return this.DAO.getUserByEmail(email).then(res=>{
+            //console.log(res);
         }).catch(e=>console.error(e));
     }
+
 
     getUsers(){
         return this.DAO.getAllUser().then(res=>{
