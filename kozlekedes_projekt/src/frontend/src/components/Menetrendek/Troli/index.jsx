@@ -1,6 +1,7 @@
-import React, {useState} from 'react';
 import './index.scss';
 import { MapContainer, TileLayer, Popup, Marker  } from 'react-leaflet';
+import React, {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
 const position = [46.253, 20.14824];
 
 const Troli = () => {
@@ -26,15 +27,15 @@ const Troli = () => {
                             <li>Hová: {b.stops[b.stops.length-1].name}</li>
                         </ul>
                         {sessionStorage.getItem('loggedin') &&
-                            <button onClick={() => {
+                            <li><button onClick={() => {
                                 ticketPurchase(b.id);
-                            }}>Megveszem</button>
+                            }}>Megveszem</button></li>
                         }
                     </div>
                 </div>
             ));
             if(!trolleysList || trolleysList.length <= 0){
-                setTrolleysList(trolleysList);
+                setTrolleysList(trolleyList);
             }
         });
     }
@@ -48,39 +49,41 @@ const Troli = () => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({jaratID: id})
-        }).then((res=>res.json())).then(res=>{
+        }).then(res=>{
             if(res.status === 200){
                 setError('Sikeres jegyvásárlás!++');
+                alert('Sikeres jegyvásárlás!++');
             }else{
-                setError(res.error);
+                res.json().then(res=>setError(res.error));
             }
         })
     }
+
     return(
-        <div className="container">
-        <div className="header">
-            <h1>Troli menetrendek</h1>
-        </div>
-        <div className="wrapper">
-            <div className="menetrendek">
-                {trolleyList}
+        <>
+            <div className="header">
+                <h1>Troli menetrendek</h1>
             </div>
-            
-            <div className="map-wrap">
-            <MapContainer center={position} zoom={13} scrollWheelZoom={false}>
-    <TileLayer
-      attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-    />
-    <Marker position={position}>
-      <Popup>
-       Pusztulat mennyiségben fogunk még ezzel szenvedni <br /> 
-      </Popup>
-    </Marker>
-  </MapContainer>
+            <div className="wrapper">
+                <div className="menetrendek">
+                    {trolleysList}
+                </div>
+
+                <div className="map-wrap">
+                    <MapContainer center={position} zoom={13} scrollWheelZoom={false}>
+                        <TileLayer
+                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                        />
+                        <Marker position={position}>
+                            <Popup>
+                                Pusztulat mennyiségben fogunk még ezzel szenvedni <br />
+                            </Popup>
+                        </Marker>
+                    </MapContainer>
+                </div>
             </div>
-        </div>
-        </div>
+        </>
     );
 }
 
