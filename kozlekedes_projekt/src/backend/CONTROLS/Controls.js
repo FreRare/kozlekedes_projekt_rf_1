@@ -172,7 +172,7 @@ class Controls{
      * Bejelentkezik a megadott adatokkal, hamissal tér vissza ha sikertelen
      * @param email
      * @param password
-     * @returns {boolean}
+     * @returns {boolean | Promise}
      */
     async loginByEmailAndPassword(email, password){
         if(typeof email !== "string" || typeof password !== "string"){
@@ -180,10 +180,16 @@ class Controls{
             return false;
         }
         return await this.DAO.getUserByEmail(email).then(res=>{
-            console.log('user found!');
-            this.activeUser = res;
-            //console.log(this.activeUser);
-            return true;
+            console.log("loginbyemail", res);
+            if(res === false){
+                console.log("user is not found!");
+                return false;
+            }
+            else{
+                this.activeUser = res;
+                console.log(this.activeUser);
+                return true;
+            }
         }).catch(e=>console.error(e));
     }
 

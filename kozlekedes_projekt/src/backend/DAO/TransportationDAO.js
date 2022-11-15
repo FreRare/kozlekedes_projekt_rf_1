@@ -9,7 +9,7 @@ const {query} = require("express");
 
 class TransportationDAO{
     static QUERIES = {
-        getUserQuery: 'SELECT email, jelszo, iranyitoszam, utca, hazszam, szuletesi_datum, vezeteknev, keresztnev, jegyAzonosito, berletAzonosito, adminE FROM UTAS WHERE email = ?',
+        getUserQuery: 'SELECT * FROM UTAS WHERE email = ?',
         createUserQuery: 'INSERT INTO UTAS VALUES(?,?,?,?,?,?,?,?,?,?,?)',
         updateUserQuery: 'UPDATE UTAS SET jelszo = ?, iranyitoszam = ?, utca = ?, hazszam = ?, szuletesi_datum = ?, vezeteknev = ?, keresztnev = ? WHERE email = ?',
         updateUserTicketIdentifierQuery: 'UPDATE UTAS SET jegyAzonosito = ? WHERE email = ?',
@@ -215,9 +215,14 @@ class TransportationDAO{
             }
             this.db.query(TransportationDAO.QUERIES.getUserQuery, [email], (err, result, next)=>{
                 if(err)throw(err);
-                //console.log('User got by email:', email, 'successfully', result);
+                console.log('User got by email:', email, 'successfully', result);
+                if(result[0] === undefined){
+                    console.log("This user does not exist!")
+                    resolve(false);
+                    return false;
+                }
                 let res = result[0];
-                console.log(res);
+                //console.log("getuserbyemail", res);
                 this.getTicketByIdentifier(res["jegyAzonosito"]).then(ticket=>{
                     //console.log(res);
                     resolve(new User(res['email'], res['jelszo'], res['iranyitoszam'], res['utca'], res['hazszam'], res['szuletesi_datum'], res['vezeteknev'], res['keresztnev'], ticket, res['berletAzonosito'], res['adminE']));

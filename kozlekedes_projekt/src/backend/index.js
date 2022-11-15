@@ -18,14 +18,20 @@ const CONTROL = new Control();
      // Do not uncomment only if post
      let email = req.body.emailAddress;
      let pass = req.body.passwordSec;
+     console.log(email, pass);
      console.log('Starting login process...');
-        if(!CONTROL.loginByEmailAndPassword(email, pass)){
-            console.log('Backend: Invalid login!');
-            response.json({user: undefined});
-        }else{
-            console.log('Backend: Valid login!');
-            response.json({user: email});
-        }
+     let user = CONTROL.loginByEmailAndPassword(email, pass);
+     console.log(user);
+     user.then(res=>{
+         if(!res){
+             console.log('Backend: Invalid login!');
+             response.json({user: undefined});
+         }
+         else{
+             console.log('Backend: Valid login!');
+             response.json({user: email});
+         }
+     });
  });
 
  router.post("/api/ticketPurchase", (req, res)=>{
