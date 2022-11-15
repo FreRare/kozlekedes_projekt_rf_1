@@ -65,17 +65,22 @@ const CONTROL = new Control();
     const number = req.body.houseNumber;
     const birthDate = req.body.birthDate;
 
+    console.log('SERVER: Registrating email:', email);
+
      // used email check
      // Any other case we can register, type check is done on the client side
     CONTROL.canRegisterUser(email).then(res=>{
         if(!res){
             response.json({error: 'Email address already in use!'});
+            response.end();
         }else{
             CONTROL.registerUser(email, password, firstName, lastName, zipCode, street, number, birthDate).then(res=>{
                 if(res){
                     response.json({success: true});
+                    response.end();
                 }else{
                     response.json({success: false});
+                    response.end();
                 }
             });
         }

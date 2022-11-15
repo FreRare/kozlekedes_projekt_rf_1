@@ -193,9 +193,16 @@ class Controls{
         });
     }
 
-    canRegisterUser(email){
-        return this.DAO.getUserByEmail(email).then(res=>{
-            return !res;
+    /**
+     * Is the email in use?
+     * @param email
+     * @returns {Promise<boolean>}
+     */
+    async canRegisterUser(email){
+        return await this.DAO.getUserByEmail(email).then(res=>{
+            return !(res instanceof User);
+        }).catch(e=>{
+            console.error(e);
         })
     }
 

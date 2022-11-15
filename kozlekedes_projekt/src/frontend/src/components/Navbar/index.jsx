@@ -1,3 +1,4 @@
+import React from "react";
 import "./index.scss";
 import { NavLink} from 'react-router-dom';
 import {faHome,faXmark} from '@fortawesome/free-solid-svg-icons'
@@ -61,15 +62,6 @@ function NavBar() {
             to="/News">
             Hírfolyam
         </NavLink>}
-        { bevagyjelentkezeveBaszod &&
-            <NavLink
-            exact="true"
-            activeclassname="active"
-            className="price-link"
-            to="/price">
-            Áraink
-            </NavLink>
-        }
         { !bevagyjelentkezeveBaszod &&
             <NavLink
                 exact="true"

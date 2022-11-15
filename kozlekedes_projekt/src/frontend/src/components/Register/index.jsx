@@ -26,7 +26,7 @@ const Register = () => {
 
 
     const register = ()=>{
-        console.log(registrationInfo);
+        //console.log(registrationInfo);
         if(registrationInfo.email.length <= 0 || registrationInfo.password.length <= 0 || registrationInfo.lastName.length <= 0
             || registrationInfo.firstName.length <= 0 || registrationInfo.zipcode.length <= 0 || registrationInfo.street.length <= 0
             || registrationInfo.houseNumber.length <= 0){
@@ -48,27 +48,16 @@ const Register = () => {
                 }else{
                     console.log('Something else went wrong!');
                 }
-            });
-
-            setRegistrationInfo({
-                lastName: "",
-                firstName: "",
-                email: "",
-                password: "",
-                zipcode: "",
-                street: "",
-                houseNumber: "",
-                birthDate: new Date()
+            }).catch(e=>{
+                console.error('Unable to connect to the register API! ', e);
             });
         }
     }
 
     return(
-        <>
-            <div className="form">
-                <div className="form-body">
-                    <form>
-                        <h2>Regisztrációs űrlap</h2>
+            <div className="form-container">
+                <h2>Regisztrációs űrlap</h2>
+                    <form className="form">
                         {error}
 
                         <label className="form__label" htmlFor="lastName">Vezetéknév:</label>
@@ -95,11 +84,9 @@ const Register = () => {
                         <label className="form__label" htmlFor="birthDate">Születési Dátum:</label>
                         <input className="form__input" type="date" id="birthDate" name="birthDate" onChange={handleChange} value={registrationInfo.birthDate} required/>
 
-                        <button onClick={register} >Submit</button>
+                        <button onClick={register} >Küldés</button>
                     </form>
-                </div>
             </div>
-        </>
     );
 }
 

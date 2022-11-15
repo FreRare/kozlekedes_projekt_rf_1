@@ -1,3 +1,4 @@
+import React from "react";
 import './index.scss';
 import {Outlet} from 'react-router-dom';
 import NavBar from '../Navbar';

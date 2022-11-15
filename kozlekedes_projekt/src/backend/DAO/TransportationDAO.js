@@ -211,7 +211,7 @@ class TransportationDAO{
     getUserByEmail(email){
         return new Promise((resolve, reject)=>{
             if(typeof email !=='string'){
-                reject(false);
+                throw new Error(this.className + 'Invalid email address! ' + email);
             }
             this.db.query(TransportationDAO.QUERIES.getUserQuery, [email], (err, result, next)=>{
                 if(err)throw(err);
