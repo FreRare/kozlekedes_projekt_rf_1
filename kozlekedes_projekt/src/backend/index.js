@@ -90,7 +90,7 @@ const CONTROL = new Control();
  router.get('/api/bus', (req, res)=>{
      CONTROL.selectBuses().then(result=>{
          console.log('Buses to display:', result);
-         res.json(result);
+         res.json({bus: result});
      });
  });
 
