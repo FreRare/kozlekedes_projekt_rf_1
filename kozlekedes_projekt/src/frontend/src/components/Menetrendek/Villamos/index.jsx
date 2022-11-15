@@ -62,7 +62,7 @@ const Villamos = () => {
     return(
         <>
             <div className="header">
-                <h1>Busz menetrendek</h1>
+                <h1>Villamos menetrendek</h1>
             </div>
             <div className="wrapper">
                 <div className="menetrendek">
