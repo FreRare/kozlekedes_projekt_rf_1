@@ -119,7 +119,7 @@ class Controls{
     }
 
 
-    selectTrams(){
+    async selectTrams(){
         if(this.DAO.serviceList.length > 0){
             let result = [];
             for(let r of this.DAO.serviceList){
@@ -129,7 +129,7 @@ class Controls{
             }
             return result;
         }
-        return this.DAO.getAllServiceMagyarulJarat().then(res=>{
+        return await this.DAO.getAllServiceMagyarulJarat().then(res=>{
             let resolvetomb = [];
             // console.log("selectTrams",res);
             for (let i of res){

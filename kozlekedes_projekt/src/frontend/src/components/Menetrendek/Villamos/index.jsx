@@ -60,11 +60,10 @@ const Villamos = () => {
     }
 
     return(
-        <div className="container">
+        <>
             <div className="header">
-                <h1>Villamos menetrendek</h1>
+                <h1>Busz menetrendek</h1>
             </div>
-            {error}
             <div className="wrapper">
                 <div className="menetrendek">
                     {tramsList}
@@ -84,7 +83,7 @@ const Villamos = () => {
                     </MapContainer>
                 </div>
             </div>
-        </div>
+        </>
     );
 }
 
