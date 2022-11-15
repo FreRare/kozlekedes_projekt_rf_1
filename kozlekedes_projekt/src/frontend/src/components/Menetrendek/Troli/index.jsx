@@ -5,17 +5,17 @@ const position = [46.253, 20.14824];
 
 const Troli = () => {
 
-    const [tramsList, setTramsList] = useState([]);
+    const [trolleysList, setTrolleysList] = useState([]);
     const [error, setError] = useState('');
-    let tramList;
-    let trams = [];
-    if(tramsList.length <= 0){
-        fetch('/api/tram', {
+    let trolleyList;
+    let trolley = [];
+    if(trolleysList.length <= 0){
+        fetch('/api/trolley', {
             method: 'get'
         }).then(res=>res.json()).then(res=>{
-            trams = res.trams;
-            console.log("Data got successfully!", trams);
-            tramList = trams.map((b, index)=>(
+            trolley = res.trolley;
+            console.log("Data got successfully!", trolley);
+            trolleyList = trolley.map((b, index)=>(
                 <div className="ticket" key={b.id}>
                     <div>
                         <ul className="ticket-list-1">
@@ -33,8 +33,8 @@ const Troli = () => {
                     </div>
                 </div>
             ));
-            if(!tramsList || tramsList.length <= 0){
-                setTramsList(tramList);
+            if(!trolleysList || trolleysList.length <= 0){
+                setTrolleysList(trolleysList);
             }
         });
     }
@@ -63,7 +63,7 @@ const Troli = () => {
         </div>
         <div className="wrapper">
             <div className="menetrendek">
-                {tramsList}
+                {trolleyList}
             </div>
             
             <div className="map-wrap">

@@ -87,6 +87,13 @@ const CONTROL = new Control();
     });
  });
 
+ router.get('/api/trolley', (req, res)=>{
+    CONTROL.selectTrolleyBuses().then(result=>{
+        console.log('Trollies to display:', result);
+        res.json({trolley: result});
+    });
+});
+
  router.get('/api/bus', (req, res)=>{
      CONTROL.selectBuses().then(result=>{
          console.log('Buses to display:', result);

@@ -5,7 +5,7 @@ import pepe from '../../assets/pepe.png'
 const Profil = () =>{
 
     const [jegy, setJegy] = useState('');
-   /* if(!ticket.identifier) {
+    /*if(!ticket.identifier) {
         setTicket({
             identifier: 17263,
             validity: 'x-y időpontig érvényes eskü lekérjük majd adatbázisból',
