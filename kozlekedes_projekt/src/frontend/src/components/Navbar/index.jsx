@@ -2,9 +2,18 @@ import "./index.scss";
 import { NavLink} from 'react-router-dom';
 import {faHome,faXmark} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {useEffect, useState} from "react";
 
 
 function NavBar() {
+
+    const [bevagyjelentkezeveBaszod, setBevagyjelentkezeveBaszod] = useState(false);
+
+    useEffect(()=>{
+        setBevagyjelentkezeveBaszod(JSON.parse(sessionStorage.getItem('loggedin')));
+    })
+
+
     return (
         <>
         <div className='nav-bar'>
@@ -44,28 +53,24 @@ function NavBar() {
                 </NavLink>
             </div>
         </div>
-        <NavLink
+        {bevagyjelentkezeveBaszod &&
+            <NavLink
             exact="true"
             activeclassname="active"
-            className="news-link" 
+            className="news-link"
             to="/News">
             Hírfolyam
-        </NavLink>
-        <NavLink
-            exact="true" 
-            activeclassname="active" 
-            className="help"
-            to="/Help">
-            Segítség
-        </NavLink>
-        <NavLink
-            exact="true" 
-            activeclassname="active" 
+        </NavLink>}
+        { bevagyjelentkezeveBaszod &&
+            <NavLink
+            exact="true"
+            activeclassname="active"
             className="price-link"
             to="/price">
             Áraink
-        </NavLink>
-        { !sessionStorage.getItem('loggedin') &&
+            </NavLink>
+        }
+        { !bevagyjelentkezeveBaszod &&
             <NavLink
                 exact="true"
                 activeclassname="active"
@@ -73,7 +78,7 @@ function NavBar() {
                 Bejelentkezés/Regisztráció
             </NavLink>
         }
-        {sessionStorage.getItem('loggedin') &&
+        {bevagyjelentkezeveBaszod &&
             <NavLink
                 exact="true"
                 activeclassname="active"
@@ -82,12 +87,23 @@ function NavBar() {
                 Profil
             </NavLink>
         }
+        {bevagyjelentkezeveBaszod &&
+            (
+                <NavLink
+                exact="true"
+                activeclassname="active"
+                className="logout"
+                to="/">
+                <FontAwesomeIcon icon={faXmark} color='#ffffff'/>
+                </NavLink>
+            )
+        }
         <NavLink
-            exact="true" 
-            activeclassname="active" 
-            className="logout"
-            to="/">
-            <FontAwesomeIcon icon={faXmark} color='#ffffff'/>
+            exact="true"
+            activeclassname="active"
+            className="help"
+            to="/Help">
+            Segítség
         </NavLink>
         
     </nav>

@@ -69,6 +69,9 @@ class Controls{
     // Admin felhasználó módosíthatja az adott járatokat, törölhet járatot
 
     selectAllServiceList(){
+        if(this.DAO.serviceList.length > 0){
+            return this.DAO.serviceList;
+        }
         return this.DAO.getAllServiceMagyarulJarat().then(res=>{
            if(res.length > 0){
                return res;
@@ -79,6 +82,15 @@ class Controls{
     }
 
     selectBuses(){
+        if(this.DAO.serviceList.length > 0){
+            let result = [];
+            for(let r of this.DAO.serviceList){
+                if(r.serviceType === 'BUSZ'){
+                    result.push(r);
+                }
+            }
+            return result;
+        }
         return this.DAO.getAllServiceMagyarulJarat().then(res=>{
             let result = [];
             for(let r of res){
@@ -92,6 +104,15 @@ class Controls{
 
 
     selectTrams(){
+        if(this.DAO.serviceList.length > 0){
+            let result = [];
+            for(let r of this.DAO.serviceList){
+                if(r.serviceType === 'VILL'){
+                    result.push(r);
+                }
+            }
+            return result;
+        }
         return this.DAO.getAllServiceMagyarulJarat().then(res=>{
             let resolvetomb = [];
             // console.log("selectTrams",res);
@@ -105,6 +126,15 @@ class Controls{
     }
 
     selectTrolleyBuses(){
+        if(this.DAO.serviceList.length > 0){
+            let result = [];
+            for(let r of this.DAO.serviceList){
+                if(r.serviceType === 'TROL'){
+                    result.push(r);
+                }
+            }
+            return result;
+        }
         return this.DAO.getAllServiceMagyarulJarat().then(res=>{
             let result = [];
             for(let r of res){

@@ -6,7 +6,6 @@ const Pass = require("../models/Pass");
 const Stopping = require("../models/Stopping");
 const News = require("../models/News");
 const {query} = require("express");
-const {TIME} = require("mysql/lib/protocol/constants/types");
 
 class TransportationDAO{
     static QUERIES = {
@@ -49,6 +48,25 @@ class TransportationDAO{
         this.className = 'TransportationDAO => ';
        // this.router = require('express').Router();
         this.db = require('./config/db');
+        this.serviceList = [];
+    }
+
+    /**
+     * The most basic thing XD
+     * @param queryString
+     * @returns {Promise<unknown>}
+     * @private Smart
+     */
+    __query(queryString){
+        if(typeof queryString !== 'string'){
+            throw new Error(this.className + 'Invalid string in query: ' + queryString);
+        }
+        return new Promise((resolve)=>{
+           this.db.query(queryString, (err, result)=>{
+               if(err)throw err;
+               resolve(result);
+           });
+        });
     }
 
     /***
@@ -58,7 +76,7 @@ class TransportationDAO{
     getAllServiceMagyarulJarat(){
         // Query elvégzése
         // Query egy tömböt ad vissza promiseként kezeljük
-            return new Promise((resolve, reject)=> {
+            return new Promise((resolve)=> {
                 let queryResult =[];
                 this.db.query(TransportationDAO.QUERIES.getAllServiceQuery, (error, result, next) => {
                     if (error) throw (error);
@@ -81,6 +99,7 @@ class TransportationDAO{
                     }
                     setTimeout(()=>{
                         //console.log("getAllservices", queryResult);
+                        this.serviceList = queryResult;
                         resolve(queryResult);
                     }, 1000);
                 });
@@ -346,7 +365,7 @@ class TransportationDAO{
                 console.log('Ticket got by identifier successfully');
                 res = res[0];
                 this.getService(res['ID']).then(service=>{
-                    resolve(new Ticket(res['azonosito'], res['ar'], res['tipus'], new TIME(res['ervenyes']), service.id));
+                    resolve(new Ticket(res['azonosito'], res['ar'], res['tipus'], (res['ervenyes']), service.id));
                 }).catch(e=>console.log(e));
             });
         });

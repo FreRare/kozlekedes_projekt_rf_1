@@ -14,16 +14,14 @@ const Profil = () =>{
     }*/
     let ticket = {};
     if(jegy.length <= 0) {
-        console.log(ticket.identifier, ticket.type);
         fetch('/api/profile', {
             method: 'GET'
         }).then(res => res.json()).then((res) => {
             if(!res){
                 console.log('No ticket found!');
             }else{
-                console.log(res.ticketToSend);
                 ticket = res.ticketToSend;
-                console.log(ticket);
+                //console.log(ticket);
                 setJegy(
                     <>
                         <p>

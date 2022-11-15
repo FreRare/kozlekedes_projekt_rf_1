@@ -24,7 +24,7 @@ const Login = () =>{
                setError('Invalid email address or password!');
            }else{
                     console.log('Valid login!');
-                    sessionStorage.setItem('loggedin', email);
+                    sessionStorage.setItem('loggedin', JSON.stringify(true));
                     navigate('/Profil');
            }
         });

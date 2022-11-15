@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.scss';
 import {Routes, Route} from 'react-router-dom';
 import Home from './components/Home';
@@ -14,19 +14,27 @@ import News from './components/News';
 import Help from './components/Help';
 import Profil from './components/Profil';
 function App() {
+
+  const [bevagyjelentkezeveBaszod, setBevagyjelentkezeveBaszod] = useState(false);
+
+  useEffect(()=>{
+    setBevagyjelentkezeveBaszod(JSON.parse(sessionStorage.getItem('loggedin')));
+  })
+
   return(
     <>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home/>}/>
-          <Route path="/Register"  element={<Register/>}/>
-          <Route path="/Login" element={<Login/>}/>
+          {!bevagyjelentkezeveBaszod && <Route path="/Register" element={<Register/>}/>}
+          {!bevagyjelentkezeveBaszod &&<Route path="/Login" element={<Login/>}/>}
           <Route path="/Menetrendek/Bus" element={<Bus/>}/>
           <Route path="/Menetrendek/Villamos" element={<Villamos/>}/>
           <Route path="/Menetrendek/Troli" element={<Troli/>}/>
-          <Route path="/News" element={<News/>}/>
+          {bevagyjelentkezeveBaszod &&<Route path="/News" element={<News/>}/>}
           <Route path="/Help" element={<Help/>}></Route>
-          <Route path="/Profil" element={<Profil/>}></Route>
+          {bevagyjelentkezeveBaszod &&<Route path="/Profil" element={<Profil/>}></Route>}
+          <Route path='**' element={<Layout/>}></Route>
         </Route>
       </Routes>
     </>
