@@ -27,9 +27,9 @@ const Villamos = () => {
                             <li>Hová: {b.stops[b.stops.length-1].name}</li>
                         </ul>
                         {sessionStorage.getItem('loggedin') &&
-                            <button onClick={() => {
+                            <li><button onClick={() => {
                                 ticketPurchase(b.id);
-                            }}>Megveszem</button>
+                            }}>Megveszem</button></li>
                         }
                     </div>
                 </div>

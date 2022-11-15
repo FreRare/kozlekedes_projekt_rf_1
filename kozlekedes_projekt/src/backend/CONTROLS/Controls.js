@@ -97,7 +97,7 @@ class Controls{
         });
     }
 
-    selectBuses(){
+    async selectBuses(){
         if(this.DAO.serviceList.length > 0){
             let result = [];
             for(let r of this.DAO.serviceList){
@@ -107,7 +107,7 @@ class Controls{
             }
             return result;
         }
-        return this.DAO.getAllServiceMagyarulJarat().then(res=>{
+        return await this.DAO.getAllServiceMagyarulJarat().then(res=>{
             let result = [];
             for(let r of res){
                 if(r.serviceType === 'BUSZ'){
@@ -203,12 +203,12 @@ class Controls{
             return !(res instanceof User);
         }).catch(e=>{
             console.error(e);
-        })
+        });
     }
 
-    registerUser(email, password, firstName, lastName, zipCode, street, house, birthDate){
+    async registerUser(email, password, firstName, lastName, zipCode, street, house, birthDate){
         let user = new User(email, password, zipCode, street, house, birthDate, firstName, lastName);
-        return this.DAO.createUser(user).then(res=>{
+        return await this.DAO.createUser(user).then(res=>{
             return res;
         }).catch(e=>console.error(e));
     }

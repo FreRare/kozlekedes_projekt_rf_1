@@ -217,7 +217,7 @@ class TransportationDAO{
                 if(err)throw(err);
                 //console.log('User got by email:', email, 'successfully', result);
                 let res = result[0];
-                //console.log(res);
+                console.log(res);
                 this.getTicketByIdentifier(res["jegyAzonosito"]).then(ticket=>{
                     //console.log(res);
                     resolve(new User(res['email'], res['jelszo'], res['iranyitoszam'], res['utca'], res['hazszam'], res['szuletesi_datum'], res['vezeteknev'], res['keresztnev'], ticket, res['berletAzonosito'], res['adminE']));
