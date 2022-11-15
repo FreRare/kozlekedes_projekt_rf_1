@@ -94,7 +94,14 @@ const CONTROL = new Control();
          // console.log('Trams to display:', result);
          res.json({trams: result});
      });
- })
+ });
+
+ router.get('/api/news', (req, res)=>{
+     CONTROL.getNews().then((result)=>{
+         res.json(JSON.stringify(result));
+         res.end();
+     });
+ });
 
  router.get('*', (req, res)=>{
     res.sendFile(path.resolve(__dirname, '../frontend/build', 'index.html'));

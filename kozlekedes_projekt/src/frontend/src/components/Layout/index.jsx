@@ -4,10 +4,6 @@ import NavBar from '../Navbar';
 import {useEffect} from "react";
 
 const Layout = () => {
-    useEffect(()=>{
-        sessionStorage.removeItem('loggedin');
-    });
-
     return(
         <div className="container">
             <NavBar/>

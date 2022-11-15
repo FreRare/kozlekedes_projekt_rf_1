@@ -2,15 +2,55 @@ const DAO = require('../DAO/TransportationDAO');
 const Ticket = require("../models/Ticket");
 const User = require("../models/User");
 const Stop = require('../models/Stop');
+const News = require('../models/News');
 
 class Controls{
     constructor() {
+        this.className = 'CONTROLS => ';
         this.DAO = new DAO();
         this.activeUser = new User();
     }
 
     // TODO: Jegyek, bérletek kezeléséhez tartozó üzleti logika (listázás, módosítás, létrehozása, törlése)
     // Jegyek, bérletek árának módosítása, bejelentkezett felhasználó ellenörzése
+
+    /***
+     * A bejelentkezett felhasználó jegyét visszaadja
+     * @returns {Ticket | boolean}
+     */
+    getTicketForLoggedInUser(){
+        if(this.activeUser) {
+            return this.activeUser.ticket;
+        }else{
+            console.error('No active user!');
+            return false;
+        }
+    }
+
+    // TODO: MEGADOTT AZONOSÍTÓJÚ JEGY ÁRÁNAK ÉS/VAGY TÍPUSÁNAK MÓDOSÍTÁSA (CSAK ADMIN)
+    // TODO: MEGADOTT AZONOSÍTÓJÚ JEGY TÖRLÉSE (CSAK ADMIN)
+
+    // TODO: Jegyek bérletek vásárlása logika
+    // Vásárlás: Form kitöltése után jegy feltöltése az adatbázisba + jegy hozzárendelése a bejelentkezett  felhasználóhoz ezt hozzáadni
+
+    // TODO: Hírfolyam kezeléséhez tartozó üzleti logika (listázás, módosítás, létrehozása, törlése)
+    // Hírfolyam adatainak lekérése az adatbázisból és a hírfolyamra való felíratkozás kezelése
+
+    /**
+     * Megkapod a híreket
+     * @returns {Promise<Array<News>>}
+     */
+    async getNews(){
+        return await this.DAO.getNewsFoloslegesIdAlapjan().then(res=>{
+            //console.log(this.className, res);
+            return res;
+        }).catch(e=>console.error(e));
+    }
+
+
+    // TODO: Vásárlások kezeléséhez tartozó üzleti logika (listázás, módosítás, létrehozása, törlése)
+    // Random bankártya adatok bekérése, nincs mentés
+
     /***
      * A megadott email című usernek megvásárolja a jegyet
      * @param jaratID
@@ -40,30 +80,6 @@ class Controls{
         }).catch(e=>console.error(e));
     }
 
-    /***
-     * A bejelentkezett felhasználó jegyét visszaadja
-     * @returns {Ticket | boolean}
-     */
-    getTicketForLoggedInUser(){
-        if(this.activeUser) {
-            return this.activeUser.ticket;
-        }else{
-            console.error('No active user!');
-            return false;
-        }
-    }
-
-    // TODO: MEGADOTT AZONOSÍTÓJÚ JEGY ÁRÁNAK ÉS/VAGY TÍPUSÁNAK MÓDOSÍTÁSA (CSAK ADMIN)
-    // TODO: MEGADOTT AZONOSÍTÓJÚ JEGY TÖRLÉSE (CSAK ADMIN)
-
-    // TODO: Jegyek bérletek vásárlása logika
-    // Vásárlás: Form kitöltése után jegy feltöltése az adatbázisba + jegy hozzárendelése a bejelentkezett  felhasználóhoz ezt hozzáadni
-
-    // TODO: Hírfolyam kezeléséhez tartozó üzleti logika (listázás, módosítás, létrehozása, törlése)
-    // Hírfolyam adatainak lekérése az adatbázisból és a hírfolyamra való felíratkozás kezelése
-
-    // TODO: Vásárlások kezeléséhez tartozó üzleti logika (listázás, módosítás, létrehozása, törlése)
-    // Random bankártya adatok bekérése, nincs mentés
 
     // TODO: Menetrendek kezeléséhez tartozó üzleti logika (listázás, módosítás, létrehozása, törlése)
     // Admin felhasználó módosíthatja az adott járatokat, törölhet járatot

@@ -1,5 +1,6 @@
 const mysql = require('mysql');
 const fs = require('fs');
+const path = require('path');
 const { connect } = require('net');
 
 const config =
@@ -9,7 +10,7 @@ const config =
     password: 'szteOverrated100',
     database: 'rf1',
     port: 3306,
-    ssl: {ca: fs.readFileSync("src/backend/DAO/config/DigiCertGlobalRootCA.crt.pem")}
+    ssl: {ca: fs.readFileSync(path.join(__dirname + "/DigiCertGlobalRootCA.crt.pem"))}
 };
 
 const conn = new mysql.createConnection(config);

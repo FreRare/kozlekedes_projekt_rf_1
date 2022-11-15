@@ -42,7 +42,7 @@ class TransportationDAO{
         createNewsQuery: 'INSERT INTO HIRFOLYAM VALUES (?, ?, ?, ?, ?)',
         updateNewsQuery: 'UPDATE HIRFOLYAM SET kategoria = ?, cim = ?, leiras = ? kozzetetel_datum = ?',
         deleteNewsQuery: 'DELETE FROM HIRFOLYAM WHERE ID = ?',
-        getNewsQuery: 'SELECT * FROM HIRFOLYAM WHERE ID = ?'
+        getNewsQuery: 'SELECT * FROM HIRFOLYAM'
     }
     constructor(){
         this.className = 'TransportationDAO => ';
@@ -553,8 +553,8 @@ class TransportationDAO{
                 }
                 console.log("Sikeres hír létrehozás!");
                 resolve(result);
-            })
-        })
+            });
+        });
     }
 
     updateNews(news){
@@ -588,17 +588,22 @@ class TransportationDAO{
         })
     }
 
-    getNewsByID(ID){
-        return new Promise((resolve, reject)=>{
-            if(typeof ID !=="number"){
-                reject(false);
-            }
-            this.db.query(TransportationDAO.QUERIES.getNewsQuery,  [ID], (err, res, next)=>{
-                if(err)reject(err);
-                console.log('News got by ID successfully');
-                resolve(new Ticket(res['KATEGORIA'], res['CIM'], res['LEIRAS'], res['KOZZETETEL_DATUM'], res['ID']));
+    /**
+     * Visszaadja az összes hírt
+     * @returns {Promise<Array<News>>}
+     */
+    getNewsFoloslegesIdAlapjan(){
+        return new Promise((resolve)=>{
+            this.db.query(TransportationDAO.QUERIES.getNewsQuery, (err, faszomeredmeny, next)=>{
+                if(err)throw(err);
+                console.log('News got successfully');
+                let result = [];
+                for(let res of faszomeredmeny) {
+                    result.push(new News(res['ID'], res['kategoria'], res['cim'], res['leiras'], new Date(res['kozzetetel_datum'])));
+                }
+                resolve(result);
             })
-        })
+        });
     }
     createStopping(stopping){
         return new Promise((resolve, reject)=>{

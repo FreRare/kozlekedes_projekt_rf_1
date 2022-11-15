@@ -26,15 +26,15 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home/>}/>
-          {!bevagyjelentkezeveBaszod && <Route path="/Register" element={<Register/>}/>}
-          {!bevagyjelentkezeveBaszod &&<Route path="/Login" element={<Login/>}/>}
+          <Route path="/Register" element={<Register/>}/>
+          <Route path="/Login" element={<Login/>}/>
           <Route path="/Menetrendek/Bus" element={<Bus/>}/>
           <Route path="/Menetrendek/Villamos" element={<Villamos/>}/>
           <Route path="/Menetrendek/Troli" element={<Troli/>}/>
           {bevagyjelentkezeveBaszod &&<Route path="/News" element={<News/>}/>}
           <Route path="/Help" element={<Help/>}></Route>
-          {bevagyjelentkezeveBaszod &&<Route path="/Profil" element={<Profil/>}></Route>}
-          <Route path='**' element={<Layout/>}></Route>
+          <Route path="/Profil" element={<Profil/>}></Route>
+          <Route path='*' element={<Layout/>}></Route>
         </Route>
       </Routes>
     </>
