@@ -84,7 +84,7 @@ const Register = () => {
                         <label className="form__label" htmlFor="birthDate">Születési Dátum:</label>
                         <input className="form__input" type="date" id="birthDate" name="birthDate" onChange={handleChange} value={registrationInfo.birthDate} required/>
 
-                        <button onClick={register} >Küldés</button>
+                        <button onClick={register} className="submitbutton">Küldés</button>
                     </form>
             </div>
     );
