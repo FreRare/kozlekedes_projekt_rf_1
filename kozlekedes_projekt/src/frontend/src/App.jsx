@@ -9,14 +9,10 @@ import Login from './components/Login';
 import Bus from './components/Menetrendek/Bus'
 import Villamos from './components/Menetrendek/Villamos';
 import Troli from './components/Menetrendek/Troli';
-import AdminMenu from './components/Menetrendek/AdminMenu';
 
 import News from './components/News';
 import Help from './components/Help';
 import Profil from './components/Profil';
-
-import Ticket from './components/Ticket';
-
 function App() {
 
   const [bevagyjelentkezeveBaszod, setBevagyjelentkezeveBaszod] = useState(false);
@@ -35,14 +31,10 @@ function App() {
           <Route path="/Menetrendek/Bus" element={<Bus/>}/>
           <Route path="/Menetrendek/Villamos" element={<Villamos/>}/>
           <Route path="/Menetrendek/Troli" element={<Troli/>}/>
-          <Route path="/Menetrendek/AdminMenu" element={<AdminMenu/>}/>
-
           {bevagyjelentkezeveBaszod &&<Route path="/News" element={<News/>}/>}
           <Route path="/Help" element={<Help/>}></Route>
           <Route path="/Profil" element={<Profil/>}></Route>
           <Route path='*' element={<Layout/>}></Route>
-          
-
         </Route>
       </Routes>
     </>
