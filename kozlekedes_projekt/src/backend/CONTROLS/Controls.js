@@ -187,8 +187,8 @@ class Controls{
             }
             else{
                 this.activeUser = res;
-                console.log(this.activeUser);
-                return true;
+                //console.log(this.activeUser);
+                return res;
             }
         }).catch(e=>console.error(e));
     }

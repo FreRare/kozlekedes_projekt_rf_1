@@ -392,7 +392,7 @@ class TransportationDAO{
                 res = res[0];
                 this.getService(ID).then(service=>{
                     console.log(this.className, 'getTicketByServiceID', service);
-                    resolve(new Ticket(res['azonosito'], res['ar'], res['tipus'], (res['ervenyes']), service.id));
+                    resolve(new Ticket(res['azonosito'], res['ar'], res['tipus'], (res['ervenyes']), service.serviceNumber));
                 }).catch(e=>console.log(e));
             });
         });

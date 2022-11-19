@@ -18,10 +18,10 @@ const CONTROL = new Control();
      // Do not uncomment only if post
      let email = req.body.emailAddress;
      let pass = req.body.passwordSec;
-     console.log(email, pass);
+     //console.log(email, pass);
      console.log('Starting login process...');
      let user = CONTROL.loginByEmailAndPassword(email, pass);
-     console.log(user);
+     //console.log(user);
      user.then(res=>{
          if(!res){
              console.log('Backend: Invalid login!');
@@ -51,7 +51,7 @@ const CONTROL = new Control();
  router.get('/api/profile', (req, res)=>{
      setTimeout(()=>{
          let ticket = CONTROL.getTicketForLoggedInUser();
-         console.log(ticket);
+         //console.log(ticket);
          if(ticket === false){
              console.log('No ticket found!');
          }else{
@@ -95,14 +95,14 @@ const CONTROL = new Control();
 
  router.get('/api/trolley', (req, res)=>{
     CONTROL.selectTrolleyBuses().then(result=>{
-        console.log('Trollies to display:', result);
+        //console.log('Trollies to Ready');
         res.json({trolley: result});
     });
 });
 
  router.get('/api/bus', (req, res)=>{
      CONTROL.selectBuses().then(result=>{
-         console.log('Buses to display:', result);
+         //console.log('Buses to Ready');
          res.json({bus: result});
      });
  });

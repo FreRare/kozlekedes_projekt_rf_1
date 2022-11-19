@@ -4,12 +4,6 @@ import { NavLink} from 'react-router-dom';
 import {useEffect} from "react";
 
 const Home = () =>{
-
-    useEffect(()=>{
-        sessionStorage.removeItem('loggedin');
-    });
-
-
     return (
         <div>
                 <div className="header_container">
@@ -21,8 +15,6 @@ const Home = () =>{
                                 <NavLink className="registration-page" to="/register">
                                 <button className="custom-btn home-button">Regisztráció</button>
                                 </NavLink>
-                                
-                                
                                 <br/>
                         </div>
                         <div className="login">

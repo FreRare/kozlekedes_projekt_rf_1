@@ -8,26 +8,23 @@ import {useEffect, useState} from "react";
 
 function NavBar() {
 
-    const [bevagyjelentkezeveBaszod, setBevagyjelentkezeveBaszod] = useState(false);
+    const [bevagyjelentkezeveBaszod, setBevagyjelentkezeveBaszod] = useState();
 
-    useEffect(()=>{
+    if(!bevagyjelentkezeveBaszod && sessionStorage.getItem('loggedin')) {
         setBevagyjelentkezeveBaszod(JSON.parse(sessionStorage.getItem('loggedin')));
-    })
-
+        console.log(bevagyjelentkezeveBaszod);
+    }
 
     return (
         <>
         <div className='nav-bar'>
-   
     <nav>
-    <NavLink
+        {!bevagyjelentkezeveBaszod && <NavLink
             exact="true" 
             activeclassname="active" 
             to="/">
             <FontAwesomeIcon icon={faHome} color="#ffffff"/>
-        </NavLink>
-        
-        
+        </NavLink>}
         <div className="dropdown">
             <p className="dropp">Menetrendek</p>
             <div className="dropdown-content">
@@ -51,6 +48,13 @@ function NavBar() {
                     className="menetrendek-link-troli"
                     to="/menetrendek/troli">
                     Troli
+                </NavLink>
+                <NavLink
+                    exact="true"
+                    activeclassname="active"
+                    className="menetrendek-link-busz"
+                    to="/Menetrendek/AdminMenu">
+                    Szerkesztés
                 </NavLink>
             </div>
         </div>
@@ -85,6 +89,9 @@ function NavBar() {
                 exact="true"
                 activeclassname="active"
                 className="logout"
+                onClick={()=>{
+                    sessionStorage.removeItem('loggedin');
+                }}
                 to="/">
                 <FontAwesomeIcon icon={faXmark} color='#ffffff'/>
                 </NavLink>
