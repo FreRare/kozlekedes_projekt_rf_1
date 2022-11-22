@@ -75,18 +75,21 @@ const CONTROL = new Control();
 
      // used email check
      // Any other case we can register, type check is done on the client side
-    CONTROL.canRegisterUser(email).then(res=>{
+     let canregister = CONTROL.canRegisterUser(email);
+     console.log("canregister", canregister);
+    canregister.then(res=>{
         if(!res){
             response.json({error: 'Email address already in use!'});
             response.end();
         }else{
             CONTROL.registerUser(email, password, firstName, lastName, zipCode, street, number, birthDate).then(res=>{
+                console.log("control register", res);
                 if(res){
                     response.json({success: true});
-                    response.end();
+                    //response.end();
                 }else{
                     response.json({success: false});
-                    response.end();
+                    //response.end();
                 }
             });
         }

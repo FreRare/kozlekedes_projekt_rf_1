@@ -215,7 +215,9 @@ class Controls{
 
     async registerUser(email, password, firstName, lastName, zipCode, street, house, birthDate){
         let user = new User(email, password, zipCode, street, house, birthDate, firstName, lastName);
+        console.log("async register user method", user);
         return await this.DAO.createUser(user).then(res=>{
+            console.log("create user dao method", res)
             return res;
         }).catch(e=>console.error(e));
     }

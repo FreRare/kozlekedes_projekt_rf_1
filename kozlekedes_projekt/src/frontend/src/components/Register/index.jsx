@@ -40,10 +40,11 @@ const Register = () => {
                 },
                 body: JSON.stringify(registrationInfo)
             }).then(res => res.json()).then(res => {
-                if (res.success === true) {
+                console.log("frontend register", res);
+                if(res.body !== undefined){
                     console.log('Successful registration!');
                     nav('/Login');
-                } else if (typeof res === 'string') {
+                }else if (typeof res === 'string') {
                     setError(res.error);
                 }else{
                     console.log('Something else went wrong!');

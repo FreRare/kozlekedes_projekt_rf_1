@@ -130,7 +130,7 @@ class TransportationDAO{
                 console.error('Inavlid user!')
                 reject(false);
             }
-            this.db.query(TransportationDAO.QUERIES.createUserQuery, [user.email, user.password, user.zipCode, user.street, user.houseNumber, user.birthDate, user.firstName, user.lastName, user.ticket, user.passId, user.isAdmin], (err, result) => {
+            this.db.query(TransportationDAO.QUERIES.createUserQuery, [user.email, user.password, user.zipCode, user.street, user.houseNumber, user.birthDate, user.firstName, user.lastName, user.passId, user.passId, user.isAdmin], (err, result) => {
                 if(err){
                     throw(err);
                 }
