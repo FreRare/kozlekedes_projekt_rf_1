@@ -4,8 +4,13 @@ import { useState } from "react";
 import {useNavigate} from "react-router-dom";
 
 
-const Register = () => {
 
+const Register = () => {
+    const navigate = useNavigate();
+
+    const navigateToLoginPage = () => {
+        navigate('/login');
+    };
     const [registrationInfo, setRegistrationInfo] = useState({
         lastName: "",
         firstName: "",
@@ -43,7 +48,7 @@ const Register = () => {
                 console.log("frontend register", res);
                 if(res.body !== undefined){
                     console.log('Successful registration!');
-                    nav('/Login');
+                    
                 }else if (typeof res === 'string') {
                     setError(res.error);
                 }else{
@@ -85,7 +90,7 @@ const Register = () => {
                         <label className="form__label" htmlFor="birthDate">Születési Dátum:</label>
                         <input className="form__input" type="date" id="birthDate" name="birthDate" onChange={handleChange} value={registrationInfo.birthDate} required/>
 
-                        <button onClick={register} className="submitbutton">Küldés</button>
+                        <button onClick={() => {register(); navigateToLoginPage();}} className="submitbutton">Küldés</button>
                     </form>
             </div>
     );

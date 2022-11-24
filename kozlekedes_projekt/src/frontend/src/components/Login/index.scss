@@ -51,18 +51,33 @@
     }
 
     
-    input[type=submit] {
-        display: block;
-        margin: 20px auto 0;
-        width: 150px;
-        height: 40px;
-        border-radius: 25px;
+    button {
+        padding: 15px 25px;
+        font-size: 25px;
+        text-align: center;
+        cursor: pointer;
+        outline: none;
+        color: #fff;
+        background-color: #0578ba;
         border: none;
-        color: #eee;
-        font-weight: 700;
-        box-shadow: 1px 4px 10px 1px #aaa;
-        background: -webkit-linear-gradient(left, #207cca 0%,#9f58a3 100%); /* Chrome10-25,Safari5.1-6 */
-        animation: fadeIn 2s 2.8s backwards;
+        border-radius: 15px;
+        box-shadow: 0 4px #999;
+        margin-top: 40px;
+        margin: 0 auto;
+        margin-top: 50px;
+        display: block;
+        width: 200px;
+        height: 50px;
+
+        &:hover{
+            background-color: #00cdcd
+        }
+
+        &:active{
+        background-color: #00ff22;
+        box-shadow: 0 5px rgb(138, 138, 138);
+        transform: translateY(4px);
+        }
         
       }
 }
