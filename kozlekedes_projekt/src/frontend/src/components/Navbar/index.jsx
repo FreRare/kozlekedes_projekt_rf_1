@@ -26,7 +26,7 @@ function NavBar() {
             <FontAwesomeIcon icon={faHome} color="#ffffff"/>
         </NavLink>}
         <div className="dropdown">
-            <p className="dropp">Menetrendek</p>
+            <p className="dropp" content="Menetrendek"><span>Menetrendek</span></p>
             <div className="dropdown-content">
                 <NavLink 
                     exact="true"

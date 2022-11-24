@@ -73,7 +73,7 @@ nav{
 .dropdown {
   position: static;
   display: inline-block;
-height: 350px;
+  height: 450px;
   p{
     color: white;
     font-size: 22px;
@@ -81,12 +81,28 @@ height: 350px;
 
     &:hover{
       color: #30D5C8;
-
+      
           &:after{
               opacity: 2;
             }
           }
+    &:hover:before{
+    content: "\25bc";
+    float:left;
+    color:rgb(0, 175, 181);
+    
+    }
+    &:hover:after{
+    content: "\25bc";
+    float:right;
+    color:rgb(0, 175, 181);
+    
+    }
   }
+  
+  
+
+  
 }
 
 .dropdown-content {
@@ -112,8 +128,21 @@ height: 350px;
   margin-top: -20px;
   visibility: visible;
   display: block;
-  height: 200px;
+  height: 280px;
+  transition: all 1.2s ease-out;
+  cursor: pointer;
 }
+
+.dropdown:hover{
+  cursor: pointer;
+  
+
+  
+}
+
+
+
+
 
 
 
