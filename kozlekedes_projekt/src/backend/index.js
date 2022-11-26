@@ -72,8 +72,14 @@ const CONTROL = new Control();
      const passwordAgain = req.body.passwordAgain;
      if(password === passwordAgain){
          CONTROL.updateUser(password, firstName, lastName, CONTROL.activeUser.email).then((res)=>{
-             response.json({success: res});
-             response.end();
+             if(!res){
+                 response.json({success: false, error:"Nem tudtuk backenden updatelni a usert!"});
+                 response.end();
+             }
+             else{
+                 response.json({success: true});
+                 response.end();
+             }
          }).catch(e=>(console.error(e)));
      }
      else{
@@ -111,7 +117,7 @@ const CONTROL = new Control();
                          response.json({success: true});
                          response.end();
                      }else{
-                         response.json({success: false});
+                         response.json({success: false, error:"Nem megfelelő user!"});
                          response.end();
                      }
                  });
