@@ -7,23 +7,18 @@ import {useNavigate} from "react-router-dom";
 
 const Register = () => {
     const navigate = useNavigate();
-
-    const navigateToLoginPage = () => {
-        navigate('/login');
-    };
     const [registrationInfo, setRegistrationInfo] = useState({
         lastName: "",
         firstName: "",
         email: "",
         password: "",
+        passwordAgain: "",
         zipcode: "",
         street: "",
         houseNumber: "",
         birthDate: new Date()
     });
     const [error, setError] = useState('');
-    const nav = useNavigate();
-
     const handleChange = (event) => {
         setRegistrationInfo({ ...registrationInfo, [event.target.name]: event.target.value });
     };
@@ -45,14 +40,11 @@ const Register = () => {
                 },
                 body: JSON.stringify(registrationInfo)
             }).then(res => res.json()).then(res => {
-                console.log("frontend register", res);
-                if(res.body !== undefined){
+                if(res.success){
                     console.log('Successful registration!');
-                    
-                }else if (typeof res === 'string') {
+                    navigate('/login');
+                }else {
                     setError(res.error);
-                }else{
-                    console.log('Something else went wrong!');
                 }
             }).catch(e=>{
                 console.error('Unable to connect to the register API! ', e);
@@ -78,6 +70,9 @@ const Register = () => {
                         <label className="form__label" htmlFor="password">Jelszó:</label>
                         <input className="form__input" type="password"  id="password" name="password" value={registrationInfo.password} onChange={handleChange} placeholder="**********" required/>
 
+                        <label className="form__label" htmlFor="passwordAgain">Jelszó megerősítése:</label>
+                        <input className="form__input" type="password"  id="passwordAgain" name="passwordAgain" value={registrationInfo.passwordAgain} onChange={handleChange} placeholder="**********" required/>
+
                         <label className="form__label" htmlFor="zipcode">Irányítószám:</label>
                         <input className="form__input" type="text"  id="zipcode" name="zipcode" value={registrationInfo.zipcode} onChange={handleChange} placeholder="6725" required/>
 
@@ -90,7 +85,7 @@ const Register = () => {
                         <label className="form__label" htmlFor="birthDate">Születési Dátum:</label>
                         <input className="form__input" type="date" id="birthDate" name="birthDate" onChange={handleChange} value={registrationInfo.birthDate} required/>
 
-                        <button onClick={() => {register(); navigateToLoginPage();}} className="submitbutton">Küldés</button>
+                        <button onClick={register} className="submitbutton">Küldés</button>
                     </form>
             </div>
     );

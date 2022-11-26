@@ -5,14 +5,8 @@ import pepe from '../../assets/pepe.png'
 const Profil = () =>{
 
     const [jegy, setJegy] = useState('');
-    /*if(!ticket.identifier) {
-        setTicket({
-            identifier: 17263,
-            validity: 'x-y időpontig érvényes eskü lekérjük majd adatbázisból',
-            serviceTheTicketIsFor: 12344
-        });
-    }*/
-    let ticket = {};
+    const [error, setError] = useState('');
+
     if(jegy.length <= 0) {
         fetch('/api/profile', {
             method: 'GET'
@@ -20,7 +14,7 @@ const Profil = () =>{
             if(!res){
                 console.log('No ticket found!');
             }else{
-                ticket = res.ticketToSend;
+                let ticket = res.ticketToSend;
                 //console.log(ticket);
                 setJegy(
                     <>
@@ -39,17 +33,42 @@ const Profil = () =>{
         });
     }
 
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [pass, setPass] = useState('');
+    const [pass2, setPass2] = useState('');
+
+    const updateProfile = ()=>{
+        fetch('/api/updateUser', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({firstName: firstName, lastName: lastName, password: pass, passwordAgain: pass2})
+        }).then(res=>res.json()).then(response=>{
+            if(response.success){
+                console.log('Sikeres módosítás!');
+                setError('Sikeres adatmódosítás');
+            }else {
+                setError(response.error);
+            }
+        })
+    }
+
     return(
         <>
         <h1>Profil</h1>
         <div className="wrapper">
             <div className="profile-datas">
                 <form>
-                    <input type="text" className="name" placeholder="Név"></input>
-                    <input type="email" className="emailaddress" placeholder="email-cím"></input>
-                    <input type="text" className="username" placeholder="Felhasználónév"></input>
-                    <input type="date" className="dateofbirth"></input>
-                    <input type="submit" value="Változtatások mentése"></input>
+                    {error}
+                    <input type="text" className="firstName" placeholder="Vezetéknév" name='firstName' onChange={e=>setFirstName(e.target.value)}></input>
+                    <input type="text" className="lastName" placeholder="Keresztnév" name='lastName' onChange={e=>setLastName(e.target.value)}></input>
+                    <p>Jelszó módósítása:</p>
+                    <input type="text" className="username" placeholder="Jelszó" name='password' onChange={e=>setPass(e.target.value)}></input>
+                    <input type="text" className="username" placeholder="Jelszó megerősítése" name='passwordAgain' onChange={e=>setPass2(e.target.value)}></input>
+                    <button onClick={updateProfile} value="Változtatások mentése"></button>
                 </form>
             </div>
             <div className="history">

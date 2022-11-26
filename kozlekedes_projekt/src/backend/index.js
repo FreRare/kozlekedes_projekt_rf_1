@@ -50,7 +50,7 @@ const CONTROL = new Control();
 
  router.post('/api/deleteService', (req, res)=>{
      //TODO: delete the service from db (req.body.id)
- })
+ });
 
  router.get('/api/profile', (req, res)=>{
      setTimeout(()=>{
@@ -95,7 +95,7 @@ const CONTROL = new Control();
                     response.json({success: false});
                     //response.end();
                 }
-            });
+            }).catch(e=>console.error(e));
         }
     });
  });
