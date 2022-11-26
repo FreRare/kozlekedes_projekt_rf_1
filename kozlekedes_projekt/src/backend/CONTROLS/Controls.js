@@ -52,7 +52,7 @@ class Controls{
     // Random bankártya adatok bekérése, nincs mentés
 
     /***
-     * A megadott email című usernek megvásárolja a jegyet
+     * A bejelentkezett usernek vesz egy jegyet a megadott id-jú járatra
      * @param jaratID
      * @returns {boolean}
      */

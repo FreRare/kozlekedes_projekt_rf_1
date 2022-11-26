@@ -48,6 +48,10 @@ const CONTROL = new Control();
      res.end();
  });
 
+ router.post('/api/deleteService', (req, res)=>{
+     //TODO: delete the service from db (req.body.id)
+ })
+
  router.get('/api/profile', (req, res)=>{
      setTimeout(()=>{
          let ticket = CONTROL.getTicketForLoggedInUser();

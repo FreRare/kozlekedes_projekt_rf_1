@@ -5,124 +5,98 @@ const AdminMenu = () => {
 
 
     const [busesList, setBusesList] = useState([]);
+    const [tramsList, setTramsList] = useState([]);
+    const [trolleysList, setTrolleysList] = useState([]);
     const [error, setError] = useState('');
-    let busList;
-    let bus = [];
+
     if(busesList.length <= 0){
         fetch('/api/bus', {
             method: 'get'
         }).then(res=>res.json()).then(res=>{
-            bus = res.bus;
+            let bus = res.bus;
             console.log("Data got successfully!", bus);
-            busList = bus.map((b)=>(
-            <div className="route-list-wrapper" key={b.id }>
-            <table className="route-list-table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>JÁRATSZÁM</th>
-                    <th>HONNAN</th>
-                    <th>HOVÁ</th>
-                </tr>
-                </thead>
-                <tbody>
-                    <tr>
+            let busList = bus.map((b, index)=>(
+                    <tr key={index}>
                         <td>Járatszám: {b.serviceNumber}</td>
                         <td>Járatszám: {b.serviceNumber}</td>
                         <td>Honnan: {b.stops[0].name}</td>
                         <td>Hová: {b.stops[b.stops.length-1].name}</td>
+                        <td><form method='POST' action='/api/deleteService'>
+                            <input type="hidden" id='id' name='id' value={b.id}/>
+                            <input type='submit'>Törlés</input>
+                        </form></td>
                     </tr>
-                </tbody>
-            </table>
-            <button >Törlés</button>
-            </div>
             ));
-            if(!busesList || busesList.length <= 0){
                 setBusesList(busList);
-            }
         }).catch(e=>{
             console.error(e);
-            setError(e);
+            setBusesList((
+                <tr>
+                    <td>NO DATA FOUND!</td>
+                </tr>
+            ));
         });
     }
 
-    const [tramsList, setTramsList] = useState([]);
-    
-    let tramList;
-    let trams = [];
     if(tramsList.length <= 0){
         fetch('/api/tram', {
             method: 'get'
         }).then(res=>res.json()).then(res=>{
-            trams = res.trams;
+            let trams = res.trams;
             console.log("Data got successfully!", trams);
-            tramList = trams.map((b, index)=>(
-                <div className="route-list-wrapper"key={b.id }>
-            <table className="route-list-table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>JÁRATSZÁM</th>
-                    <th>HONNAN</th>
-                    <th>HOVÁ</th>
-                </tr>
-                </thead>
-                <tbody>
-                    <tr>
+            let tramList = trams.map((b, index)=>(
+                    <tr key={index}>
                         <td>Járatszám: {b.serviceNumber}</td>
                         <td>Járatszám: {b.serviceNumber}</td>
                         <td>Honnan: {b.stops[0].name}</td>
                         <td>Hová: {b.stops[b.stops.length-1].name}</td>
+                        <td><form method='POST' action='/api/deleteService'>
+                            <input type="hidden" id='id' name='id' value={b.id}/>
+                            <input type='submit'>Törlés</input>
+                        </form></td>
                     </tr>
-                </tbody>
-            </table>
-            <button >Törlés</button>
-            </div>
             ));
-            if(!tramsList || tramsList.length <= 0){
                 setTramsList(tramList);
-            }
+
+        }).catch(e=>{
+            console.error(e);
+            setTramsList((
+            <tr>
+                <td>NO DATA FOUND!</td>
+            </tr>
+            ));
         });
     }
 
-    const [trolleysList, setTrolleysList] = useState([]);
-    
-    let trolleyList;
-    let trolley = [];
     if(trolleysList.length <= 0){
         fetch('/api/trolley', {
             method: 'get'
         }).then(res=>res.json()).then(res=>{
-            trolley = res.trolley;
+            let trolley = res.trolley;
             console.log("Data got successfully!", trolley);
-            trolleyList = trolley.map((b, index)=>(
-                <div className="route-list-wrapper"key={b.id }>
-            <table className="route-list-table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>JÁRATSZÁM</th>
-                    <th>HONNAN</th>
-                    <th>HOVÁ</th>
-                </tr>
-                </thead>
-                <tbody>
-                    <tr>
+            let trolleyList = trolley.map((b, index)=>(
+                    <tr key={index}>
                         <td>Járatszám: {b.serviceNumber}</td>
                         <td>Járatszám: {b.serviceNumber}</td>
                         <td>Honnan: {b.stops[0].name}</td>
                         <td>Hová: {b.stops[b.stops.length-1].name}</td>
+                        <td><form method='POST' action='/api/deleteService'>
+                            <input type="hidden" id='id' name='id' value={b.id}/>
+                            <input type='submit'>Törlés</input>
+                        </form></td>
                     </tr>
-                </tbody>
-            </table>
-            <button >Törlés</button>
-            </div>
             ));
-            if(!trolleysList || trolleysList.length <= 0){
                 setTrolleysList(trolleyList);
-            }
+        }).catch(e=>{
+            console.error(e);
+            setTrolleysList((
+            <tr>
+                <td>NO DATA FOUND!</td>
+            </tr>
+            ));
         });
     }
+
     return(
         <>
         <h1>Admin menu</h1>
@@ -130,15 +104,59 @@ const AdminMenu = () => {
             <div className="route-list">
             <h3>Járatok kilistázása</h3>
             <h5>BUSZ menetrendek listázása:</h5>
+                <div className="route-list-wrapper">
+                    <table className="route-list-table">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>JÁRATSZÁM</th>
+                            <th>HONNAN</th>
+                            <th>HOVÁ</th>
+                        </tr>
+                        </thead>
+                        <tbody>
             {busesList}
+                        </tbody>
+                    </table>
+                    <button >Törlés</button>
+                </div>
             <h5>TROLI menetrendek listázása:</h5>
+                <div className="route-list-wrapper">
+                    <table className="route-list-table">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>JÁRATSZÁM</th>
+                            <th>HONNAN</th>
+                            <th>HOVÁ</th>
+                        </tr>
+                        </thead>
+                    <tbody>
             {trolleysList}
+                    </tbody>
+                    </table>
+                    <button >Törlés</button>
+                </div>
             <h5>VILLAMOS menetrendek listázása:</h5>
+                <div className="route-list-wrapper">
+                    <table className="route-list-table">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>JÁRATSZÁM</th>
+                            <th>HONNAN</th>
+                            <th>HOVÁ</th>
+                        </tr>
+                        </thead>
+                    <tbody>
             {tramsList}
-            
+                    </tbody>
+            </table>
+        </div>
             </div>
             <div className="route-add-to-list">
             <h3>Járatok bevitele</h3>
+                {error}
                 <form>
                 <p>id:JARAT.ID | name:MEGALLO.nev | when:mikor</p>
                 

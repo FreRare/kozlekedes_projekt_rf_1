@@ -11,8 +11,8 @@ function NavBar() {
     const navigate = useNavigate();
     if(!bevagyjelentkezeveBaszod && sessionStorage.getItem('loggedin')) {
         setBevagyjelentkezeveBaszod(JSON.parse(sessionStorage.getItem('loggedin')));
-        console.log(bevagyjelentkezeveBaszod);
-        console.log(sessionStorage.getItem('loggedin'));
+        //console.log(bevagyjelentkezeveBaszod);
+        //console.log(sessionStorage.getItem('loggedin'));
     }
 
     return (
