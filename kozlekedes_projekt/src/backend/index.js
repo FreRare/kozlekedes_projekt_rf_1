@@ -65,11 +65,35 @@ const CONTROL = new Control();
 
  });
 
+ router.post('/api/updateUser',(req, response)=>{
+     const firstName = req.body.firstName;
+     const lastName = req.body.lastName;
+     const password = req.body.password;
+     const passwordAgain = req.body.passwordAgain;
+     if(password === passwordAgain){
+         CONTROL.updateUser(password, firstName, lastName, CONTROL.activeUser.email).then((res)=>{
+             if(!res){
+                 response.json({success: false, error:"Nem tudtuk backenden updatelni a usert!"});
+                 response.end();
+             }
+             else{
+                 response.json({success: true});
+                 response.end();
+             }
+         }).catch(e=>(console.error(e)));
+     }
+     else{
+         response.json({success: false, error: "Nem egyező jelszó!"});
+         response.end();
+     }
+ });
+
  router.post('/api/register', (req, response)=>{
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
     const email = req.body.email;
     const password = req.body.password;
+    const passwordAgain = req.body.passwordAgain;
     const zipCode = req.body.zipcode;
     const street = req.body.street;
     const number = req.body.houseNumber;
@@ -81,23 +105,29 @@ const CONTROL = new Control();
      // Any other case we can register, type check is done on the client side
      let canregister = CONTROL.canRegisterUser(email);
      console.log("canregister", canregister);
-    canregister.then(res=>{
-        if(!res){
-            response.json({error: 'Email address already in use!'});
-            response.end();
-        }else{
-            CONTROL.registerUser(email, password, firstName, lastName, zipCode, street, number, birthDate).then(res=>{
-                console.log("control register", res);
-                if(res){
-                    response.json({success: true});
-                    //response.end();
-                }else{
-                    response.json({success: false});
-                    //response.end();
-                }
-            }).catch(e=>console.error(e));
-        }
-    });
+     if(password === passwordAgain){
+         canregister.then(res=>{
+             if(!res){
+                 response.json({error: 'Email address already in use!'});
+                 response.end();
+             }else{
+                 CONTROL.registerUser(email, password, firstName, lastName, zipCode, street, number, birthDate).then(res=>{
+                     console.log("control register", res);
+                     if(res){
+                         response.json({success: true});
+                         response.end();
+                     }else{
+                         response.json({success: false, error:"Nem megfelelő user!"});
+                         response.end();
+                     }
+                 });
+             }
+         });
+     }
+     else{
+         response.json({success: false, error: "Nem egyeznek a jelszavak!"});
+         response.end();
+     }
  });
 
  router.get('/api/trolley', (req, res)=>{
