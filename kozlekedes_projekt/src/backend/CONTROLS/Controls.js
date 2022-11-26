@@ -193,6 +193,21 @@ class Controls{
         }).catch(e=>console.error(e));
     }
 
+    async updateUser(password, firstName, lastName, email){
+        return await this.DAO.updateUser(password, firstName, lastName, email).then(res=>{
+            console.log("updateuser", res);
+            if(res){
+                this.activeUser.password = password;
+                this.activeUser.firstName = firstName;
+                this.activeUser.lastName = lastName;
+                this.activeUser.email = email;
+                return true;
+            }
+        }).catch(e=> {
+            console.error(e)
+            return false});
+    }
+
 
     getUsers(){
         return this.DAO.getAllUser().then(res=>{

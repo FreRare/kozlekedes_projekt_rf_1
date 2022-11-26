@@ -11,7 +11,7 @@ class TransportationDAO{
     static QUERIES = {
         getUserQuery: 'SELECT * FROM UTAS WHERE email = ?',
         createUserQuery: 'INSERT INTO UTAS VALUES(?,?,?,?,?,?,?,?,?,?,?)',
-        updateUserQuery: 'UPDATE UTAS SET jelszo = ?, iranyitoszam = ?, utca = ?, hazszam = ?, szuletesi_datum = ?, vezeteknev = ?, keresztnev = ? WHERE email = ?',
+        updateUserQuery: 'UPDATE UTAS SET jelszo = ?, vezeteknev = ?, keresztnev = ? WHERE email = ?',
         updateUserTicketIdentifierQuery: 'UPDATE UTAS SET jegyAzonosito = ? WHERE email = ?',
         updateUserPassIdentifierQuery: 'UPDATE UTAS SET berletAzonosito = ? WHERE email = ?',
         deleteUserQuery: 'DELETE FROM UTAS WHERE email = ?',
@@ -140,20 +140,20 @@ class TransportationDAO{
         })
     }
 
-    updateUser(user){
+    updateUser(password, firstName, lastName, email){
         return new Promise((resolve, reject)=>{
-            if(!user instanceof User){
-                console.error('Inavlid user!')
+            if(typeof password !== "string" || typeof firstName !== "string" || typeof lastName !== "string" || typeof email !== "string"){
+                console.error('Invalid update user parameters!');
                 reject(false);
             }
-            this.db.query(TransportationDAO.QUERIES.updateUserQuery, [user.password, user.zipCode, user.street, user.houseNumber, user.birthDate, user.firstName, user.lastName , user.email], (err, result) => {
+            this.db.query(TransportationDAO.QUERIES.updateUserQuery, [password, firstName, lastName , email], (err, result) => {
                 if(err){
                     reject(err);
                 }
-                console.log("Sikeres adatmódosítás!");
-                resolve(result);
-            })
-        })
+                console.log("Sikeres felhasználó adatmódosítás!");
+                resolve(true);
+            });
+        });
     }
 
     updateUserTicketIdentifier(identifier, email) {
