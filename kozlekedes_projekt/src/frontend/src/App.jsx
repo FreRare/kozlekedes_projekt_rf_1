@@ -14,6 +14,7 @@ import News from './components/News';
 import Help from './components/Help';
 import Profil from './components/Profil';
 import AdminMenu from "./components/Menetrendek/AdminMenu";
+import Logout from './components/Logout';
 function App() {
 
   const [bevagyjelentkezeveBaszod, setBevagyjelentkezeveBaszod] = useState(false);
@@ -36,8 +37,10 @@ function App() {
           {bevagyjelentkezeveBaszod &&<Route path="/News" element={<News/>}/>}
           <Route path="/Help" element={<Help/>}></Route>
           {bevagyjelentkezeveBaszod && <Route path="/Profil" element={<Profil/>}></Route>}
+          
           <Route path='*' element={<Layout/>}></Route>
         </Route>
+        <Route path="/Logout" element={<Logout/>}></Route>
       </Routes>
     </>
   )

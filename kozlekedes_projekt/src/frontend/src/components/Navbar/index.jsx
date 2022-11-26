@@ -4,13 +4,15 @@ import { NavLink} from 'react-router-dom';
 import {faHome,faXmark} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 function NavBar() {
     const [bevagyjelentkezeveBaszod, setBevagyjelentkezeveBaszod] = useState();
-
+    const navigate = useNavigate();
     if(!bevagyjelentkezeveBaszod && sessionStorage.getItem('loggedin')) {
         setBevagyjelentkezeveBaszod(JSON.parse(sessionStorage.getItem('loggedin')));
         console.log(bevagyjelentkezeveBaszod);
+        console.log(sessionStorage.getItem('loggedin'));
     }
 
     return (
@@ -47,13 +49,14 @@ function NavBar() {
                     to="/menetrendek/troli">
                     Troli
                 </NavLink>
-                <NavLink
+                
+                {bevagyjelentkezeveBaszod &&<NavLink
                     exact="true"
                     activeclassname="active"
                     className="menetrendek-link-busz"
                     to="/Menetrendek/AdminMenu">
                     Szerkesztés
-                </NavLink>
+                </NavLink>}
             </div>
         </div>
         {bevagyjelentkezeveBaszod &&
@@ -90,8 +93,8 @@ function NavBar() {
                 onClick={()=>{
                     sessionStorage.removeItem('loggedin');
                 }}
-                to="/">
-                <FontAwesomeIcon icon={faXmark} color='#ffffff'/>
+                to="/Logout">
+                <FontAwesomeIcon icon={faXmark}  color='#ffffff'/>
                 </NavLink>
             )
         }

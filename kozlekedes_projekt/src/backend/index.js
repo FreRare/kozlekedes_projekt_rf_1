@@ -29,7 +29,7 @@ const CONTROL = new Control();
          }
          else{
              console.log('Backend: Valid login!');
-             response.json({user: email});
+             response.json({user: res});
          }
      });
  });

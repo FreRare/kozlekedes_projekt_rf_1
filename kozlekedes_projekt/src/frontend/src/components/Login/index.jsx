@@ -3,11 +3,13 @@ import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import data from "bootstrap/js/src/dom/data";
 
+
 const Login = () =>{
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
+    
 
     const login = ()=>{
         //console.log('Logging in...');
@@ -25,10 +27,17 @@ const Login = () =>{
            }else{
                     console.log('Valid login!');
                     sessionStorage.setItem('loggedin', JSON.stringify(res.user));
-                    navigate('/Profil');
+                    refreshPage();
+                    
            }
         });
     }
+
+    function refreshPage() {
+        navigate('/Profil');
+        navigate(0);
+        
+      }
     return(
     <>
     <div className="form">
