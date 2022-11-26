@@ -28,7 +28,6 @@ const Login = () =>{
                     console.log('Valid login!');
                     sessionStorage.setItem('loggedin', JSON.stringify(res.user));
                     refreshPage();
-                    
            }
         });
     }
@@ -36,8 +35,9 @@ const Login = () =>{
     function refreshPage() {
         navigate('/Profil');
         navigate(0);
-        
       }
+
+
     return(
     <>
     <div className="form">
