@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import './index.scss';
+import {useNavigate} from "react-router-dom";
 
 const AdminMenu = () => {
 
@@ -8,6 +9,7 @@ const AdminMenu = () => {
     const [tramsList, setTramsList] = useState([]);
     const [trolleysList, setTrolleysList] = useState([]);
     const [error, setError] = useState('');
+    const nav = useNavigate();
 
     if(busesList.length <= 0){
         fetch('/api/bus', {
@@ -18,13 +20,11 @@ const AdminMenu = () => {
             let busList = bus.map((b, index)=>(
                     <tr key={index}>
                         <td>Járatszám: {b.serviceNumber}</td>
-                        <td>Járatszám: {b.serviceNumber}</td>
                         <td>Honnan: {b.stops[0].name}</td>
                         <td>Hová: {b.stops[b.stops.length-1].name}</td>
-                        <td><form method='POST' action='/api/deleteService'>
-                            <input type="hidden" id='id' name='id' value={b.id}/>
-                            <input type='submit'>Törlés</input>
-                        </form></td>
+                        <td>
+                            <button onClick={()=>{deleteService(b.id)}}>Törlés</button>
+                        </td>
                     </tr>
             ));
                 setBusesList(busList);
@@ -47,13 +47,11 @@ const AdminMenu = () => {
             let tramList = trams.map((b, index)=>(
                     <tr key={index}>
                         <td>Járatszám: {b.serviceNumber}</td>
-                        <td>Járatszám: {b.serviceNumber}</td>
                         <td>Honnan: {b.stops[0].name}</td>
                         <td>Hová: {b.stops[b.stops.length-1].name}</td>
-                        <td><form method='POST' action='/api/deleteService'>
-                            <input type="hidden" id='id' name='id' value={b.id}/>
-                            <input type='submit'>Törlés</input>
-                        </form></td>
+                        <td>
+                            <button onClick={()=>{deleteService(b.id)}}>Törlés</button>
+                        </td>
                     </tr>
             ));
                 setTramsList(tramList);
@@ -77,13 +75,11 @@ const AdminMenu = () => {
             let trolleyList = trolley.map((b, index)=>(
                     <tr key={index}>
                         <td>Járatszám: {b.serviceNumber}</td>
-                        <td>Járatszám: {b.serviceNumber}</td>
                         <td>Honnan: {b.stops[0].name}</td>
                         <td>Hová: {b.stops[b.stops.length-1].name}</td>
-                        <td><form method='POST' action='/api/deleteService'>
-                            <input type="hidden" id='id' name='id' value={b.id}/>
-                            <input type='submit'>Törlés</input>
-                        </form></td>
+                        <td>
+                            <button onClick={()=>{deleteService(b.id)}}>Törlés</button>
+                        </td>
                     </tr>
             ));
                 setTrolleysList(trolleyList);
@@ -97,6 +93,32 @@ const AdminMenu = () => {
         });
     }
 
+    const deleteService = (id)=>{
+        fetch('api/deleteService', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({id: id})
+        }).then(res=>{
+            if(res.success){
+                console.log("Service successfully deleted!");
+                nav('/Menetrendek/AdminMenu');
+            }else{
+                setError(res.error);
+            }
+        }).catch(e=>console.error(e));
+    }
+
+    const [number, setNumber] = useState(0);
+    const [depart, setDepart] = useState('');
+    const [arrive, setArrive] = useState('');
+
+    const createService = ()=>{
+        //TODO: create service in db
+    }
+
     return(
         <>
         <h1>Admin menu</h1>
@@ -108,7 +130,6 @@ const AdminMenu = () => {
                     <table className="route-list-table">
                         <thead>
                         <tr>
-                            <th>ID</th>
                             <th>JÁRATSZÁM</th>
                             <th>HONNAN</th>
                             <th>HOVÁ</th>
@@ -118,14 +139,12 @@ const AdminMenu = () => {
             {busesList}
                         </tbody>
                     </table>
-                    <button >Törlés</button>
                 </div>
             <h5>TROLI menetrendek listázása:</h5>
                 <div className="route-list-wrapper">
                     <table className="route-list-table">
                         <thead>
                         <tr>
-                            <th>ID</th>
                             <th>JÁRATSZÁM</th>
                             <th>HONNAN</th>
                             <th>HOVÁ</th>
@@ -135,14 +154,12 @@ const AdminMenu = () => {
             {trolleysList}
                     </tbody>
                     </table>
-                    <button >Törlés</button>
                 </div>
             <h5>VILLAMOS menetrendek listázása:</h5>
                 <div className="route-list-wrapper">
                     <table className="route-list-table">
                         <thead>
                         <tr>
-                            <th>ID</th>
                             <th>JÁRATSZÁM</th>
                             <th>HONNAN</th>
                             <th>HOVÁ</th>
@@ -158,17 +175,24 @@ const AdminMenu = () => {
             <h3>Járatok bevitele</h3>
                 {error}
                 <form>
-                <p>id:JARAT.ID | name:MEGALLO.nev | when:mikor</p>
-                
-                <label className="form__label" htmlFor="id">ID:</label>
-                <input className="form__input" type="text" id="id" name="id"  placeholder="pl.: 32" required/>
+                <label className="form__label" htmlFor="id">Járatszám:</label>
+                <input className="form__input" type="text" id="id" name="id"  placeholder="pl.: 32" onChange={e=>setNumber(e.target.value)}/>
 
-                <label className="form__label" htmlFor="megallo">MEGALLÓ:</label>
-                <input className="form__input" type="text" id="megallo"  name="megallo"  placeholder="pl.: Budapesti Krt" required/>
+                    <label htmlFor='type'>
+                        Service type:
+                        <select name="type" id='type'>
+                            <option>Busz</option>
+                            <option>Villamos</option>
+                            <option>Trolibusz</option>
+                        </select>
+                    </label>
 
-                <label className="form__label" htmlFor="mikor">MIKOR:</label>
-                <input className="form__input" type="text" id="mikor"  name="mikor"  placeholder="pl.: 13:32" required/>
-                <button >Adatot feltölt</button>
+                <label className="form__label" htmlFor="depart">Indulás:</label>
+                <input className="form__input" type="text" id="depart"  name="depart"  placeholder="pl.: Budapesti Krt" required/>
+
+                <label className="form__label" htmlFor="arrive">Végállomás:</label>
+                <input className="form__input" type="text" id="arrive"  name="arrive"  placeholder="pl.: Tarján" required/>
+                <button onClick={createService} >Adatot feltölt</button>
                 </form>
             </div>
         </div>
