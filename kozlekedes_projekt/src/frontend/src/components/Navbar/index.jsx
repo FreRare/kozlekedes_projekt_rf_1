@@ -7,13 +7,17 @@ import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 
 function NavBar() {
-    const [bevagyjelentkezeveBaszod, setBevagyjelentkezeveBaszod] = useState();
+    const [bevagyjelentkezeveBaszod, setBevagyjelentkezeveBaszod] = useState(undefined);
     const navigate = useNavigate();
+    useEffect(()=>{
     if(!bevagyjelentkezeveBaszod && sessionStorage.getItem('loggedin')) {
-        setBevagyjelentkezeveBaszod(JSON.parse(sessionStorage.getItem('loggedin')));
-        //console.log(bevagyjelentkezeveBaszod);
-        //console.log(sessionStorage.getItem('loggedin'));
+        let user = JSON.parse(sessionStorage.getItem('loggedin'));
+        setBevagyjelentkezeveBaszod(user);
+        //console.log(user);
+        //console.log('Sessionstorage loggedin: ', sessionStorage.getItem('loggedin'));
     }
+    /*console.log(bevagyjelentkezeveBaszod);*/
+    });
 
     return (
         <>
@@ -27,7 +31,12 @@ function NavBar() {
         </NavLink>}
         <div className="dropdown">
             <p className="dropp" content="Menetrendek"><span>Menetrendek</span></p>
-            <div className="dropdown-content">
+            <div className="dropdown-content"
+                 style={{
+                     height: `${(bevagyjelentkezeveBaszod && bevagyjelentkezeveBaszod.isAdmin) ? '280px' : '200px'}`
+                 }
+                 }
+            >
                 <NavLink 
                     exact="true"
                     activeclassname="active"
@@ -49,14 +58,15 @@ function NavBar() {
                     to="/menetrendek/troli">
                     Troli
                 </NavLink>
-                
-                {bevagyjelentkezeveBaszod &&<NavLink
+                {bevagyjelentkezeveBaszod && bevagyjelentkezeveBaszod.isAdmin &&
+                    <NavLink
                     exact="true"
                     activeclassname="active"
                     className="menetrendek-link-busz"
                     to="/Menetrendek/AdminMenu">
                     Szerkesztés
-                </NavLink>}
+                </NavLink>
+                }
             </div>
         </div>
         {bevagyjelentkezeveBaszod &&
@@ -67,7 +77,7 @@ function NavBar() {
             to="/News">
             Hírfolyam
         </NavLink>}
-        { !bevagyjelentkezeveBaszod &&
+        {!bevagyjelentkezeveBaszod &&
             <NavLink
                 exact="true"
                 activeclassname="active"
@@ -105,9 +115,7 @@ function NavBar() {
             to="/Help">
             Segítség
         </NavLink>
-        
     </nav>
-    
 </div>
       </>
     );

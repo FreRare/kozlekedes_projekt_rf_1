@@ -37,7 +37,6 @@ const Login = () =>{
         navigate(0);
       }
 
-
     return(
     <>
     <div className="form">

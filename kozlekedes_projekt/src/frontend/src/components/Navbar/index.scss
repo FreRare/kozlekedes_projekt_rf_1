@@ -27,9 +27,6 @@ nav{
       position: relative;
       text-decoration: none;
       padding-right: 25px;
-
-      
-      
       i{
           transition: all 0.5s ease-out;
       }
@@ -39,7 +36,6 @@ nav{
 
           &:after{
               opacity: 2;
-
           }
       }
 
@@ -55,11 +51,7 @@ nav{
           opacity: 0;
           transition: all 1s ease-out;
       }
-
-      
   }
-
-  
 
   a.active{
       svg{
@@ -73,7 +65,7 @@ nav{
 .dropdown {
   position: static;
   display: inline-block;
-  height: 450px;
+  height: 300px;
   p{
     color: white;
     font-size: 22px;
@@ -98,19 +90,11 @@ nav{
     color:rgb(0, 175, 181);
     
     }
-
-    
   }
-
-  
-  
-  
-
-  
 }
 
 .dropdown-content {
-  display: block;
+  display: inline-block;
   position: absolute;
   visibility: hidden;
   background-color: #f9f9f9;
@@ -132,47 +116,24 @@ nav{
   margin-top: -20px;
   visibility: visible;
   display: block;
-  height: 280px;
   transition: all 1.2s ease-out;
   cursor: pointer;
-
-  
 }
 
 .dropdown:hover{
   cursor: pointer;
-  
-
-  
 }
-
-
-
-
-
-
-
-
-
-
 .container{
     min-width: 200px;
     overflow: hidden;
     position: relative;
-
-
-    
-  
 }
 .navbar{
-  height: 500px;
     width: 250px;
     padding-top: 50px;
     padding-left: 50px;
     overflow: hidden;
     float: left;
-    margin-top: -200px;
-    
 }
 
 .activity_buttons{

@@ -19,9 +19,9 @@ const AdminMenu = () => {
             console.log("Data got successfully!", bus);
             let busList = bus.map((b, index)=>(
                     <tr key={index}>
-                        <td>Járatszám: {b.serviceNumber}</td>
-                        <td>Honnan: {b.stops[0].name}</td>
-                        <td>Hová: {b.stops[b.stops.length-1].name}</td>
+                        <td>{b.serviceNumber}</td>
+                        <td>{b.stops[0].name}</td>
+                        <td>{b.stops[b.stops.length-1].name}</td>
                         <td>
                             <button onClick={()=>{deleteService(b.id)}}>Törlés</button>
                         </td>
@@ -46,9 +46,9 @@ const AdminMenu = () => {
             console.log("Data got successfully!", trams);
             let tramList = trams.map((b, index)=>(
                     <tr key={index}>
-                        <td>Járatszám: {b.serviceNumber}</td>
-                        <td>Honnan: {b.stops[0].name}</td>
-                        <td>Hová: {b.stops[b.stops.length-1].name}</td>
+                        <td>{b.serviceNumber}</td>
+                        <td>{b.stops[0].name}</td>
+                        <td>{b.stops[b.stops.length-1].name}</td>
                         <td>
                             <button onClick={()=>{deleteService(b.id)}}>Törlés</button>
                         </td>
@@ -74,9 +74,9 @@ const AdminMenu = () => {
             console.log("Data got successfully!", trolley);
             let trolleyList = trolley.map((b, index)=>(
                     <tr key={index}>
-                        <td>Járatszám: {b.serviceNumber}</td>
-                        <td>Honnan: {b.stops[0].name}</td>
-                        <td>Hová: {b.stops[b.stops.length-1].name}</td>
+                        <td>{b.serviceNumber}</td>
+                        <td>{b.stops[0].name}</td>
+                        <td>{b.stops[b.stops.length-1].name}</td>
                         <td>
                             <button onClick={()=>{deleteService(b.id)}}>Törlés</button>
                         </td>
