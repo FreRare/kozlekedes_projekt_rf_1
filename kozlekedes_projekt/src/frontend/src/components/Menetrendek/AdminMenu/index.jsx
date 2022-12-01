@@ -3,37 +3,6 @@ import './index.scss';
 import {useNavigate} from "react-router-dom";
 
 const AdminMenu = () => {
-    //Stops list
-    const [stopList, setStopList] = useState([]);
-    
-    if(stopList.length <= 0){
-        fetch('/api/getStops', {
-            method: 'get'
-        }).then(res=>res.json()).then(res=>{
-            let stops = res.stops;
-            console.log("Stops Data got successfully!", stops);
-            let stopList = stops.map((b, index)=>(
-                <select key={index}>
-                <option>b.name</option>
-                </select>
-            ));
-            setStopList(stopList);
-
-        }).catch(e=>{
-            console.log("Szar a valami ez van",e);
-            setStopList((
-           <select>
-            <option>NO DATA FOUND</option>
-           </select>
-            ));
-        });
-    }
-    
-    
-    
-    
-
-
     //Lists
     const [busesList, setBusesList] = useState([]);
     const [tramsList, setTramsList] = useState([]);
@@ -204,34 +173,24 @@ const AdminMenu = () => {
             <div className="route-add-to-list">
             <h3>Járatok bevitele</h3>
                 {error}
-                <form>
+                <form className="stopinput">
                 <label className="form__label" htmlFor="id">Járatszám:</label>
                 <input className="form__input" type="text" id="id" name="id"  placeholder="pl.: 32" onChange={e=>setNumber(e.target.value)}/>
 
-                    <label htmlFor='type'>
-                        Service type:
-                        <select name="type" id='type'>
-                            <option>Busz</option>
-                            <option>Villamos</option>
-                            <option>Trolibusz</option>
-                        </select>
-                    </label>
+                <label className="form__label" htmlFor='type'>
+                    Service type:
+                </label>
+                    <select name="type" id='type'>
+                        <option>Busz</option>
+                        <option>Villamos</option>
+                        <option>Trolibusz</option>
+                    </select>
+                    
 
-                <br></br>
-                <div className="labello">
-                <label className="form__label" htmlFor="megallo">Megálló:</label>
-                </div>
-
-<div className="input_container_to_db">
-    <div className="input_container_1">
-                {stopList}
-    </div>
-                <div className="input_container_2">
-                <input type="time" id="time" name="time" required></input>
-    </div>
-</div>
                 
-                <button onClick={createService} >Adatot feltölt</button>
+                
+                
+                <button onClick={createService} >Megállók megadása</button>
                 </form>
             </div>
         </div>
