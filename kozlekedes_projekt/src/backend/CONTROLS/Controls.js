@@ -2,6 +2,8 @@ const DAO = require('../DAO/TransportationDAO');
 const Ticket = require("../models/Ticket");
 const User = require("../models/User");
 const Stop = require('../models/Stop');
+const Service = require("../models/Service");
+const Stopping = require('../models/Stopping');
 const News = require('../models/News');
 
 class Controls{
@@ -33,6 +35,8 @@ class Controls{
     // TODO: Jegyek bérletek vásárlása logika
     // Vásárlás: Form kitöltése után jegy feltöltése az adatbázisba + jegy hozzárendelése a bejelentkezett  felhasználóhoz ezt hozzáadni
 
+
+
     // TODO: Hírfolyam kezeléséhez tartozó üzleti logika (listázás, módosítás, létrehozása, törlése)
     // Hírfolyam adatainak lekérése az adatbázisból és a hírfolyamra való felíratkozás kezelése
 
@@ -45,6 +49,14 @@ class Controls{
             //console.log(this.className, res);
             return res;
         }).catch(e=>console.error(e));
+    }
+
+    createNews(category, title, description, publishDate){
+        const news = new News(0, category, title, description, publishDate)
+        return this.DAO.createNews(news).then(res=>{
+            console.log("createNews control", res);
+            return news;
+        }).catch(e=>console.log("createNews control error", e));
     }
 
 
@@ -83,6 +95,23 @@ class Controls{
 
     // TODO: Menetrendek kezeléséhez tartozó üzleti logika (listázás, módosítás, létrehozása, törlése)
     // Admin felhasználó módosíthatja az adott járatokat, törölhet járatot
+
+    //result.insertID
+    createService(serviceNumber, serviceType, stops){
+        return this.DAO.createService(serviceNumber, serviceType).then(res=>{
+            let service = new Service(res.insertId, serviceNumber, serviceType, []);
+            for(let i in stops){
+                this.DAO.getStop(i.name).then(res=>{
+                    service.stops.push(res);
+                });
+                let stopping = new Stopping(res.insertId, i.name, i.arrivalTime);
+                this.DAO.createStopping(stopping).then(res=>{
+                    console.log("createStopping control", res);
+                }).catch(e=>console.error(e));
+            }
+            this.DAO.serviceList.push(service);
+        }).catch(e=>console.error(e));
+    }
 
     selectAllServiceList(){
         if(this.DAO.serviceList.length > 0){

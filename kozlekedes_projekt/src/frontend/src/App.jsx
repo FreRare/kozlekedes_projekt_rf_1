@@ -13,7 +13,11 @@ import Troli from './components/Menetrendek/Troli';
 import News from './components/News';
 import Help from './components/Help';
 import Profil from './components/Profil';
+
+
 import AdminMenu from "./components/Menetrendek/AdminMenu";
+import AdminMenuList from "./components/Menetrendek/AdminMenu/AdminMenuList";
+
 import Logout from './components/Logout';
 function App() {
 
@@ -33,9 +37,10 @@ function App() {
           <Route path="/Menetrendek/Bus" element={<Bus/>}/>
           <Route path="/Menetrendek/Villamos" element={<Villamos/>}/>
           <Route path="/Menetrendek/Troli" element={<Troli/>}/>
-          {/*bevagyjelentkezeveBaszod && bevagyjelentkezeveBaszod.isAdmin &&
-            */
+          {bevagyjelentkezeveBaszod && bevagyjelentkezeveBaszod.isAdmin &&
            <Route path="/Menetrendek/AdminMenu" element={<AdminMenu/>}/>}
+           {bevagyjelentkezeveBaszod && bevagyjelentkezeveBaszod.isAdmin &&
+           <Route path="/Menetrendek/AdminMenu/AdminMenuList" element={<AdminMenuList/>}/>}
           {bevagyjelentkezeveBaszod &&<Route path="/News" element={<News/>}/>}
           <Route path="/Help" element={<Help/>}></Route>
           {bevagyjelentkezeveBaszod && <Route path="/Profil" element={<Profil/>}></Route>}

@@ -15,7 +15,7 @@ class TransportationDAO{
         updateUserTicketIdentifierQuery: 'UPDATE UTAS SET jegyAzonosito = ? WHERE email = ?',
         updateUserPassIdentifierQuery: 'UPDATE UTAS SET berletAzonosito = ? WHERE email = ?',
         deleteUserQuery: 'DELETE FROM UTAS WHERE email = ?',
-        createServiceQuery: 'INSERT INTO JARAT VALUES(?, ?, ?)',
+        createServiceQuery: 'INSERT (vonalszam), (tipus) INTO JARAT VALUES(?, ?)',
         updateServiceQuery: 'UPDATE JARAT SET vonalszam =?, tipus= ? WHERE id = ?',
         deleteServiceQuery: 'DELETE FROM JARAT WHERE id =?',
         getServiceQuery: 'SELECT * FROM JARAT WHERE id = ?',
@@ -39,7 +39,7 @@ class TransportationDAO{
         updateStoppingQuery: 'UPDATE megall SET mikor = ? WHERE ID = ? AND nev = ?',
         deleteStoppingQuery: 'DELETE FROM megall WHERE ID = ? AND nev = ?',
         getStoppingQuery: 'SELECT * FROM MEGALL WHERE ID = ? ORDER BY mikor',
-        createNewsQuery: 'INSERT INTO HIRFOLYAM VALUES (?, ?, ?, ?, ?)',
+        createNewsQuery: 'INSERT (kategoria), (cim), (leiras), (kozzetetel_datum) INTO HIRFOLYAM VALUES (?, ?, ?, ?)',
         updateNewsQuery: 'UPDATE HIRFOLYAM SET kategoria = ?, cim = ?, leiras = ? kozzetetel_datum = ?',
         deleteNewsQuery: 'DELETE FROM HIRFOLYAM WHERE ID = ?',
         getNewsQuery: 'SELECT * FROM HIRFOLYAM'
@@ -254,7 +254,7 @@ class TransportationDAO{
                 console.error('Inavlid service!')
                 reject(false);
             }
-            this.db.query(TransportationDAO.QUERIES.createServiceQuery, [service.serviceNumber, service.serviceType, service.id], (err, result) => {
+            this.db.query(TransportationDAO.QUERIES.createServiceQuery, [serviceNumber, serviceType], (err, result) => {
                 if(err){
                     reject(err);
                 }
@@ -552,7 +552,7 @@ class TransportationDAO{
                 console.error('Inavlid news!')
                 reject(false);
             }
-            this.db.query(TransportationDAO.QUERIES.createNewsQuery, [news.ID, news.category, news.title, news.description, news.publishDate], (err, result) => {
+            this.db.query(TransportationDAO.QUERIES.createNewsQuery, [news.category, news.title, news.description, news.publishDate], (err, result) => {
                 if(err){
                     reject(err);
                 }
@@ -610,6 +610,7 @@ class TransportationDAO{
             })
         });
     }
+
     createStopping(stopping){
         return new Promise((resolve, reject)=>{
             if(!stopping instanceof Stopping){
