@@ -1,5 +1,10 @@
-
+html{
+    OverFlow-y: scroll;
+    height: 1000px;
+}
 .form-container{
+    height: 950px;
+    
     h2{
         text-align: center;
         margin-top: 100px;
@@ -11,6 +16,7 @@
         height: 620px;
         margin: 20px;
         padding: 20px;
+        padding-bottom: 120px;
         box-shadow: 1px 4px 10px 1px #aaa;
         font-size: 20px;
         animation: fadeIn 0.5s 1s backwards;
@@ -33,6 +39,7 @@
         .form-body{
             text-align: left;
             padding: 20px 10px;
+            
     
             h2{
                 margin-top: -20px;
@@ -55,7 +62,7 @@
         }
 
         input[type="date"]{
-            margin-bottom: 10px;
+            margin-bottom: 20px;
         }
 
         button{
@@ -69,10 +76,11 @@
             border: none;
             border-radius: 15px;
             box-shadow: 0 4px #999;
-            margin-top: 40px;
+            margin-top: 100px;
             margin: 0 auto;
             display: block;
             text-decoration: none;
+            margin-bottom: 50px;
     
             &:hover{
                 background-color: #00cdcd

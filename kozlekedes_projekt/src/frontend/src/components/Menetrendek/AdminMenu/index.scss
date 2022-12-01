@@ -124,3 +124,36 @@ height: 700px;
         }
     }
 }
+
+.labello{
+    margin-top: 30px;
+}
+.input_container_to_db{
+    margin: 15px auto 15px auto;
+    font-size: 30px; //mukodik fak ye
+    width: 100%;
+    
+    overflow: hidden;
+    .input_container_1{
+        width: 50;
+        float: left;
+        
+        margin-left: 30px;
+
+        select{
+            font-size: 22px;;
+        }
+    }
+
+    .input_container_2{
+        width: 100;
+        
+        float: right;
+        margin-right: 30px;
+        margin-top: 10px;
+
+        input{
+            font-size: 20px;
+        }
+    }
+}

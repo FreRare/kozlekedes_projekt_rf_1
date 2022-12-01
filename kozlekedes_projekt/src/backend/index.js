@@ -115,9 +115,10 @@ const CONTROL = new Control();
      }
  });
 
- router.get('api/getStops', (req, response)=>{
+ router.get('/api/getStops', (req, response)=>{
      CONTROL.getStops().then(res=>{
         response.json({stops: res});
+        console.log("index.js getStops", res);
      });
  });
 

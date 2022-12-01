@@ -3,8 +3,38 @@ import './index.scss';
 import {useNavigate} from "react-router-dom";
 
 const AdminMenu = () => {
+    //Stops list
+    const [stopList, setStopList] = useState([]);
+    
+    if(stopList.length <= 0){
+        fetch('/api/getStops', {
+            method: 'get'
+        }).then(res=>res.json()).then(res=>{
+            let stops = res.stops;
+            console.log("Stops Data got successfully!", stops);
+            let stopList = stops.map((b, index)=>(
+                <select >
+                <option></option>
+            </select>
+            ));
+            setStopList(stopList);
+
+        }).catch(e=>{
+            console.error(e);
+            setTramsList((
+            <tr>
+                <td>NO DATA FOUND!</td>
+            </tr>
+            ));
+        });
+    }
+    
+    
+    
+    
 
 
+    //Lists
     const [busesList, setBusesList] = useState([]);
     const [tramsList, setTramsList] = useState([]);
     const [trolleysList, setTrolleysList] = useState([]);
@@ -16,7 +46,7 @@ const AdminMenu = () => {
             method: 'get'
         }).then(res=>res.json()).then(res=>{
             let bus = res.bus;
-            console.log("Data got successfully!", bus);
+            console.log("Bus Data got successfully!", bus);
             let busList = bus.map((b, index)=>(
                     <tr key={index}>
                         <td>{b.serviceNumber}</td>
@@ -43,7 +73,7 @@ const AdminMenu = () => {
             method: 'get'
         }).then(res=>res.json()).then(res=>{
             let trams = res.trams;
-            console.log("Data got successfully!", trams);
+            console.log("Tram Data got successfully!", trams);
             let tramList = trams.map((b, index)=>(
                     <tr key={index}>
                         <td>{b.serviceNumber}</td>
@@ -71,7 +101,7 @@ const AdminMenu = () => {
             method: 'get'
         }).then(res=>res.json()).then(res=>{
             let trolley = res.trolley;
-            console.log("Data got successfully!", trolley);
+            console.log("Trolley Data got successfully!", trolley);
             let trolleyList = trolley.map((b, index)=>(
                     <tr key={index}>
                         <td>{b.serviceNumber}</td>
@@ -187,11 +217,22 @@ const AdminMenu = () => {
                         </select>
                     </label>
 
-                <label className="form__label" htmlFor="depart">Indulás:</label>
-                <input className="form__input" type="text" id="depart"  name="depart"  placeholder="pl.: Budapesti Krt" required/>
+                <br></br>
+                <div className="labello">
+                <label className="form__label" htmlFor="megallo">Megálló:</label>
+                </div>
 
-                <label className="form__label" htmlFor="arrive">Végállomás:</label>
-                <input className="form__input" type="text" id="arrive"  name="arrive"  placeholder="pl.: Tarján" required/>
+<div className="input_container_to_db">
+    <div className="input_container_1">
+                <select>
+                    <option>Megálló kiválasztása</option>
+                </select>
+    </div>
+                <div className="input_container_2">
+                <input type="time" id="time" name="time" required></input>
+    </div>
+</div>
+                
                 <button onClick={createService} >Adatot feltölt</button>
                 </form>
             </div>

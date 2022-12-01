@@ -33,7 +33,9 @@ function App() {
           <Route path="/Menetrendek/Bus" element={<Bus/>}/>
           <Route path="/Menetrendek/Villamos" element={<Villamos/>}/>
           <Route path="/Menetrendek/Troli" element={<Troli/>}/>
-          {bevagyjelentkezeveBaszod && bevagyjelentkezeveBaszod.isAdmin && <Route path="/Menetrendek/AdminMenu" element={<AdminMenu/>}/>}
+          {/*bevagyjelentkezeveBaszod && bevagyjelentkezeveBaszod.isAdmin &&
+            */
+           <Route path="/Menetrendek/AdminMenu" element={<AdminMenu/>}/>}
           {bevagyjelentkezeveBaszod &&<Route path="/News" element={<News/>}/>}
           <Route path="/Help" element={<Help/>}></Route>
           {bevagyjelentkezeveBaszod && <Route path="/Profil" element={<Profil/>}></Route>}
