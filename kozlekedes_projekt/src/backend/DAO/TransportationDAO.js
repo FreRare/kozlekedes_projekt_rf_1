@@ -248,13 +248,13 @@ class TransportationDAO{
         })
     }
 
-    createService(service){
+    createService(serviceNumber, serviceType){
         return new Promise((resolve, reject)=>{
-            if(!service instanceof Service){
+            if(typeof serviceNumber !== "string" || typeof serviceNumber){
                 console.error('Inavlid service!')
                 reject(false);
             }
-            this.db.query(TransportationDAO.QUERIES.createServiceQuery, [service.ID, service.serviceNumber, service.serviceType], (err, result) => {
+            this.db.query(TransportationDAO.QUERIES.createServiceQuery, [service.serviceNumber, service.serviceType, service.id], (err, result) => {
                 if(err){
                     reject(err);
                 }
@@ -291,7 +291,7 @@ class TransportationDAO{
                     reject(err);
                 }
                 console.log("Járat törölve!");
-                resolve(result);
+                resolve(true);
             })
         })
     }

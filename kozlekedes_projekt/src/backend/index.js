@@ -48,9 +48,36 @@ const CONTROL = new Control();
      res.end();
  });
 
- router.post('/api/deleteService', (req, res)=>{
-     //TODO: delete the service from db (req.body.id)
+ router.post('/api/deleteService', (req, response)=>{
+     const id = req.body.id;
+     CONTROL.deleteService(id).then((result)=>{
+         if(result){
+             response.json({success: true});
+             response.end();
+         }
+         else{
+             response.json({success: false, error:"Törlés nem sikerült!"});
+             response.end();
+         }
+     }).catch(e=>console.log(e));
  });
+
+/*
+ router.post('/api/createService', (req, response)=>{
+     const id = req.body.id;
+     const
+     CONTROL.createService(id).then((result)=>{
+         if(result){
+             response.json({success: true});
+             response.end();
+         }
+         else{
+             response.json({success: false, error:"Törlés nem sikerült!"});
+             response.end();
+         }
+     }).catch(e=>console.log(e));
+ });
+*/
 
  router.get('/api/profile', (req, res)=>{
      setTimeout(()=>{
@@ -86,6 +113,12 @@ const CONTROL = new Control();
          response.json({success: false, error: "Nem egyező jelszó!"});
          response.end();
      }
+ });
+
+ router.get('api/getStops', (req, response)=>{
+     CONTROL.getStops().then(res=>{
+        response.json({stops: res});
+     });
  });
 
  router.post('/api/register', (req, response)=>{

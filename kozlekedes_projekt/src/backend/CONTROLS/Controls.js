@@ -96,6 +96,17 @@ class Controls{
            }
         });
     }
+    async deleteService(id){
+        return await this.DAO.deleteService(id).then(res=>{
+            console.log("deleteService", res);
+            if(res){
+                return true;
+            }
+        }).catch(e=>{
+            console.log(e);
+            return false;
+        });
+    }
 
     async selectBuses(){
         if(this.DAO.serviceList.length > 0){
@@ -212,6 +223,12 @@ class Controls{
     getUsers(){
         return this.DAO.getAllUser().then(res=>{
             return res;
+        });
+    }
+
+    getStops(){
+        return this.DAO.getAllStopMagyarulMegallo().then(res=>{
+           return res;
         });
     }
 
