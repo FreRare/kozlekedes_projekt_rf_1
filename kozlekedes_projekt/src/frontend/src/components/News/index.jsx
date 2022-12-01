@@ -19,6 +19,7 @@ const News = () => {
                 <div className="news-row " key={index}>
                     <h2>{n.title}</h2>
                     <h3>{n.description}</h3>
+                    {JSON.parse(sessionStorage.getItem('loggedin')).isAdmin && <button onClick={deleteNews()}>Törlés</button>}
                 </div>
 
             )));
@@ -74,6 +75,24 @@ const News = () => {
     </form>
         </>
     )
+
+    const deleteNews=(id)=>{
+        fetch('api/deleteNews', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: id
+        }).then(res=>res.json()).then(res=>{
+            if(res.success){
+                console.log('Hír törölve');
+                setNews(undefined);
+            }else{
+                setError(res.error);
+            }
+        }).catch(e=>console.error(e));
+    }
 
     return(
         <>
