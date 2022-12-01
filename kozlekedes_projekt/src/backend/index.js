@@ -56,28 +56,27 @@ const CONTROL = new Control();
              response.end();
          }
          else{
-             response.json({success: false, error:"Törlés nem sikerült!"});
+             response.json({success: false, error:"Járat törlés nem sikerült!"});
              response.end();
          }
      }).catch(e=>console.log(e));
  });
 
-/*
  router.post('/api/createService', (req, response)=>{
-     const id = req.body.id;
-     const
-     CONTROL.createService(id).then((result)=>{
-         if(result){
+     const serviceNumber = req.body.serviceNumber;
+     const serviceType = req.body.serviceType;
+     const stops = req.body.stops;
+     CONTROL.createService(serviceNumber, serviceType, stops).then(res=>{
+         if(res){
              response.json({success: true});
              response.end();
          }
          else{
-             response.json({success: false, error:"Törlés nem sikerült!"});
+             response.json({success: false, error:"Járat hozzáadás nem sikerült!"});
              response.end();
          }
      }).catch(e=>console.log(e));
  });
-*/
 
  router.get('/api/profile', (req, res)=>{
      setTimeout(()=>{
@@ -90,6 +89,20 @@ const CONTROL = new Control();
          }
      }, 1000);
 
+ });
+
+ router.post('api/deleteNews', (req, response)=>{
+    const ID = req.body.ID;
+    CONTROL.deleteNews(ID).then(res=>{
+        if(res){
+            response.json({success: true});
+            response.end();
+        }
+        else{
+            response.json({success: false, error:"Nem sikerült törölni a hírt!"});
+            response.end();
+        }
+    });
  });
 
  router.post('/api/updateUser',(req, response)=>{
@@ -201,7 +214,7 @@ const CONTROL = new Control();
     CONTROL.createNews(category, title, description, publishDate).then(res=>{
         console.log("control createNews", res);
         if(res){
-            response.json({success: true});
+            response.json({success: true, news: res});
             response.end();
         }else{
             response.json({success: false, error:"Nem megfelelő news!"});

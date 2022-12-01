@@ -15,7 +15,7 @@ class TransportationDAO{
         updateUserTicketIdentifierQuery: 'UPDATE UTAS SET jegyAzonosito = ? WHERE email = ?',
         updateUserPassIdentifierQuery: 'UPDATE UTAS SET berletAzonosito = ? WHERE email = ?',
         deleteUserQuery: 'DELETE FROM UTAS WHERE email = ?',
-        createServiceQuery: 'INSERT INTO JARAT VALUES(?, ?, ?)',
+        createServiceQuery: 'INSERT (vonalszam), (tipus) INTO JARAT VALUES(?, ?)',
         updateServiceQuery: 'UPDATE JARAT SET vonalszam =?, tipus= ? WHERE id = ?',
         deleteServiceQuery: 'DELETE FROM JARAT WHERE id =?',
         getServiceQuery: 'SELECT * FROM JARAT WHERE id = ?',
@@ -254,7 +254,7 @@ class TransportationDAO{
                 console.error('Inavlid service!')
                 reject(false);
             }
-            this.db.query(TransportationDAO.QUERIES.createServiceQuery, [service.serviceNumber, service.serviceType, service.id], (err, result) => {
+            this.db.query(TransportationDAO.QUERIES.createServiceQuery, [serviceNumber, serviceType], (err, result) => {
                 if(err){
                     reject(err);
                 }
@@ -610,6 +610,7 @@ class TransportationDAO{
             })
         });
     }
+
     createStopping(stopping){
         return new Promise((resolve, reject)=>{
             if(!stopping instanceof Stopping){
