@@ -59,6 +59,15 @@ class Controls{
         }).catch(e=>console.log("createNews control error", e));
     }
 
+    deleteNews(ID){
+        return this.DAO.deleteNews(ID).then(res=>{
+           console.log("deleteNews control", res);
+           if(res){
+               return true;
+           }
+           return false;
+        });
+    }
 
     // TODO: Vásárlások kezeléséhez tartozó üzleti logika (listázás, módosítás, létrehozása, törlése)
     // Random bankártya adatok bekérése, nincs mentés

@@ -91,6 +91,20 @@ const CONTROL = new Control();
 
  });
 
+ router.post('api/deleteNews', (req, response)=>{
+    const ID = req.body.ID;
+    CONTROL.deleteNews(ID).then(res=>{
+        if(res){
+            response.json({success: true});
+            response.end();
+        }
+        else{
+            response.json({success: false, error:"Nem sikerült törölni a hírt!"});
+            response.end();
+        }
+    });
+ });
+
  router.post('/api/updateUser',(req, response)=>{
      const firstName = req.body.firstName;
      const lastName = req.body.lastName;
