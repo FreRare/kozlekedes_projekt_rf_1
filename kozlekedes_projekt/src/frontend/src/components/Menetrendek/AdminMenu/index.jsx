@@ -13,18 +13,18 @@ const AdminMenu = () => {
             let stops = res.stops;
             console.log("Stops Data got successfully!", stops);
             let stopList = stops.map((b, index)=>(
-                <select >
-                <option></option>
-            </select>
+                <select key={index}>
+                <option>b.name</option>
+                </select>
             ));
             setStopList(stopList);
 
         }).catch(e=>{
-            console.error(e);
-            setTramsList((
-            <tr>
-                <td>NO DATA FOUND!</td>
-            </tr>
+            console.log("Szar a valami ez van",e);
+            setStopList((
+           <select>
+            <option>NO DATA FOUND</option>
+           </select>
             ));
         });
     }
@@ -46,7 +46,7 @@ const AdminMenu = () => {
             method: 'get'
         }).then(res=>res.json()).then(res=>{
             let bus = res.bus;
-            console.log("Bus Data got successfully!", bus);
+            //console.log("Bus Data got successfully!", bus);
             let busList = bus.map((b, index)=>(
                     <tr key={index}>
                         <td>{b.serviceNumber}</td>
@@ -73,7 +73,7 @@ const AdminMenu = () => {
             method: 'get'
         }).then(res=>res.json()).then(res=>{
             let trams = res.trams;
-            console.log("Tram Data got successfully!", trams);
+            //console.log("Tram Data got successfully!", trams);
             let tramList = trams.map((b, index)=>(
                     <tr key={index}>
                         <td>{b.serviceNumber}</td>
@@ -101,7 +101,7 @@ const AdminMenu = () => {
             method: 'get'
         }).then(res=>res.json()).then(res=>{
             let trolley = res.trolley;
-            console.log("Trolley Data got successfully!", trolley);
+            //console.log("Trolley Data got successfully!", trolley);
             let trolleyList = trolley.map((b, index)=>(
                     <tr key={index}>
                         <td>{b.serviceNumber}</td>
@@ -224,9 +224,7 @@ const AdminMenu = () => {
 
 <div className="input_container_to_db">
     <div className="input_container_1">
-                <select>
-                    <option>Megálló kiválasztása</option>
-                </select>
+                {stopList}
     </div>
                 <div className="input_container_2">
                 <input type="time" id="time" name="time" required></input>
