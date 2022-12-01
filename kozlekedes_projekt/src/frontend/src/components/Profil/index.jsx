@@ -39,6 +39,10 @@ const Profil = () =>{
     const [pass2, setPass2] = useState('');
 
     const updateProfile = ()=>{
+        if(firstName.length <= 0 || lastName.length <= 0 || pass.length<=0 || pass2.length <=0){
+            setError('Minden mezőt ki kell tölteni!');
+            return;
+        }
         fetch('/api/updateUser', {
             method: 'POST',
             headers: {
@@ -66,8 +70,8 @@ const Profil = () =>{
                     <input type="text" className="firstName" placeholder="Vezetéknév" name='firstName' onChange={e=>setFirstName(e.target.value)}></input>
                     <input type="text" className="lastName" placeholder="Keresztnév" name='lastName' onChange={e=>setLastName(e.target.value)}></input>
                     <p>Jelszó módósítása:</p>
-                    <input type="text" className="username" placeholder="Jelszó" name='password' onChange={e=>setPass(e.target.value)}></input>
-                    <input type="text" className="username" placeholder="Jelszó megerősítése" name='passwordAgain' onChange={e=>setPass2(e.target.value)}></input>
+                    <input type="password" className="username" placeholder="Jelszó" name='password' onChange={e=>setPass(e.target.value)}></input>
+                    <input type="password" className="username" placeholder="Jelszó megerősítése" name='passwordAgain' onChange={e=>setPass2(e.target.value)}></input>
                     <button onClick={updateProfile} value="Változtatások mentése">Változtatások mentése</button>
                 </form>
             </div>

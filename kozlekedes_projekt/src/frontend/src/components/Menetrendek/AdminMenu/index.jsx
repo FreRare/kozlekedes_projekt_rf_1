@@ -3,6 +3,7 @@ import './index.scss';
 import {useNavigate} from "react-router-dom";
 
 const AdminMenu = () => {
+
     //Lists
     const [busesList, setBusesList] = useState([]);
     const [tramsList, setTramsList] = useState([]);
@@ -110,12 +111,14 @@ const AdminMenu = () => {
         }).catch(e=>console.error(e));
     }
 
-    const [number, setNumber] = useState(0);
-    const [depart, setDepart] = useState('');
-    const [arrive, setArrive] = useState('');
+    const [number, setNumber] = useState('');
+    const [type, setType] = useState('');
 
-    const createService = ()=>{
-        //TODO: create service in db
+    const redirectToCreateService = ()=>{
+        sessionStorage.setItem('serviceNumber', JSON.stringify(number));
+        sessionStorage.setItem('serviceType', JSON.stringify(type));
+        nav('/menetrendek/adminMenu/adminMenuList');
+        nav(0);
     }
 
     return(
@@ -177,20 +180,17 @@ const AdminMenu = () => {
                 <label className="form__label" htmlFor="id">Járatszám:</label>
                 <input className="form__input" type="text" id="id" name="id"  placeholder="pl.: 32" onChange={e=>setNumber(e.target.value)}/>
 
-                <label className="form__label" htmlFor='type'>
-                    Service type:
-                </label>
-                    <select name="type" id='type'>
-                        <option>Busz</option>
-                        <option>Villamos</option>
-                        <option>Trolibusz</option>
-                    </select>
-                    
+                    <label htmlFor='type' className="form__label">
+                        Service type:
+                        </label>
+                        <select name="type" id='type' onChange={e=>setType(e.target.value)}>
+                            <option>Busz</option>
+                            <option>Villamos</option>
+                            <option>Trolibusz</option>
+                        </select>
 
-                
-                
-                
-                <button onClick={createService} >Megállók megadása</button>
+
+                <button onClick={redirectToCreateService} >Megállók megadása</button>
                 </form>
             </div>
         </div>
