@@ -40,7 +40,7 @@ function App() {
           {bevagyjelentkezeveBaszod && bevagyjelentkezeveBaszod.isAdmin &&
            <Route path="/Menetrendek/AdminMenu" element={<AdminMenu/>}/>}
            {bevagyjelentkezeveBaszod && bevagyjelentkezeveBaszod.isAdmin &&
-           <Route path="/Menetrendek/AdminMenuList" element={<AdminMenuList/>}/>}
+           <Route path="/Menetrendek/AdminMenu/AdminMenuList" element={<AdminMenuList/>}/>}
           {bevagyjelentkezeveBaszod &&<Route path="/News" element={<News/>}/>}
           <Route path="/Help" element={<Help/>}></Route>
           {bevagyjelentkezeveBaszod && <Route path="/Profil" element={<Profil/>}></Route>}
