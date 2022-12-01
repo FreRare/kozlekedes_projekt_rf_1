@@ -39,7 +39,7 @@ class TransportationDAO{
         updateStoppingQuery: 'UPDATE megall SET mikor = ? WHERE ID = ? AND nev = ?',
         deleteStoppingQuery: 'DELETE FROM megall WHERE ID = ? AND nev = ?',
         getStoppingQuery: 'SELECT * FROM MEGALL WHERE ID = ? ORDER BY mikor',
-        createNewsQuery: 'INSERT INTO HIRFOLYAM VALUES (?, ?, ?, ?, ?)',
+        createNewsQuery: 'INSERT (kategoria), (cim), (leiras), (kozzetetel_datum) INTO HIRFOLYAM VALUES (?, ?, ?, ?)',
         updateNewsQuery: 'UPDATE HIRFOLYAM SET kategoria = ?, cim = ?, leiras = ? kozzetetel_datum = ?',
         deleteNewsQuery: 'DELETE FROM HIRFOLYAM WHERE ID = ?',
         getNewsQuery: 'SELECT * FROM HIRFOLYAM'
@@ -552,7 +552,7 @@ class TransportationDAO{
                 console.error('Inavlid news!')
                 reject(false);
             }
-            this.db.query(TransportationDAO.QUERIES.createNewsQuery, [news.ID, news.category, news.title, news.description, news.publishDate], (err, result) => {
+            this.db.query(TransportationDAO.QUERIES.createNewsQuery, [news.category, news.title, news.description, news.publishDate], (err, result) => {
                 if(err){
                     reject(err);
                 }

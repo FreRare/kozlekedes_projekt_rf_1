@@ -193,6 +193,23 @@ const CONTROL = new Control();
      });
  });
 
+ router.post('/api/createNews', (req, response)=>{
+    const category = req.body.category;
+    const title = req.body.title;
+    const description = req.body.description;
+    const publishDate = req.body.publishDate;
+    CONTROL.createNews(category, title, description, publishDate).then(res=>{
+        console.log("control createNews", res);
+        if(res){
+            response.json({success: true});
+            response.end();
+        }else{
+            response.json({success: false, error:"Nem megfelelő news!"});
+            response.end();
+        }
+    });
+ });
+
  router.get('*', (req, res)=>{
     res.sendFile(path.resolve(__dirname, '../frontend/build', 'index.html'));
  });
