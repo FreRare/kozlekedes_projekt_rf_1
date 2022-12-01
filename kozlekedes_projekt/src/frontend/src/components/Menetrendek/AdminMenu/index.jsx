@@ -28,11 +28,6 @@ const AdminMenu = () => {
             ));
         });
     }
-    
-    
-    
-    
-
 
     //Lists
     const [busesList, setBusesList] = useState([]);
@@ -141,12 +136,14 @@ const AdminMenu = () => {
         }).catch(e=>console.error(e));
     }
 
-    const [number, setNumber] = useState(0);
-    const [depart, setDepart] = useState('');
-    const [arrive, setArrive] = useState('');
+    const [number, setNumber] = useState('');
+    const [type, setType] = useState('');
 
-    const createService = ()=>{
-        //TODO: create service in db
+    const redirectToCreateService = ()=>{
+        sessionStorage.setItem('serviceNumber', JSON.stringify(number));
+        sessionStorage.setItem('serviceType', JSON.stringify(type));
+        nav('/menetrendek/adminMenu/adminMenuList');
+        nav(0);
     }
 
     return(
@@ -207,10 +204,9 @@ const AdminMenu = () => {
                 <form>
                 <label className="form__label" htmlFor="id">Járatszám:</label>
                 <input className="form__input" type="text" id="id" name="id"  placeholder="pl.: 32" onChange={e=>setNumber(e.target.value)}/>
-
                     <label htmlFor='type'>
                         Service type:
-                        <select name="type" id='type'>
+                        <select name="type" id='type' onChange={e=>setType(e.target.value)}>
                             <option>Busz</option>
                             <option>Villamos</option>
                             <option>Trolibusz</option>
@@ -231,7 +227,7 @@ const AdminMenu = () => {
     </div>
 </div>
                 
-                <button onClick={createService} >Adatot feltölt</button>
+                <button onClick={redirectToCreateService} >Adatot feltölt</button>
                 </form>
             </div>
         </div>
