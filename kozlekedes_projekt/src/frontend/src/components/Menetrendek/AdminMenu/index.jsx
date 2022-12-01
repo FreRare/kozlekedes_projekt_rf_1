@@ -204,7 +204,7 @@ const AdminMenu = () => {
                 <form>
                 <label className="form__label" htmlFor="id">Járatszám:</label>
                 <input className="form__input" type="text" id="id" name="id"  placeholder="pl.: 32" onChange={e=>setNumber(e.target.value)}/>
-                    <label htmlFor='type'>
+                    <label htmlFor='type' className='form__label'>
                         Service type:
                         <select name="type" id='type' onChange={e=>setType(e.target.value)}>
                             <option>Busz</option>

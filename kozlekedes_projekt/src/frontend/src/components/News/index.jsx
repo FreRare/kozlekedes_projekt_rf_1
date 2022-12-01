@@ -6,6 +6,7 @@ const News = () => {
 
     const [news, setNews] = useState(undefined);
     //const [newsDisplay, setNewsDisplay] = useState(<></>);
+    const [error, setError] = useState('');
 
     let displayNews;
 
@@ -25,6 +26,55 @@ const News = () => {
         }).catch(e => console.error(e));
     }
 
+    const [newsData, setNewsData] = useState({
+        category: '',
+        title: '',
+        description: '',
+        publishDate: new Date()
+    })
+
+    const updateData = (e)=>{
+        setNewsData({ ...newsData, [e.target.name]: e.target.value });
+        newsData.publishDate = new Date();
+    }
+
+    const addNews = ()=>{
+        for(let d of newsData){
+            if(!d){
+                setError('Minden mező kitöltése kötelező!');
+                return;
+            }
+        }
+        fetch('/api/createNews', {
+         method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newsData)
+        }).then(res=>res.json()).then(res=>{
+            if(res.success){
+                console.log('News added successfully');
+                let newNews = news.push(res.news);
+                setNews(newNews);
+            }else{
+                setError(res.error);
+            }
+        })
+    }
+
+    const  addNewsForAdmin = (
+        <>
+        <h3>Hír hozzáadása</h3>
+    <form>
+        <input type="text" placeholder="Kategória" onChange={(e)=>updateData(e)}></input>
+        <input type="text" placeholder="Cím" onChange={(e)=>updateData(e)}></input>
+        <textarea placeholder="Leírás" onChange={(e)=>updateData(e)}></textarea>
+        <button onClick={addNews}>Hír feltöltése</button>
+    </form>
+        </>
+    )
+
     return(
         <>
             <h1>Hírfolyam</h1>
@@ -33,15 +83,7 @@ const News = () => {
                 {news}
             </div>
             <div className="news-subscription">
-                <p>Szeretnél feliratkozni hírlevelünkre?</p>
-                <p>Írd be e-mail címedet, s küldd el nekünk kérésed</p>
-                <form>
-
-                    <input type="email" placeholder="gyurcsanyaferi@akigyok-kigyoznak.hu"></input>
-
-                    <input type="submit" placeholder="Elküldés"></input>
-
-                </form>
+                {JSON.parse(sessionStorage.getItem('loggedin')).isAdmin && addNewsForAdmin}
             </div>
         </div>
         </>
