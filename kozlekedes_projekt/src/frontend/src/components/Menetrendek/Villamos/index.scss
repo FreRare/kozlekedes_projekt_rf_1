@@ -20,10 +20,9 @@
 }
 
 .menetrendek{
-    overflow: hidden;
+    /*overflow: hidden;*/
     padding: 0;
-    margin: 0;
-    display: block;
+    display: flex;
     position: relative;
     width: 35%;
     height: 100%;
@@ -36,21 +35,21 @@
         border: 1px solid black;
         margin: 20px;
         padding: 2%;
+        display: flex;
 
         .ticket-list-1, .ticket-list-2{
-            display: inline-block;
+            display: flex;
             list-style-type: none;
-            position: relative;
             opacity: 0;
             animation: fadeInUp 1s 1s;
             animation-fill-mode: forwards;
             clear: both;
 
         }
-
         .ticket-list-2{
             float:right;
             margin-right: 150px;
+            display: flex;
         }
 
 

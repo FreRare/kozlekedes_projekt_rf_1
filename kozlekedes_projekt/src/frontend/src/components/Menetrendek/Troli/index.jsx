@@ -27,9 +27,9 @@ const Troli = () => {
                             <li>Hová: {b.stops[b.stops.length-1].name}</li>
                         </ul>
                         {sessionStorage.getItem('loggedin') &&
-                            <li><button onClick={() => {
+                            <button onClick={() => {
                                 ticketPurchase(b.id);
-                            }}>Megveszem</button></li>
+                            }}>Megveszem</button>
                         }
                     </div>
                 </div>

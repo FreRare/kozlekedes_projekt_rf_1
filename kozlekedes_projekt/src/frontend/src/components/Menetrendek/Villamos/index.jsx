@@ -8,6 +8,7 @@ const Villamos = () => {
 
     const [tramsList, setTramsList] = useState([]);
     const [error, setError] = useState('');
+    const [markersOfTram, setMarkersOfTram] = useState();
     let tramList;
     let trams = [];
     if(tramsList.length <= 0){
@@ -26,10 +27,11 @@ const Villamos = () => {
                             <li>Honnan: {b.stops[0].name}</li>
                             <li>Hová: {b.stops[b.stops.length-1].name}</li>
                         </ul>
+                        <button onClick={()=>setMapMarkers(b.id)}>Részletek</button>
                         {sessionStorage.getItem('loggedin') &&
-                            <li><button onClick={() => {
+                            <button onClick={() => {
                                 ticketPurchase(b.id);
-                            }}>Megveszem</button></li>
+                            }}>Megveszem</button>
                         }
                     </div>
                 </div>
@@ -58,6 +60,21 @@ const Villamos = () => {
             }
         })
     }
+    const setMapMarkers = (id)=> {
+        console.log('Setting up markers, tramsList: ', tramsList)
+        for(let t of trams){
+            console.log('Tram stops:', t.stops);
+            if(t.id === id) {
+                setMarkersOfTram(t.stops.map((stop, stopIndex) => (
+                    <Marker position={stop.location} key={stopIndex}>
+                        <Popup>
+                            {stop.name}
+                        </Popup>
+                    </Marker>
+                )));
+            }
+        }
+    }
 
     return(
         <>
@@ -68,18 +85,13 @@ const Villamos = () => {
                 <div className="menetrendek">
                     {tramsList}
                 </div>
-
                 <div className="map-wrap">
                     <MapContainer center={position} zoom={13} scrollWheelZoom={false}>
                         <TileLayer
                             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                         />
-                        <Marker position={position}>
-                            <Popup>
-                                Pusztulat mennyiségben fogunk még ezzel szenvedni <br />
-                            </Popup>
-                        </Marker>
+                        {markersOfTram}
                     </MapContainer>
                 </div>
             </div>

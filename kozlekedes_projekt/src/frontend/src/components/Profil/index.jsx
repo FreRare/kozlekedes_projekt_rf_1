@@ -19,7 +19,7 @@ const Profil = () =>{
                 setJegy(
                     <>
                         <p>
-                            Érvényes: {ticket.validity}
+                            Érvényes: {ticket.validity.split(':')[0] + ':' + ticket.validity.split(':')[1]}
                         </p>
                         <p>
                             Járat: {ticket.serviceTheTicketIsFor}
@@ -70,10 +70,10 @@ const Profil = () =>{
                     <input type="text" className="firstName" placeholder="Vezetéknév" name='firstName' onChange={e=>setFirstName(e.target.value)}></input>
                     <input type="text" className="lastName" placeholder="Keresztnév" name='lastName' onChange={e=>setLastName(e.target.value)}></input>
                     <p>Jelszó módósítása:</p>
-                    <input type="password" className="username" placeholder="Jelszó" name='password' onChange={e=>setPass(e.target.value)}></input>
+                    <input type="password" className="username" placeholder="Új jelszó" name='password' onChange={e=>setPass(e.target.value)}></input>
                     <input type="password" className="username" placeholder="Jelszó megerősítése" name='passwordAgain' onChange={e=>setPass2(e.target.value)}></input>
-                    <button onClick={updateProfile} value="Változtatások mentése">Változtatások mentése</button>
                 </form>
+                <button onClick={updateProfile} value="Változtatások mentése">Változtatások mentése</button>
             </div>
             <div className="history">
                 <div className="ticket-infos">

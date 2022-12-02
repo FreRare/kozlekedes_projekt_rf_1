@@ -38,7 +38,7 @@ class TransportationDAO{
         createStoppingQuery: 'INSERT INTO megall VALUES (?, ?, ?)',
         updateStoppingQuery: 'UPDATE megall SET mikor = ? WHERE ID = ? AND nev = ?',
         deleteStoppingQuery: 'DELETE FROM megall WHERE ID = ? AND nev = ?',
-        getStoppingQuery: 'SELECT * FROM MEGALL WHERE ID = ? ORDER BY mikor',
+        getStoppingQuery: 'SELECT MEGALL.ID AS ID, MEGALL.nev AS nev, MEGALL.mikor AS mikor, MEGALLO.hely AS hely FROM MEGALL INNER JOIN MEGALLO ON MEGALL.nev=MEGALLO.nev WHERE MEGALL.ID = ? ORDER BY mikor',
         createNewsQuery: 'INSERT INTO HIRFOLYAM (cim, kategória, leiras, kozzetel_datum) VALUES (?, ?, ?, ?)',
         updateNewsQuery: 'UPDATE HIRFOLYAM SET kategória = ?, cim = ?, leiras = ?, kozzetel_datum = ?',
         deleteNewsQuery: 'DELETE FROM HIRFOLYAM WHERE ID = ?',
@@ -89,13 +89,9 @@ class TransportationDAO{
                     for (let ser of result) {
                         let lofasz = new Service(ser['ID'],ser['vonalszam'], ser['tipus']);
                         this.getStopping(lofasz.id).then((res)=>{
-                            for(let i of res){
-                                lofasz.stops.push(i);
-                            }
-                        }).then(()=>{
-                            //console.log(lofasz);
+                            lofasz.stops = res;
                             queryResult.push(lofasz);
-                        })
+                        });
                     }
                     setTimeout(()=>{
                         //console.log("getAllservices", queryResult);
@@ -516,13 +512,18 @@ class TransportationDAO{
                 if(err){
                     reject(err);
                 }
-                console.log("Megálló visszaadva!");
-                console.log(result);
+                //console.log("Megálló visszaadva!");
+                //console.log(result);
                 resolve(new Stop(result["nev"], result["hely"]));
             })
         })
     }
 
+    /**
+     * Returns the stops with timestamp for the given serviceid
+     * @param id the id of the service
+     * @returns {Promise<Array<Stop>>}
+     */
     getStopping(id){
         return new Promise((resolve, reject)=>{
             if(typeof id !== "number"){
@@ -539,7 +540,7 @@ class TransportationDAO{
                 // console.log("Megáll visszaadva!");
                 let stoppings = [];
                 for(let res of result) {
-                    stoppings.push(new Stopping(res["ID"], res["nev"], res["mikor"]));
+                    stoppings.push(new Stop(res["nev"], res['hely'], res["mikor"]));
                 }
                 resolve(stoppings);
             })
