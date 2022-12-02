@@ -68,7 +68,8 @@ const Villamos = () => {
                 setMarkersOfTram(t.stops.map((stop, stopIndex) => (
                     <Marker position={stop.location} key={stopIndex}>
                         <Popup>
-                            {stop.name}
+                            {stop.name}<br></br>
+                            {"Időpontok: " + stop.arrivalTime}
                         </Popup>
                     </Marker>
                 )));
