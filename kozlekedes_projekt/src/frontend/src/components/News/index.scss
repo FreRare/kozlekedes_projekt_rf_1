@@ -1,4 +1,9 @@
+html{
+    height: 1500px;
+}
+
 .news-wrapper{
+    height: 100%;
     width: 100%;
     overflow: hidden;
     margin-top: 80px;
@@ -18,7 +23,7 @@ h1{
 .news-container{
     
     width: 60%;
-    height: 770px;
+    height: 100%;
     float: left;
     overflow: hidden;
     display: flex;
@@ -28,10 +33,12 @@ h1{
 }
 
 .news-row{
+    display: flex;
+    flex-direction: column;
     border: 2px solid black;
     border-radius: 20px;
     width: 99%;
-    height: 150px;
+    height: 300px;
     margin-bottom: 20px;
     box-shadow: 10px 2px 2px 2px #484848;
     padding: 3%;
@@ -89,32 +96,28 @@ h1{
             border: none;
             background-color: #f3f3f3;
         }
-    
-        button{
-            padding: 15px 25px;
-            font-size: 24px;
-            text-align: center;
-            cursor: pointer;
-            outline: none;
-            color: #fff;
-            background-color: #0578ba;
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 4px #999;
-            margin-top: 70px;
-    
-            &:hover{
-                background-color: #00cdcd
-            }
-    
-            &:active{
-            background-color: #00ff22;
-            box-shadow: 0 5px rgb(138, 138, 138);
-            transform: translateY(4px);
-            }
         }
     }
-    
+button{
+    padding: 15px 25px;
+    font-size: 24px;
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+    color: #fff;
+    background-color: #0578ba;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px #999;
+    margin-top: 70px;
+    &:hover{
+        background-color: #00cdcd
+    }
 
-    
+    &:active{
+        background-color: #00ff22;
+        box-shadow: 0 5px rgb(138, 138, 138);
+        transform: translateY(4px);
+    }
+
 }

@@ -3,14 +3,19 @@ class News{ //HIRFOLYAM
     category; //kategoria
     title; //cim
     description; //leiras
-    publishDate; //kozzetel_datum
+    _publishDate; //kozzetel_datum
 
     constructor(ID = 0, category = "", title = "", description = "", publishDate = new Date()) {
         this.ID = ID;
         this.category = category;
         this.title = title;
         this.description = description;
-        this.publishDate = publishDate;
+        this._publishDate = publishDate;
+    }
+
+    publishDate(){
+        let isoString = this._publishDate.toISOString();
+        return isoString.split('T')[0]
     }
 }
 

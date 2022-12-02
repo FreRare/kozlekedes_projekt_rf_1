@@ -62,11 +62,8 @@ class Controls{
     deleteNews(ID){
         return this.DAO.deleteNews(ID).then(res=>{
            console.log("deleteNews control", res);
-           if(res){
-               return true;
-           }
-           return false;
-        });
+           return res;
+        }).catch(e=>console.error(e));
     }
 
     // TODO: Vásárlások kezeléséhez tartozó üzleti logika (listázás, módosítás, létrehozása, törlése)

@@ -15,7 +15,7 @@ class TransportationDAO{
         updateUserTicketIdentifierQuery: 'UPDATE UTAS SET jegyAzonosito = ? WHERE email = ?',
         updateUserPassIdentifierQuery: 'UPDATE UTAS SET berletAzonosito = ? WHERE email = ?',
         deleteUserQuery: 'DELETE FROM UTAS WHERE email = ?',
-        createServiceQuery: 'INSERT (vonalszam), (tipus) INTO JARAT VALUES(?, ?)',
+        createServiceQuery: 'INSERT INTO JARAT (vonalszam, tipus) VALUES(?, ?)',
         updateServiceQuery: 'UPDATE JARAT SET vonalszam =?, tipus= ? WHERE id = ?',
         deleteServiceQuery: 'DELETE FROM JARAT WHERE id =?',
         getServiceQuery: 'SELECT * FROM JARAT WHERE id = ?',
@@ -39,8 +39,8 @@ class TransportationDAO{
         updateStoppingQuery: 'UPDATE megall SET mikor = ? WHERE ID = ? AND nev = ?',
         deleteStoppingQuery: 'DELETE FROM megall WHERE ID = ? AND nev = ?',
         getStoppingQuery: 'SELECT * FROM MEGALL WHERE ID = ? ORDER BY mikor',
-        createNewsQuery: 'INSERT (kategoria), (cim), (leiras), (kozzetetel_datum) INTO HIRFOLYAM VALUES (?, ?, ?, ?)',
-        updateNewsQuery: 'UPDATE HIRFOLYAM SET kategoria = ?, cim = ?, leiras = ? kozzetetel_datum = ?',
+        createNewsQuery: 'INSERT INTO HIRFOLYAM (cim, kategória, leiras, kozzetel_datum) VALUES (?, ?, ?, ?)',
+        updateNewsQuery: 'UPDATE HIRFOLYAM SET kategória = ?, cim = ?, leiras = ?, kozzetel_datum = ?',
         deleteNewsQuery: 'DELETE FROM HIRFOLYAM WHERE ID = ?',
         getNewsQuery: 'SELECT * FROM HIRFOLYAM'
     }
@@ -552,12 +552,12 @@ class TransportationDAO{
                 console.error('Inavlid news!')
                 reject(false);
             }
-            this.db.query(TransportationDAO.QUERIES.createNewsQuery, [news.category, news.title, news.description, news.publishDate], (err, result) => {
+            this.db.query(TransportationDAO.QUERIES.createNewsQuery, [news.title, news.category, news.description, news.publishDate()], (err, result) => {
                 if(err){
                     reject(err);
                 }
-                console.log("Sikeres hír létrehozás!");
-                resolve(result);
+                    console.log("Sikeres hír létrehozás!");
+                    resolve(result);
             });
         });
     }
@@ -587,8 +587,12 @@ class TransportationDAO{
                 if(err){
                     reject(err);
                 }
-                console.log("Hír törölve!");
-                resolve(result);
+                if(result){
+                    console.log("Hír törölve!", result);
+                    resolve(result);
+                }else{
+                    reject(false);
+                }
             })
         })
     }
@@ -604,7 +608,7 @@ class TransportationDAO{
                 console.log('News got successfully');
                 let result = [];
                 for(let res of faszomeredmeny) {
-                    result.push(new News(res['ID'], res['kategoria'], res['cim'], res['leiras'], new Date(res['kozzetetel_datum'])));
+                    result.push(new News(res['ID'], res['kategória'], res['cim'], res['leiras'], new Date(res['kozzetel_datum'])));
                 }
                 resolve(result);
             })

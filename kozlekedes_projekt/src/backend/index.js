@@ -91,8 +91,8 @@ const CONTROL = new Control();
 
  });
 
- router.post('api/deleteNews', (req, response)=>{
-    const ID = req.body.ID;
+ router.post('/api/deleteNews', (req, response)=>{
+    const ID = req.body.id;
     CONTROL.deleteNews(ID).then(res=>{
         if(res){
             response.json({success: true});
@@ -201,7 +201,11 @@ const CONTROL = new Control();
 
  router.get('/api/news', (req, res)=>{
      CONTROL.getNews().then((result)=>{
-         res.json(JSON.stringify(result));
+         //console.log('News to display: ', result);
+         for(let n of result){
+             n._publishDate = n.publishDate();
+         }
+         res.json({news: result});
          res.end();
      });
  });
@@ -210,14 +214,15 @@ const CONTROL = new Control();
     const category = req.body.category;
     const title = req.body.title;
     const description = req.body.description;
-    const publishDate = req.body.publishDate;
+    const publishDate = new Date();
+    console.log('Creating news...');
     CONTROL.createNews(category, title, description, publishDate).then(res=>{
         console.log("control createNews", res);
         if(res){
             response.json({success: true, news: res});
             response.end();
         }else{
-            response.json({success: false, error:"Nem megfelelő news!"});
+            response.json({success: false, error:"Nem sikerült hozzáadni a hírt!"});
             response.end();
         }
     });
