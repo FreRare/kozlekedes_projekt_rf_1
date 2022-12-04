@@ -61,6 +61,7 @@ const News = () => {
                 let newNews = news;
                 newNews.push(res.news);
                 setNews(newNews);
+                setError('Hír sikeresen hozzáadva!');
             }else{
                 setError(res.error);
             }

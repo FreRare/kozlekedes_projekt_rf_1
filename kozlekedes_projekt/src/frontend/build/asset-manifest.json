@@ -1,7 +1,12 @@
 {
   "files": {
+<<<<<<< HEAD
     "main.css": "/static/css/main.728db65b.css",
     "main.js": "/static/js/main.529378af.js",
+=======
+    "main.css": "/static/css/main.dc694e8d.css",
+    "main.js": "/static/js/main.5a2aede6.js",
+>>>>>>> 655ad08ca5d6a4873ee6693d788651940cb1c75c
     "static/js/787.0a661eb2.chunk.js": "/static/js/787.0a661eb2.chunk.js",
     "static/media/pikachu.png": "/static/media/pikachu.078478f52ae2f94ba6fb.png",
     "static/media/pepe.png": "/static/media/pepe.2bc0a4f5f7345e94e58f.png",
@@ -10,6 +15,7 @@
     "static/media/LaBelleAurore.woff2": "/static/media/LaBelleAurore.a83c1c58fd7e43972e4a.woff2",
     "static/media/CoolveticaRg-Regular.woff2": "/static/media/CoolveticaRg-Regular.7d1f3b1dd46ad6557a17.woff2",
     "index.html": "/index.html",
+<<<<<<< HEAD
     "main.728db65b.css.map": "/static/css/main.728db65b.css.map",
     "main.529378af.js.map": "/static/js/main.529378af.js.map",
     "787.0a661eb2.chunk.js.map": "/static/js/787.0a661eb2.chunk.js.map"
@@ -17,5 +23,14 @@
   "entrypoints": [
     "static/css/main.728db65b.css",
     "static/js/main.529378af.js"
+=======
+    "main.dc694e8d.css.map": "/static/css/main.dc694e8d.css.map",
+    "main.5a2aede6.js.map": "/static/js/main.5a2aede6.js.map",
+    "787.0a661eb2.chunk.js.map": "/static/js/787.0a661eb2.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.dc694e8d.css",
+    "static/js/main.5a2aede6.js"
+>>>>>>> 655ad08ca5d6a4873ee6693d788651940cb1c75c
   ]
 }
