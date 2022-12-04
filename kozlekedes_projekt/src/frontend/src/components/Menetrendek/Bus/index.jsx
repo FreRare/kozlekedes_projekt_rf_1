@@ -24,8 +24,8 @@ const Busz = () => {
                             <li>Járatszám: {b.serviceNumber}</li>
                         </ul>
                         <ul className="ticket-list-2">
-                            <li>Honnan: {b.stops[0].name}</li>
-                            <li>Hová: {b.stops[b.stops.length-1].name}</li>
+                            {b.stops.length >0 && <li>Honnan: {b.stops[0].name}</li>}
+                            {b.stops.length >0 && <li>Hová: {b.stops[b.stops.length-1].name}</li>}
                         </ul>
                         <button onClick={()=>setMapMarkers(b.id)}>Részletek</button>
                         {sessionStorage.getItem('loggedin') &&
@@ -63,6 +63,9 @@ const Busz = () => {
     const setMapMarkers = (id)=> {
         console.log('Setting up markers, busesList: ', busesList)
         for(let t of bus){
+            if(t.stops.length <= 0){
+                continue;
+            }
             console.log('Bus stops:', t.stops);
             if(t.id === id) {
                 setMarkersOfBus(t.stops.map((stop, stopIndex) => (

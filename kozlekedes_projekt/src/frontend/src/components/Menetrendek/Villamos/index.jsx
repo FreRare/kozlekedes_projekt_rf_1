@@ -24,8 +24,8 @@ const Villamos = () => {
                             <li>Járatszám: {b.serviceNumber}</li>
                         </ul>
                         <ul className="ticket-list-2">
-                            <li>Honnan: {b.stops[0].name}</li>
-                            <li>Hová: {b.stops[b.stops.length-1].name}</li>
+                            {b.stops.length >0 && <li>Honnan: {b.stops[0].name}</li>}
+                            {b.stops.length >0 && <li>Hová: {b.stops[b.stops.length-1].name}</li>}
                         </ul>
                         <button onClick={()=>setMapMarkers(b.id)}>Részletek</button>
                         {sessionStorage.getItem('loggedin') &&

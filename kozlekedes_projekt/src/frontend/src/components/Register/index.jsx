@@ -26,7 +26,7 @@ const Register = () => {
 
 
     const register = ()=>{
-        //console.log(registrationInfo);
+        console.log(registrationInfo);
         if(registrationInfo.email.length <= 0 || registrationInfo.password.length <= 0 || registrationInfo.lastName.length <= 0
             || registrationInfo.firstName.length <= 0 || registrationInfo.zipcode.length <= 0 || registrationInfo.street.length <= 0
             || registrationInfo.houseNumber.length <= 0){
@@ -84,9 +84,8 @@ const Register = () => {
 
                         <label className="form__label" htmlFor="birthDate">Születési Dátum:</label>
                         <input className="form__input" type="date" id="birthDate" name="birthDate" onChange={handleChange} value={registrationInfo.birthDate} required/>
-
-                        <button onClick={register} className="submitbutton">Küldés</button>
                     </form>
+                <button onClick={register} className="submitbutton">Küldés</button>
             </div>
     );
 }

@@ -1,15 +1,14 @@
-
+html{
+    height: 1500px;
+}
 
 .wrapper{
     overflow: hidden;
     width: 100%;
-    height: 770px;
+    height: 100%;
     box-shadow: 10px 10px 2px 2px #6b6a6a;
     animation: backInRight 1s 0s;
     animation-fill-mode: forwards;
-
-
-
 }
 
 .header{
@@ -46,11 +45,11 @@
             clear: both;
 
         }
-        .ticket-list-2{
+        /*.ticket-list-2{
             float:right;
             margin-right: 150px;
             display: flex;
-        }
+        }*/
 
 
     }
@@ -69,9 +68,6 @@
         opacity: 0;
         animation: fadeInUp 1.3s 1.3s;
         animation-fill-mode: forwards;
-        
-        
-        
 
         &:hover{
             background-color: #00cdcd;
@@ -85,9 +81,6 @@
         }
     }
 }
-
-
-
 
 .map-wrap{
     border: 2px solid black;
