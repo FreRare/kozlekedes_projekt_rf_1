@@ -46,9 +46,7 @@ const AdminMenuList = () =>{
         }).catch(e=>{
             console.log("Szar a valami ez van",e);
             setStopList((
-           <select>
             <option>NO DATA FOUND</option>
-           </select>
             ));
         });
     }
@@ -95,6 +93,7 @@ const AdminMenuList = () =>{
             <button onClick={addStopToCurrentstops}>Megálló hozzáadása</button>
             <p>Járatszám : {JSON.parse(sessionStorage.getItem('serviceNumber'))}</p>
             <p>Típus : {JSON.parse(sessionStorage.getItem('serviceType'))}</p>
+                {error}
             <button onClick={addService}>Járat hozzáadása</button>
             </div>
             
