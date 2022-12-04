@@ -55,6 +55,7 @@ class Controls{
         const news = new News(0, category, title, description, publishDate)
         return this.DAO.createNews(news).then(res=>{
             console.log("createNews control", res);
+            news.ID = res.insertId;
             return news;
         }).catch(e=>console.log("createNews control error", e));
     }
