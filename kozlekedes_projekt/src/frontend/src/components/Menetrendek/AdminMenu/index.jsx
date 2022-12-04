@@ -73,7 +73,6 @@ const AdminMenu = () => {
             let trolley = res.trolley;
             //console.log("Trolley Data got successfully!", trolley);
             let trolleyList = trolley.map((b, index)=>(
-                        <>
                         <tr key={index}>
                             <td>{b.serviceNumber}</td>
                             <td>{b.stops.length > 0 && b.stops[0].name}</td>
@@ -85,7 +84,6 @@ const AdminMenu = () => {
                                 </button>
                             </td>
                         </tr>
-                        </>
             ));
                 setTrolleysList(trolleyList);
         }).catch(e=>{
