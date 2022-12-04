@@ -49,6 +49,10 @@
             }
         }
 
+        
+    }
+
+    .profilbutton{
         button{
             padding: 15px 25px;
             font-size: 24px;
@@ -60,7 +64,10 @@
             border: none;
             border-radius: 15px;
             box-shadow: 0 4px #999;
-            margin-top: 70px;
+            
+            margin: 0 auto;
+            display: block;
+            
     
             &:hover{
                 background-color: #00cdcd
@@ -72,6 +79,7 @@
             transform: translateY(4px);
             }
         }
+        
     }
    }
    
