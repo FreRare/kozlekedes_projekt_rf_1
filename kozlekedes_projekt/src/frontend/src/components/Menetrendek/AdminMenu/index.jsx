@@ -97,8 +97,8 @@ const AdminMenu = () => {
     }
 
     const deleteService = (id)=>{
-        console.log('deleting service with id: ', id);
-        fetch('api/deleteService', {
+        console.log("deleteService töröl id", id);
+        fetch('/api/deleteService', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
