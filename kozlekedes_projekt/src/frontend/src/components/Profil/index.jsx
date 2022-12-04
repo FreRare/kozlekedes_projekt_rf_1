@@ -73,7 +73,9 @@ const Profil = () =>{
                     <input type="password" className="username" placeholder="Új jelszó" name='password' onChange={e=>setPass(e.target.value)}></input>
                     <input type="password" className="username" placeholder="Jelszó megerősítése" name='passwordAgain' onChange={e=>setPass2(e.target.value)}></input>
                 </form>
-                <button onClick={updateProfile} value="Változtatások mentése">Változtatások mentése</button>
+                <div className="profilbutton">
+                <button onClick={updateProfile}  value="Változtatások mentése">Változtatások mentése</button>
+                </div>
             </div>
             <div className="history">
                 <div className="ticket-infos">

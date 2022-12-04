@@ -182,14 +182,19 @@ const AdminMenu = () => {
                     <label htmlFor='type' className='form__label'>
                         Service type:
                         </label>
+                        <div className="select_container">
                         <select name="type" id='type' onChange={e=>setType(e.target.value)}>
+                        
                             <option>Busz</option>
                             <option>Villamos</option>
                             <option>Trolibusz</option>
                         </select>
+                        </div>
+                        <br/>
 
-
+                <div className="buttonholder">
                 <button onClick={redirectToCreateService} >Megállók megadása</button>
+                </div>
                 </form>
             </div>
         </div>

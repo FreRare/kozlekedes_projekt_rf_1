@@ -53,6 +53,37 @@
     
         
     }
+
+    button{
+        padding: 10px 20px;
+        font-size: 10px;
+        text-align: center;
+        cursor: pointer;
+        outline: none;
+        color: #fff;
+        background-color: #0578ba;
+        border: none;
+        border-radius: 20px;
+        box-shadow: 0 4px #999;
+        margin-left: 20px;
+        opacity: 0;
+        animation: fadeInUp 1s 1s;
+        animation-fill-mode: forwards;
+        
+        
+        
+
+        &:hover{
+            background-color: #00cdcd;
+            color: rgb(255, 255, 255);
+        }
+
+        &:active{
+        background-color: #00ff22;
+        box-shadow: 0 5px rgb(138, 138, 138);
+        transform: translateY(4px);
+        }
+    }
 }
 
 

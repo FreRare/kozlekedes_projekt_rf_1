@@ -92,7 +92,9 @@ const News = () => {
         <input type="text" name='title' placeholder="Cím" onChange={(e)=>updateData(e)}></input>
         <textarea placeholder="Leírás" name='description' onChange={(e)=>updateData(e)}></textarea>
     </form>
+    <div className="newsbutton">
             <button onClick={addNews}>Hír feltöltése</button>
+            </div>
         </>
     )
 
