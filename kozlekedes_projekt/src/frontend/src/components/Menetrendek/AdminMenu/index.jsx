@@ -20,8 +20,8 @@ const AdminMenu = () => {
             let busList = bus.map((b, index)=>(
                     <tr key={index}>
                         <td>{b.serviceNumber}</td>
-                        <td>{b.stops[0].name}</td>
-                        <td>{b.stops[b.stops.length-1].name}</td>
+                        <td>{b.stops.length > 0 && b.stops[0].name}</td>
+                        <td>{b.stops.length > 0 && b.stops[b.stops.length-1].name}</td>
                         <td>
                             <button onClick={()=>{deleteService(b.id)}}>Törlés</button>
                         </td>
@@ -47,8 +47,8 @@ const AdminMenu = () => {
             let tramList = trams.map((b, index)=>(
                     <tr key={index}>
                         <td>{b.serviceNumber}</td>
-                        <td>{b.stops[0].name}</td>
-                        <td>{b.stops[b.stops.length-1].name}</td>
+                        <td>{b.stops.length > 0 && b.stops[0].name}</td>
+                        <td>{b.stops.length > 0 && b.stops[b.stops.length-1].name}</td>
                         <td>
                             <button onClick={()=>{deleteService(b.id)}}>Törlés</button>
                         </td>
@@ -73,14 +73,19 @@ const AdminMenu = () => {
             let trolley = res.trolley;
             //console.log("Trolley Data got successfully!", trolley);
             let trolleyList = trolley.map((b, index)=>(
-                    <tr key={index}>
-                        <td>{b.serviceNumber}</td>
-                        <td>{b.stops[0].name}</td>
-                        <td>{b.stops[b.stops.length-1].name}</td>
-                        <td>
-                            <button onClick={()=>{deleteService(b.id)}}>Törlés</button>
-                        </td>
-                    </tr>
+                        <>
+                        <tr key={index}>
+                            <td>{b.serviceNumber}</td>
+                            <td>{b.stops.length > 0 && b.stops[0].name}</td>
+                            <td>{b.stops.length > 0 && b.stops[b.stops.length - 1].name}</td>
+                            <td>
+                                <button onClick={() => {
+                                    deleteService(b.id)
+                                }}>Törlés
+                                </button>
+                            </td>
+                        </tr>
+                        </>
             ));
                 setTrolleysList(trolleyList);
         }).catch(e=>{

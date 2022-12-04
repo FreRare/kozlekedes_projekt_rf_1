@@ -5,6 +5,7 @@ const AdminMenuList = () =>{
 
     //Stops list
     const [stopList, setStopList] = useState([]);
+    const [error, setError] = useState([]);
     const [CurrentStopsList, setCurrentStopsList] = useState({
         name: "",
         arrivalTime: "" 
@@ -53,7 +54,24 @@ const AdminMenuList = () =>{
     }
 
     const addService = ()=>{
-        
+        fetch('/api/createService', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                serviceNumber: JSON.parse(sessionStorage.getItem('serviceNumber')),
+                serviceType: JSON.parse(sessionStorage.getItem('serviceType')),
+                stops: CurrentStops
+            })
+        }).then(res=>res.json()).then(res=>{
+            if(res){
+                setError('Járat sikeresen hozzáadva!');
+            }else{
+                setError(res.error);
+            }
+        }).catch(e=>console.error(e));
     }
 
 
@@ -86,9 +104,6 @@ const AdminMenuList = () =>{
         <div className="admin_stops_list">
             <h2>Itt egy lista lesz</h2>
             {valtozoamibenbenneleszezalistaXD}
-
-            
-
         </div>
         
     </div>
