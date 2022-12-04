@@ -130,7 +130,7 @@ const CONTROL = new Control();
 
  router.get('/api/getStops', (req, response)=>{
      CONTROL.getStops().then(res=>{
-        console.log("index.js getStops", res);
+        //console.log("index.js getStops", res);
         response.json({stops: res});
         response.end();
      });

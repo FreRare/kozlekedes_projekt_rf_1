@@ -111,7 +111,7 @@ class TransportationDAO{
         let result = []
         this.db.query(TransportationDAO.QUERIES.getAllStopQuery, (err, res, next)=>{
             if (err) throw err;
-            console.log(this.className, 'Result of query: ', res);
+            //console.log(this.className, 'Result of query: ', res);
             for(let s of res){
                 result.push(new Stop(s['nev'], s["hely"]))
             }

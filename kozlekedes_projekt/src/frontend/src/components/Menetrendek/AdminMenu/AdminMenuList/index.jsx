@@ -11,27 +11,30 @@ const AdminMenuList = () =>{
         arrivalTime: "" 
     });
 
-    const [CurrentStops, setCurrentStops] = useState([{}]);
+    const [CurrentStops, setCurrentStops] = useState([]);
     let [valtozoamibenbenneleszezalistaXD, setvaltozoamibenbenneleszezalistaXD] = useState("");
     const handleChange = (event) => {
         setCurrentStopsList({...CurrentStopsList, [event.target.name]: event.target.value});
     };
 
     function addStopToCurrentstops(){
-        const egymasikvaltozoamibenletarolomacurrentstopsot = CurrentStops;
-        egymasikvaltozoamibenletarolomacurrentstopsot.push(CurrentStopsList);
-        setCurrentStops(egymasikvaltozoamibenletarolomacurrentstopsot);
-        setvaltozoamibenbenneleszezalistaXD(CurrentStops.map((e, index )=> (
-            <div key={index}>
-            <p>{e.name} </p>
-            <p>{e.arrivalTime}</p>
-            </div>
-        )));
+        if(!CurrentStops.name || CurrentStops.name === 'Válassz' || !CurrentStops.arrivalTime){
+            setError('Minden adatot meg kell adni!');
+        }else {
+            const egymasikvaltozoamibenletarolomacurrentstopsot = CurrentStops;
+            egymasikvaltozoamibenletarolomacurrentstopsot.push(CurrentStopsList);
+            setCurrentStops(egymasikvaltozoamibenletarolomacurrentstopsot);
+            setvaltozoamibenbenneleszezalistaXD(CurrentStops.map((e, index) => (
+                <div key={index}>
+                    <p>{e.name} </p>
+                    <p>{e.arrivalTime}</p>
+                </div>
+            )));
+        }
         //console.log(CurrentStops);
     }
 
-    
-    
+
     if(stopList.length <= 0){
         fetch('/api/getStops', {
             method: 'get'
@@ -44,7 +47,7 @@ const AdminMenuList = () =>{
             setStopList(stopList);
 
         }).catch(e=>{
-            console.log("Szar a valami ez van",e);
+            console.error("Szar a valami ez van",e);
             setStopList((
             <option>NO DATA FOUND</option>
             ));
@@ -81,19 +84,19 @@ const AdminMenuList = () =>{
         <div className="input_container_to_db">
         <h2>Megálló adatok</h2>
             <div className="input_container_1">
-                <select name="name" onChange={e => handleChange(e)} >
+                <select name="name" defaultValue='Válassz' onChange={e => handleChange(e)} >
+                    <option disabled>Válassz</option>
                     {stopList}
                 </select>
             </div>
                 <div className="input_container_2">
                 <input type="time" id="time" name="arrivalTime"  onChange={e => handleChange(e)} required></input>
-                
             </div>
             <div className="input_container_3">
+                {error}
             <button onClick={addStopToCurrentstops}>Megálló hozzáadása</button>
             <p>Járatszám : {JSON.parse(sessionStorage.getItem('serviceNumber'))}</p>
             <p>Típus : {JSON.parse(sessionStorage.getItem('serviceType'))}</p>
-                {error}
             <button onClick={addService}>Járat hozzáadása</button>
             </div>
             

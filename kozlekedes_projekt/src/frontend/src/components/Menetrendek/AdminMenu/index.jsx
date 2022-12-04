@@ -109,6 +109,7 @@ const AdminMenu = () => {
             if(res.success){
                 console.log("Service successfully deleted!");
                 nav('/Menetrendek/AdminMenu');
+                nav(0);
             }else{
                 setError(res.error);
             }
@@ -119,10 +120,14 @@ const AdminMenu = () => {
     const [type, setType] = useState('');
 
     const redirectToCreateService = ()=>{
-        sessionStorage.setItem('serviceNumber', JSON.stringify(number));
-        sessionStorage.setItem('serviceType', JSON.stringify(type));
-        nav('/menetrendek/adminMenu/adminMenuList');
-        nav(0);
+        if(number.length <= 0 || type.length <= 0){
+            setError('Minden adatot meg kell adni!');
+        }else {
+            sessionStorage.setItem('serviceNumber', JSON.stringify(number));
+            sessionStorage.setItem('serviceType', JSON.stringify(type));
+            nav('/menetrendek/adminMenu/adminMenuList');
+            nav(0);
+        }
     }
 
     return(
@@ -187,19 +192,18 @@ const AdminMenu = () => {
                         Service type:
                         </label>
                         <div className="select_container">
-                        <select name="type" id='type' onChange={e=>setType(e.target.value)}>
-                        
-                            <option>Busz</option>
-                            <option>Villamos</option>
-                            <option>Trolibusz</option>
+                        <select name="type" id='type' defaultValue='Válassz' onChange={e=>setType(e.target.value)}>
+                            <option disabled>Válassz</option>
+                            <option  value='BUSZ'>Busz</option>
+                            <option value='VILL'>Villamos</option>
+                            <option value='TROL'>Trolibusz</option>
                         </select>
                         </div>
                         <br/>
-
-                <div className="buttonholder">
-                <button onClick={redirectToCreateService} >Megállók megadása</button>
-                </div>
                 </form>
+                <div className="buttonholder">
+                    <button onClick={redirectToCreateService} >Megállók megadása</button>
+                </div>
             </div>
         </div>
         </>

@@ -55,5 +55,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://rf1kozlekedes.azurewebsites.net"
+  "proxy": "https://localhost:8080"
 }
