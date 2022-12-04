@@ -63,6 +63,9 @@ const Villamos = () => {
     const setMapMarkers = (id)=> {
         console.log('Setting up markers, tramsList: ', tramsList)
         for(let t of trams){
+            if(t.stops.length <= 0){
+                continue;
+            }
             console.log('Tram stops:', t.stops);
             if(t.id === id) {
                 setMarkersOfTram(t.stops.map((stop, stopIndex) => (

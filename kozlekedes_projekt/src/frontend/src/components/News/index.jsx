@@ -5,8 +5,10 @@ import {useState} from "react";
 const News = () => {
 
     const [news, setNews] = useState([]);
+    const [newsObjects, setNewsObjects] = useState([]);
     //const [newsDisplay, setNewsDisplay] = useState(<></>);
     const [error, setError] = useState('');
+    let isAdmin = JSON.parse(sessionStorage.getItem('loggedin')).isAdmin;
 
     let displayNews;
 
@@ -18,14 +20,14 @@ const News = () => {
             }
         }).then(res => res.json()).then(res => {
             console.log('News in REACT: ', res.news);
+            setNewsObjects(res.news);
             displayNews = (res.news.map((n, index) => (
-                <div className="news-row " key={index}>
+                <div className="news-row " key={n.ID}>
                     <h2>{n.title}</h2>
                     <h3>{n.description}</h3>
                     <p>{n._publishDate}</p>
-                    {JSON.parse(sessionStorage.getItem('loggedin')).isAdmin && <button onClick={()=>deleteNews(n.ID)}>Törlés</button>}
+                    {isAdmin && <button onClick={()=>deleteNews(n.ID)}>Törlés</button>}
                 </div>
-
             )));
             setNews(displayNews);
         }).catch(e => console.error(e));
@@ -58,9 +60,22 @@ const News = () => {
         }).then(res=>res.json()).then(res=>{
             if(res.success){
                 console.log('News added successfully');
-                let newNews = news;
-                newNews.push(res.news);
-                setNews(newNews);
+                // Adding new news to the objects array
+                let newNew = res.news;
+                let newNewsObject = newsObjects;
+                newNewsObject.push(newNew);
+                setNewsObjects(newNewsObject);
+                let newNews = (
+                    <div className="news-row " key={newNew.ID}>
+                        <h2>{newNew.title}</h2>
+                        <h3>{newNew.description}</h3>
+                        <p>{newNew._publishDate}</p>
+                        {isAdmin && <button onClick={()=>deleteNews(newNew.ID)}>Törlés</button>}
+                    </div>
+                );
+                let newsDisplay = news;
+                newsDisplay.push(newNews);
+                setNews(newsDisplay);
                 setError('Hír sikeresen hozzáadva!');
             }else{
                 setError(res.error);
