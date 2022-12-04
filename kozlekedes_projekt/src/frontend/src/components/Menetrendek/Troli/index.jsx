@@ -8,6 +8,7 @@ const Troli = () => {
 
     const [trolleysList, setTrolleysList] = useState([]);
     const [error, setError] = useState('');
+    const [markersOfTrolley, setMarkersOfTrolley] = useState();
     let trolleyList;
     let trolley = [];
     if(trolleysList.length <= 0){
@@ -26,6 +27,7 @@ const Troli = () => {
                             <li>Honnan: {b.stops[0].name}</li>
                             <li>Hová: {b.stops[b.stops.length-1].name}</li>
                         </ul>
+                        <button onClick={()=>setMapMarkers(b.id)}>Részletek</button>
                         {sessionStorage.getItem('loggedin') &&
                             <button onClick={() => {
                                 ticketPurchase(b.id);
@@ -58,6 +60,22 @@ const Troli = () => {
             }
         })
     }
+    const setMapMarkers = (id)=> {
+        console.log('Setting up markers, trolleysList: ', trolleysList)
+        for(let t of trolley){
+            console.log('Trolley stops:', t.stops);
+            if(t.id === id) {
+                setMarkersOfTrolley(t.stops.map((stop, stopIndex) => (
+                    <Marker position={stop.location} key={stopIndex}>
+                        <Popup>
+                            {stop.name}<br></br>
+                            {"Időpontok: " + stop.arrivalTime}
+                        </Popup>
+                    </Marker>
+                )));
+            }
+        }
+    }
 
     return(
         <>
@@ -75,11 +93,7 @@ const Troli = () => {
                             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                         />
-                        <Marker position={position}>
-                            <Popup>
-                                Pusztulat mennyiségben fogunk még ezzel szenvedni <br />
-                            </Popup>
-                        </Marker>
+                        {markersOfTrolley}
                     </MapContainer>
                 </div>
             </div>
