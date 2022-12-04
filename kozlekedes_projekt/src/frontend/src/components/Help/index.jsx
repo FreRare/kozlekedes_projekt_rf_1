@@ -15,7 +15,7 @@ const Help = () =>{
         <input type="email" placeholder="Gyurcsanyaferi@akigyok-kigyoznak.hu"></input>
         <input type="text" placeholder="Probléma témájának megnevezése"></input>
         <input type="textarea" placeholder="Probléma kifejtése"></input>
-        <input type="submit" value="Küldés"></input>
+        <a type="submit">Küldés</a>
     </form>
 </div>
 </>

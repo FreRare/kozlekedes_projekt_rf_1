@@ -10,14 +10,8 @@ const AdminMenuList = () =>{
         arrivalTime: "" 
     });
 
-    const [CurrentStops, setCurrentStops] = useState([]);
+    const [CurrentStops, setCurrentStops] = useState([{}]);
     let [valtozoamibenbenneleszezalistaXD, setvaltozoamibenbenneleszezalistaXD] = useState("");
-    useEffect(() => {
-        
-    }, [CurrentStops])
-    
-
-    
     const handleChange = (event) => {
         setCurrentStopsList({...CurrentStopsList, [event.target.name]: event.target.value});
     };
@@ -31,8 +25,8 @@ const AdminMenuList = () =>{
             <p>{e.name} </p>
             <p>{e.arrivalTime}</p>
             </div>
-        )))
-        console.log(CurrentStops);
+        )));
+        //console.log(CurrentStops);
     }
 
     
@@ -44,9 +38,7 @@ const AdminMenuList = () =>{
             let stops = res.stops;
             //console.log("Stops Data got successfully!", stops);
             let stopList = stops.map((b, index)=>(
-                
                 <option key={index}>{b.name}</option>
-                
             ));
             setStopList(stopList);
 
@@ -58,6 +50,10 @@ const AdminMenuList = () =>{
            </select>
             ));
         });
+    }
+
+    const addService = ()=>{
+        
     }
 
 
@@ -81,7 +77,7 @@ const AdminMenuList = () =>{
             <button onClick={addStopToCurrentstops}>Megálló hozzáadása</button>
             <p>Járatszám : {JSON.parse(sessionStorage.getItem('serviceNumber'))}</p>
             <p>Típus : {JSON.parse(sessionStorage.getItem('serviceType'))}</p>
-            <button>Járat hozzáadása</button>
+            <button onClick={addService}>Járat hozzáadása</button>
             </div>
             
         </div>
