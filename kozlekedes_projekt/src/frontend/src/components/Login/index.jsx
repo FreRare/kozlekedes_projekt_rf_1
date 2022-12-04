@@ -71,7 +71,9 @@ const Login = () =>{
               }}
                   />
               </form>
+              <div className="button_holder_loginon">
               <button onClick={login} >Bejelentkezés</button>
+              </div>
             </div>
         </div>
     </>
