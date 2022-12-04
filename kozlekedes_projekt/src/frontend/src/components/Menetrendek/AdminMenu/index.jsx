@@ -15,6 +15,14 @@ const AdminMenu = () => {
         fetch('/api/bus', {
             method: 'get'
         }).then(res=>res.json()).then(res=>{
+            if(res.bus.length<=0){
+                setBusesList((
+                    <tr>
+                        <td>NO DATA FOUND!</td>
+                    </tr>
+                ));
+                return;
+            }
             let bus = res.bus;
             //console.log("Bus Data got successfully!", bus);
             let busList = bus.map((b, index)=>(
@@ -23,7 +31,7 @@ const AdminMenu = () => {
                         <td>{b.stops.length > 0 && b.stops[0].name}</td>
                         <td>{b.stops.length > 0 && b.stops[b.stops.length-1].name}</td>
                         <td>
-                            <button onClick={()=>{deleteService(b.id)}}>Törlés</button>
+                            <button onClick={()=>{deleteService(b.id, b.serviceType)}}>Törlés</button>
                         </td>
                     </tr>
             ));
@@ -42,6 +50,14 @@ const AdminMenu = () => {
         fetch('/api/tram', {
             method: 'get'
         }).then(res=>res.json()).then(res=>{
+            if(res.trams.length<=0){
+                setTramsList((
+                    <tr>
+                        <td>NO DATA FOUND!</td>
+                    </tr>
+                ));
+                return;
+            }
             let trams = res.trams;
             //console.log("Tram Data got successfully!", trams);
             let tramList = trams.map((b, index)=>(
@@ -50,7 +66,7 @@ const AdminMenu = () => {
                         <td>{b.stops.length > 0 && b.stops[0].name}</td>
                         <td>{b.stops.length > 0 && b.stops[b.stops.length-1].name}</td>
                         <td>
-                            <button onClick={()=>{deleteService(b.id)}}>Törlés</button>
+                            <button onClick={()=>{deleteService(b.id, b.serviceType)}}>Törlés</button>
                         </td>
                     </tr>
             ));
@@ -70,6 +86,14 @@ const AdminMenu = () => {
         fetch('/api/trolley', {
             method: 'get'
         }).then(res=>res.json()).then(res=>{
+            if(res.trolley.length<=0){
+                setTrolleysList((
+                    <tr>
+                        <td>NO DATA FOUND!</td>
+                    </tr>
+                ));
+                return;
+            }
             let trolley = res.trolley;
             //console.log("Trolley Data got successfully!", trolley);
             let trolleyList = trolley.map((b, index)=>(
@@ -79,7 +103,7 @@ const AdminMenu = () => {
                             <td>{b.stops.length > 0 && b.stops[b.stops.length - 1].name}</td>
                             <td>
                                 <button onClick={() => {
-                                    deleteService(b.id)
+                                    deleteService(b.id, b.serviceType)
                                 }}>Törlés
                                 </button>
                             </td>
@@ -97,7 +121,7 @@ const AdminMenu = () => {
     }
 
     const deleteService = (id)=>{
-        console.log("deleteService töröl id", id);
+        console.log('Deleting: ', id);
         fetch('/api/deleteService', {
             method: 'POST',
             headers: {

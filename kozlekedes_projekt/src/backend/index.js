@@ -52,6 +52,7 @@ const CONTROL = new Control();
      const id = req.body.id;
      CONTROL.deleteService(id).then((result)=>{
          if(result){
+             console.log('Successfully deleted!');
              response.json({success: true});
              response.end();
          }

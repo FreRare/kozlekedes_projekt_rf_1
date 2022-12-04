@@ -282,6 +282,7 @@ class TransportationDAO{
                 console.error('Invalid Service!')
                 reject(false);
             }
+            this.serviceList = this.serviceList.filter(t=>t.id !== id);
             this.db.query(TransportationDAO.QUERIES.deleteServiceQuery, [id], (err, result) => {
                 if(err){
                     reject(err);
