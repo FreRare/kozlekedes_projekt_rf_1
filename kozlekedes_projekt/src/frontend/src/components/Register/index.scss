@@ -65,37 +65,12 @@ html{
             margin-bottom: 20px;
         }
 
-        button{
-            padding: 15px 25px;
-            font-size: 20px;
-            text-align: center;
-            cursor: pointer;
-            outline: none;
-            color: #fff;
-            background-color: #0578ba;
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 4px #999;
-            margin-top: 100px;
-            margin: 0 auto;
-            display: block;
-            text-decoration: none;
-            margin-bottom: 50px;
-    
-            &:hover{
-                background-color: #00cdcd
-            }
-    
-            &:active{
-            background-color: #00ff22;
-            box-shadow: 0 5px rgb(138, 138, 138);
-            transform: translateY(4px);
-            }
-        }
+        
     
         
         
     }
+    
 
     
 
@@ -103,6 +78,34 @@ html{
 
 
 
+}
+
+button{
+    padding: 15px 25px;
+    font-size: 20px;
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+    color: #fff;
+    background-color: #0578ba;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px #999;
+    margin-top: 100px;
+    margin: 0 auto;
+    display: block;
+    text-decoration: none;
+    margin-bottom: 50px;
+
+    &:hover{
+        background-color: #00cdcd
+    }
+
+    &:active{
+    background-color: #00ff22;
+    box-shadow: 0 5px rgb(138, 138, 138);
+    transform: translateY(4px);
+    }
 }
 
     
