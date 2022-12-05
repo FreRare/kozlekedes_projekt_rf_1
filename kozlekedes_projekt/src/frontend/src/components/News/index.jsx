@@ -4,6 +4,8 @@ import {useState} from "react";
 
 const News = () => {
 
+    const admin = JSON.parse(sessionStorage.getItem('loggedin')).isAdmin;
+
     const [news, setNews] = useState([]);
     const [newsObjects, setNewsObjects] = useState([]);
     //const [newsDisplay, setNewsDisplay] = useState(<></>);
@@ -125,7 +127,7 @@ const News = () => {
                 {news}
             </div>
             <div className="news-subscription">
-                {JSON.parse(sessionStorage.getItem('loggedin')).isAdmin && addNewsForAdmin}
+                {admin && addNewsForAdmin}
             </div>
         </div>
         </>
