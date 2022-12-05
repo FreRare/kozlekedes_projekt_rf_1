@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node kozlekedes_projekt/src/backend/index.js",
-    "build": "npm i kozlekedes_projekt/src/backend",
+    "build": "npm --prefix ./kozlekedes_projekt/src/backend install",
     "clear": "cd src/frontend && rm -rf node_modules && cd ../backend && rm -rf node_modules"
   },
   "keywords": [],
