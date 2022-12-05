@@ -10,5 +10,8 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "publictransport": "file:kozlekedes_projekt/src/frontend"
+  }
 }
