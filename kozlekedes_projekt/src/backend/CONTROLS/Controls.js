@@ -13,9 +13,6 @@ class Controls{
         this.activeUser = new User();
     }
 
-    // TODO: Jegyek, bérletek kezeléséhez tartozó üzleti logika (listázás, módosítás, létrehozása, törlése)
-    // Jegyek, bérletek árának módosítása, bejelentkezett felhasználó ellenörzése
-
     /***
      * A bejelentkezett felhasználó jegyét visszaadja
      * @returns {Ticket | boolean}
@@ -28,9 +25,6 @@ class Controls{
             return false;
         }
     }
-
-    // TODO: MEGADOTT AZONOSÍTÓJÚ JEGY ÁRÁNAK ÉS/VAGY TÍPUSÁNAK MÓDOSÍTÁSA (CSAK ADMIN)
-    // TODO: MEGADOTT AZONOSÍTÓJÚ JEGY TÖRLÉSE (CSAK ADMIN)
 
     // TODO: Jegyek bérletek vásárlása logika
     // Vásárlás: Form kitöltése után jegy feltöltése az adatbázisba + jegy hozzárendelése a bejelentkezett  felhasználóhoz ezt hozzáadni
