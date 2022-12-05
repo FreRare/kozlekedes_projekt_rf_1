@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/backend/index.js",
-    "build": "npm install src/forntend && npm run build src/frontend && npm install src/backend",
     "clear": "cd src/frontend && rm -rf node_modules && cd ../backend && rm -rf node_modules"
   },
   "keywords": [],
