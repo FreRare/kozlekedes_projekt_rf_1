@@ -4,7 +4,8 @@
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
   "main": "index.js",
   "scripts": {
-    "start": "node src/backend/index.js",
+    "start": "node kozlekedes_projekt/src/backend/index.js",
+    "build": "npm i kozlekedes_projekt/src/backend",
     "clear": "cd src/frontend && rm -rf node_modules && cd ../backend && rm -rf node_modules"
   },
   "keywords": [],
