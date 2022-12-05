@@ -246,7 +246,7 @@ class TransportationDAO{
 
     createService(serviceNumber, serviceType){
         return new Promise((resolve, reject)=>{
-            if(typeof serviceNumber !== "string" || typeof serviceNumber){
+            if(typeof serviceNumber !== "string" || typeof serviceType !== 'string'){
                 console.error('Inavlid service!')
                 reject(false);
             }
@@ -506,8 +506,8 @@ class TransportationDAO{
     getStop(name){
         return new Promise((resolve, reject)=>{
             if(typeof name !== "string"){
-                console.error('Invalid Stop!')
-                reject(false);
+                console.error('Invalid Stop!', name);
+                resolve(false);
             }
             this.db.query(TransportationDAO.QUERIES.getStopQuery, [name], (err, result) => {
                 if(err){

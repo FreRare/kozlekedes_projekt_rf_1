@@ -14,18 +14,20 @@ const AdminMenuList = () =>{
     const [CurrentStops, setCurrentStops] = useState([]);
     let [valtozoamibenbenneleszezalistaXD, setvaltozoamibenbenneleszezalistaXD] = useState("");
     const handleChange = (event) => {
+        console.log('handleChange')
         setCurrentStopsList({...CurrentStopsList, [event.target.name]: event.target.value});
     };
 
     function addStopToCurrentstops(){
-        if(!CurrentStops.name || CurrentStops.name === 'Válassz' || !CurrentStops.arrivalTime){
+        if(!CurrentStopsList.name || CurrentStopsList.name === 'Válassz' || !CurrentStopsList.arrivalTime){
+            console.log(CurrentStopsList);
             setError('Minden adatot meg kell adni!');
         }else {
             const egymasikvaltozoamibenletarolomacurrentstopsot = CurrentStops;
             egymasikvaltozoamibenletarolomacurrentstopsot.push(CurrentStopsList);
             setCurrentStops(egymasikvaltozoamibenletarolomacurrentstopsot);
             setvaltozoamibenbenneleszezalistaXD(CurrentStops.map((e, index) => (
-                <div key={index}>
+                <div className='StopsListDisplay' key={index}>
                     <p>{e.name} </p>
                     <p>{e.arrivalTime}</p>
                 </div>
@@ -42,7 +44,7 @@ const AdminMenuList = () =>{
             let stops = res.stops;
             //console.log("Stops Data got successfully!", stops);
             let stopList = stops.map((b, index)=>(
-                <option key={index}>{b.name}</option>
+                <option key={index} value={b.name}>{b.name}</option>
             ));
             setStopList(stopList);
 
@@ -104,7 +106,7 @@ const AdminMenuList = () =>{
         
        
         <div className="admin_stops_list">
-            <h2>Itt egy lista lesz</h2>
+            <h2>Eddigi megállók listája:</h2>
             {valtozoamibenbenneleszezalistaXD}
         </div>
         

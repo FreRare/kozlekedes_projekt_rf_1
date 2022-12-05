@@ -5,7 +5,7 @@ class Stop {
     
   constructor(name = "", location = "", when= new Date()) {
     this.name = name;
-    this.location = [Number(location.split(',')[0].trim()), Number(location.split(',')[1].trim())];
+    this.location = [Number(location.split(',')[0]), Number(location.split(',')[1])];
     this.arrivalTime = when;
   }
 }

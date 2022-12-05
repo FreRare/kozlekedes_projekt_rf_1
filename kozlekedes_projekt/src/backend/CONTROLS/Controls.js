@@ -107,9 +107,9 @@ class Controls{
     createService(serviceNumber, serviceType, stops){
         return this.DAO.createService(serviceNumber, serviceType).then(res=>{
             let service = new Service(res.insertId, serviceNumber, serviceType, []);
-            for(let i in stops){
-                this.DAO.getStop(i.name).then(res=>{
-                    service.stops.push(res);
+            for(let i of stops){
+                this.DAO.getStop(i.name).then(stopResult=>{
+                    service.stops.push(stopResult);
                 });
                 let stopping = new Stopping(res.insertId, i.name, i.arrivalTime);
                 this.DAO.createStopping(stopping).then(res=>{
